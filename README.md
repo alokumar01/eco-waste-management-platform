@@ -1,3 +1,5 @@
+[![Laravel Basic CI](https://github.com/alokumar01/eco-waste-management-platform/actions/workflows/laravel-ci.yml/badge.svg)](https://github.com/alokumar01/eco-waste-management-platform/actions/workflows/laravel-ci.yml)
+
 # Eco Compost Platform
 
 A Laravel-based web application for promoting sustainable waste management and composting practices.
