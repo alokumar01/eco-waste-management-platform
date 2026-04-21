@@ -10,8 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body
-    class="min-h-screen bg-[radial-gradient(circle_at_top_left,#d9f3d8,transparent_35%),radial-gradient(circle_at_bottom_right,#fde1c6,transparent_32%),linear-gradient(160deg,#f4faee,#ecf5e7)] text-emerald-950 antialiased">
+<body class="min-h-dvh bg-background antialiased">
     <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <header class="mb-8 flex flex-wrap items-center justify-between gap-4">
             <div>
@@ -118,7 +117,7 @@
                     Composting Need
                     <select
                         class="mt-2 w-full rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm outline-none ring-emerald-500 focus:ring-2">
-                        <option>Home Organic Waste</option>
+                        <option>Dashboard Organic Waste</option>
                         <option>Community Program</option>
                         <option>Commercial/Bulk Waste</option>
                     </select>
