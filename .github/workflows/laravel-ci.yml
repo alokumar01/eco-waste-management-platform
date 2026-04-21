@@ -1,0 +1,72 @@
+name: Laravel Basic CI
+
+on:
+  push:
+    branches:
+      - main
+      - "dev/**"
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    name: Basic Laravel Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, bcmath, pdo, sqlite, pdo_sqlite
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Validate Composer file
+        run: composer validate --strict
+
+      - name: Install PHP packages
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Check PHP package security
+        run: composer audit
+
+      - name: Install Node packages
+        run: npm ci
+
+      - name: Check Node package security
+        run: npm audit --audit-level=high
+
+      - name: Copy environment file
+        run: cp .env.example .env
+
+      - name: Generate Laravel app key
+        run: php artisan key:generate
+
+      - name: Set storage permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Check Laravel routes
+        run: php artisan route:list
+
+      - name: Run Laravel tests
+        run: php artisan test
+
+      - name: Start Laravel server
+        run: php artisan serve --host=127.0.0.1 --port=8000 &
+
+      - name: Basic homepage check
+        run: curl --retry 10 --retry-delay 2 --retry-connrefused -f http://127.0.0.1:8000
