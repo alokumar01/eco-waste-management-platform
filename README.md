@@ -1,12 +1,12 @@
-# 🌱 Eco Compost Platform
+# Eco Compost Platform
 
 A Laravel-based web application for promoting sustainable waste management and composting practices.
 
-## 📌 Project Overview
+## Project Overview
 
 This platform connects users with composting experts and waste management service providers. It also provides educational resources to encourage eco-friendly practices.
 
-## 🚀 Features
+## Features
 
 * User registration and login
 * Role-based access (User, Expert, Admin)
@@ -15,32 +15,32 @@ This platform connects users with composting experts and waste management servic
 * Admin approval system for experts
 * Educational blog/articles
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * Laravel (PHP Framework)
 * MySQL Database
 * Blade Templates (Frontend)
 * Bootstrap (UI)
 
-## 👥 User Roles
+## User Roles
 
-### 👤 User
+### User
 
 * Browse services
 * Search & filter
 * Learn composting
 
-### 🧑‍🔬 Expert
+### Expert
 
 * Register and get approved
 * Add/manage services
 
-### 🛠️ Admin
+### Admin
 
 * Approve experts
 * Manage platform
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 1. Clone the repository:
 
@@ -75,13 +75,13 @@ This platform connects users with composting experts and waste management servic
    php artisan serve
    ```
 
-## 🌍 Future Improvements
+## Future Improvements
 
 * Booking system
 * Payment integration
 * Ratings & reviews
 * Mobile app version
 
-## 📜 License
+## License
 
 This project is for academic purposes.
