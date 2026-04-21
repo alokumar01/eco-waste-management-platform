@@ -14,6 +14,14 @@ jobs:
   ci:
     name: Basic Laravel Checks
     runs-on: ubuntu-latest
+    env:
+      APP_ENV: testing
+      APP_DEBUG: true
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
+      SESSION_DRIVER: array
+      CACHE_STORE: array
+      QUEUE_CONNECTION: sync
 
     steps:
       - name: Checkout project
@@ -47,14 +55,23 @@ jobs:
       - name: Check Node package security
         run: npm audit --audit-level=high
 
-      - name: Copy environment file
-        run: cp .env.example .env
+      - name: Prepare Laravel environment
+        run: |
+          cp .env.example .env
+          mkdir -p database
+          touch database/database.sqlite
 
       - name: Generate Laravel app key
         run: php artisan key:generate
 
+      - name: Clear Laravel config
+        run: php artisan config:clear
+
       - name: Set storage permissions
         run: chmod -R 777 storage bootstrap/cache
+
+      - name: Run database migrations
+        run: php artisan migrate --force
 
       - name: Build frontend assets
         run: npm run build
@@ -66,7 +83,11 @@ jobs:
         run: php artisan test
 
       - name: Start Laravel server
-        run: php artisan serve --host=127.0.0.1 --port=8000 &
+        run: php artisan serve --host=127.0.0.1 --port=8000 > /tmp/laravel-server.log 2>&1 &
 
       - name: Basic homepage check
-        run: curl --retry 10 --retry-delay 2 --retry-connrefused -f http://127.0.0.1:8000
+        run: |
+          curl --retry 10 --retry-delay 2 --retry-connrefused -f http://127.0.0.1:8000 || {
+            cat /tmp/laravel-server.log
+            exit 1
+          }
