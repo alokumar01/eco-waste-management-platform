@@ -1,6 +1,6 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}" class="w-full space-y-5"
-        x-data="{ showPassword: false, showConfirmPassword: false, submitting: false }" @submit="submitting = true">
+        x-data="{ showPassword: false, showConfirmPassword: false, submitting: false, accountType: '{{ old('role', 'user') }}' }" @submit="submitting = true">
         @csrf
 
         <div class="w-full text-center mb-6">
@@ -48,6 +48,35 @@
             </div>
 
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Account Type -->
+        <div class="space-y-2">
+            <x-input-label :value="__('Account type')" />
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <label
+                    class="cursor-pointer rounded-2xl border border-border bg-card p-4 text-sm shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40"
+                    :class="accountType === 'user' ? 'ring-2 ring-primary/40 border-primary/50' : ''">
+                    <input type="radio" name="role" value="user" class="sr-only" x-model="accountType">
+                    <span class="font-semibold text-foreground">Resident / Customer</span>
+                    <span class="mt-1 block text-muted-foreground">Find approved composting services near you.</span>
+                </label>
+
+                <label
+                    class="cursor-pointer rounded-2xl border border-border bg-card p-4 text-sm shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40"
+                    :class="accountType === 'provider' ? 'ring-2 ring-primary/40 border-primary/50' : ''">
+                    <input type="radio" name="role" value="provider" class="sr-only" x-model="accountType">
+                    <span class="font-semibold text-foreground">Service Provider</span>
+                    <span class="mt-1 block text-muted-foreground">Create composting offers and submit them for review.</span>
+                </label>
+            </div>
+
+            <p x-show="accountType === 'provider'" x-transition class="rounded-xl bg-primary/10 px-3 py-2 text-xs text-foreground">
+                Provider accounts can create service drafts immediately. Admin approval is required before services can be published.
+            </p>
+
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <!-- Password -->

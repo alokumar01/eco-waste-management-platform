@@ -42,4 +42,25 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    public function provider(array $overrides = []): static
+    {
+        return $this->state(fn (array $attributes) => array_merge([
+            'role' => User::ROLE_PROVIDER,
+            'provider_status' => User::PROVIDER_APPROVED,
+            'business_name' => fake()->company(),
+            'phone' => fake()->phoneNumber(),
+            'service_area' => fake()->city(),
+            'address' => fake()->address(),
+            'bio' => fake()->paragraph(),
+            'approved_at' => now(),
+        ], $overrides));
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => User::ROLE_ADMIN,
+        ]);
+    }
 }
