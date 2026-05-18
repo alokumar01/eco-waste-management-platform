@@ -1,0 +1,14 @@
+services:
+
+  app:
+    build: .
+
+    container_name: laravel_app
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - .:/var/www
+
+    restart: unless-stopped
