@@ -23,7 +23,7 @@
             <form method="POST" action="{{ route('verification.send') }}" class="w-full sm:w-auto">
                 @csrf
 
-                <button type="submit" class="w-full sm:w-auto h-12 inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                <button type="submit" class="w-full sm:w-auto h-12 inline-flex items-center justify-center px-4 py-2 bg-[#1B7339] border border-transparent rounded-xl font-bold text-xs text-white uppercase tracking-widest hover:bg-[#12472F] transition-all shadow-sm">
                     {{ __('Resend Verification Email') }}
                 </button>
             </form>
@@ -31,8 +31,7 @@
             <form method="POST" action="{{ route('logout') }}" class="w-full sm:w-auto">
                 @csrf
 
-                <button type="submit"
-                    class="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-sm font-medium text-foreground transition hover:bg-secondary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40">
+                <button type="submit" class="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-700 transition hover:bg-gray-50 shadow-sm">
                     {{ __('Log Out') }}
                 </button>
             </form>

@@ -169,3 +169,10 @@ h3, .text-lg {
     background-color: #265526 !important;
     box-shadow: 0 4px 12px rgba(53, 118, 53, 0.2) !important;
 } */
+
+/* Prevent image selection and dragging globally */
+img {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}

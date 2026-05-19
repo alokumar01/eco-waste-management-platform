@@ -724,7 +724,7 @@
         // 1. Get values from input elements
         const nameVal = document.getElementById('service_title')?.value || 'Unnamed Service';
         const categorySelect = document.querySelector('select[name="category"]');
-        const categoryVal = categorySelect?.options[categorySelect.selectedIndex]?.text || 'Residential Composting';
+        const categoryVal = categorySelect?.options[categorySelect.selectedIndex]?.text || 'Composting';
         const descVal = document.querySelector('textarea[name="description"]')?.value || 'Short description placeholder...';
         const detailedVal = document.getElementById('detailed_description_hidden')?.value || 'Detailed description placeholder...';
         const typeSelect = document.querySelector('select[name="type"]');
@@ -844,7 +844,7 @@
                         <!-- Title & short description -->
                         <div class="space-y-3 pt-2">
                             <span id="mock_preview_category" class="inline-block bg-[#EAF5EE] text-[#1B7339] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                Residential Composting
+                                Composting
                             </span>
                             <h1 id="mock_preview_name" class="text-3xl font-extrabold text-gray-950 tracking-tight leading-tight">
                                 Service Title Placeholder

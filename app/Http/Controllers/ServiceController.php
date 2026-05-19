@@ -180,11 +180,91 @@ class ServiceController extends Controller
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
+                  ->orWhere('description', 'like', '%' . $request->search . '%')
+                  ->orWhere('category', 'like', '%' . $request->search . '%');
             });
         }
 
-        $services = $query->latest()->get();
-        return view('services.list', compact('services'));
+        if ($request->filled('category') && $request->category !== 'All Categories') {
+            $query->where('category', $request->category);
+        }
+
+        if ($request->filled('service_type')) {
+            $types = is_array($request->service_type) ? $request->service_type : [$request->service_type];
+            $query->whereIn('type', $types);
+        }
+
+        if ($request->filled('price_range')) {
+            $range = $request->price_range;
+            if ($range === 'under-200') {
+                $query->where('price', '<', 200);
+            } elseif ($range === '200-500') {
+                $query->whereBetween('price', [200, 500]);
+            } elseif ($range === '500-1000') {
+                $query->whereBetween('price', [500, 1000]);
+            } elseif ($range === 'above-1000') {
+                $query->where('price', '>', 1000);
+            }
+        }
+
+        // Filter by verification status if tab pill is active
+        if ($request->filled('verified') && $request->verified == '1') {
+            $query->whereHas('user', function($q) {
+                $q->where('is_verified', true);
+            });
+        }
+
+        // Filter by rating status if tab pill is active
+        if ($request->filled('top_rated') && $request->top_rated == '1') {
+            // We will filter in collection below
+        }
+
+        // Sorting
+        $sortBy = $request->input('sort_by', 'popular');
+        if ($sortBy === 'price-low') {
+            $query->orderBy('price', 'asc');
+        } elseif ($sortBy === 'price-high') {
+            $query->orderBy('price', 'desc');
+        } elseif ($sortBy === 'newest') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $services = $query->get();
+
+        // Robust PHP Collection filters for rating & top_rated to ensure 100% database driver compatibility
+        if ($request->filled('rating')) {
+            $ratingThreshold = intval($request->rating);
+            $services = $services->filter(function($service) use ($ratingThreshold) {
+                return round($service->user->averageRating()) >= $ratingThreshold;
+            });
+        }
+
+        if ($request->filled('top_rated') && $request->top_rated == '1') {
+            $services = $services->filter(function($service) {
+                return round($service->user->averageRating()) >= 4;
+            });
+        }
+
+        // Calculate counts dynamically for categories
+        $categoriesList = [
+            'All Categories' => Service::where('status', 'active')->count(),
+            'Composting' => Service::where('status', 'active')->where('category', 'Composting')->count(),
+            'Recycling' => Service::where('status', 'active')->where('category', 'Recycling')->count(),
+            'E-Waste' => Service::where('status', 'active')->where('category', 'E-Waste')->count(),
+            'Organic Waste' => Service::where('status', 'active')->where('category', 'Organic Waste')->count(),
+            'Garden Waste' => Service::where('status', 'active')->where('category', 'Garden Waste')->count(),
+            'Commercial Waste' => Service::where('status', 'active')->where('category', 'Commercial Waste')->count(),
+        ];
+
+        // Type counts
+        $typeCounts = [
+            'Pickup Service' => Service::where('status', 'active')->where('type', 'Pickup Service')->count(),
+            'On-site Service' => Service::where('status', 'active')->where('type', 'On-site Service')->count(),
+            'Consultation' => Service::where('status', 'active')->where('type', 'Consultation')->count(),
+        ];
+
+        return view('services.list', compact('services', 'categoriesList', 'typeCounts'));
     }
 }

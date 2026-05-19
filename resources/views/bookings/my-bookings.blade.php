@@ -101,7 +101,7 @@
                         @if ($booking->status === 'completed')
                             @if (!$booking->review)
                                 <!-- slek rate button -->
-                                <a href="{{ route('reviews.create', ['booking_id' => $booking->id]) }}" 
+                                <a href="{{ route('reviews.create', ['booking' => $booking->id]) }}" 
                                    class="inline-flex items-center gap-1.5 px-4.5 py-2.5 bg-[#1B7339] hover:bg-[#12472F] text-white text-xs font-extrabold rounded-xl transition-all shadow-sm select-none">
                                     <span>Rate Service</span>
                                     <span>★</span>

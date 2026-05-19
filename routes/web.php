@@ -10,6 +10,9 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PublicBlogController;
 use Illuminate\Support\Facades\Route;
 
+Route::view('/about', 'about')->name('public.about');
+Route::view('/contact', 'contact')->name('public.contact');
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,7 +23,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -35,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/notifications', [NotificationController::class, 'destroyAll'])->name('notifications.destroy-all');
 });
 
-Route::middleware(['auth', 'role:provider'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:provider'])->group(function () {
     Route::get('provider/profile', [ProviderProfileController::class, 'edit'])->name('provider.profile.edit');
     Route::put('provider/profile', [ProviderProfileController::class, 'update'])->name('provider.profile.update');
 
@@ -53,11 +56,12 @@ Route::middleware(['auth', 'role:provider'])->group(function () {
     });
 });
 
-Route::middleware(['auth', 'role:user'])->group(function () {
+Route::get('available-services', [ServiceController::class, 'list'])->name('services.list');
+
+Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::get('customer/dashboard', function () {
         return view('dashboard');
     })->name('customer.dashboard');
-    Route::get('available-services', [ServiceController::class, 'list'])->name('services.list');
     Route::get('bookings/create/{service}', [BookingController::class, 'create'])->name('bookings.create');
     Route::post('bookings', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('my-bookings', [BookingController::class, 'myBookings'])->name('bookings.my');
@@ -82,7 +86,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name('admin.verifyProvider');
 });
 
-Route::middleware(['auth', 'role:provider,admin'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:provider,admin'])->group(function () {
     Route::resource('provider/blog', \App\Http\Controllers\BlogPostController::class)->except(['show']);
 });
 
