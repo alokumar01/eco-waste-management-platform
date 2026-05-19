@@ -1,9 +1,14 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.guest')
 
-    <form method="POST" action="{{ route('password.email') }}" class="w-full space-y-5" x-data="{ submitting: false }"
-        @submit="submitting = true">
+@section('content')
+    <!-- Session Status -->
+    @if (session('status'))
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('password.email') }}" class="w-full space-y-5">
         @csrf
 
         <div class="w-full text-center mb-6">
@@ -15,7 +20,7 @@
 
         <!-- Email Address -->
         <div class="space-y-1.5">
-            <x-input-label for="email" :value="__('Email')" />
+            <label for="email" class="block font-medium text-sm text-gray-700">{{ __('Email') }}</label>
 
             <div class="relative group mt-1">
                 <span
@@ -27,23 +32,18 @@
                     </svg>
                 </span>
 
-                <x-text-input id="email" class="block w-full h-12 pl-11" type="email" name="email" :value="old('email')"
+                <input id="email" class="block w-full h-12 pl-11 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" type="email" name="email" value="{{ old('email') }}"
                     required autofocus autocomplete="username" placeholder="Enter your email" />
             </div>
 
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            @error('email')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
-        <x-primary-button class="w-full h-12 text-center">
-            <span x-show="!submitting" style="display: inline;">{{ __('Send Reset Link') }}</span>
-            <span x-show="submitting" class="inline-flex items-center gap-2" style="display: none;">
-                <svg class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"></path>
-                </svg>
-                <span>Sending link...</span>
-            </span>
-        </x-primary-button>
+        <button type="submit" class="w-full h-12 text-center inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+            {{ __('Send Reset Link') }}
+        </button>
 
         @if (Route::has('login'))
             <p class="text-center text-sm text-muted-foreground">
@@ -52,4 +52,4 @@
             </p>
         @endif
     </form>
-</x-guest-layout>
+@endsection

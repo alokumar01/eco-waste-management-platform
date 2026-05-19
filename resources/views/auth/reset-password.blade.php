@@ -1,6 +1,7 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}" class="w-full space-y-5"
-        x-data="{ showPassword: false, showConfirmPassword: false, submitting: false }" @submit="submitting = true">
+@extends('layouts.guest')
+
+@section('content')
+    <form method="POST" action="{{ route('password.store') }}" class="w-full space-y-5">
         @csrf
 
         <!-- Password Reset Token -->
@@ -13,7 +14,7 @@
 
         <!-- Email Address -->
         <div class="space-y-1.5">
-            <x-input-label for="email" :value="__('Email')" />
+            <label for="email" class="block font-medium text-sm text-gray-700">{{ __('Email') }}</label>
 
             <div class="relative group mt-1">
                 <span
@@ -25,17 +26,19 @@
                     </svg>
                 </span>
 
-                <x-text-input id="email" class="block w-full h-12 pl-11" type="email" name="email"
-                    :value="old('email', $request->email)" required autofocus autocomplete="username"
+                <input id="email" class="block w-full h-12 pl-11 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" type="email" name="email"
+                    value="{{ old('email', $request->email) }}" required autofocus autocomplete="username"
                     placeholder="Enter your email" />
             </div>
 
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            @error('email')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Password -->
         <div class="space-y-1.5">
-            <x-input-label for="password" :value="__('Password')" />
+            <label for="password" class="block font-medium text-sm text-gray-700">{{ __('Password') }}</label>
 
             <div class="relative group mt-1">
                 <span
@@ -47,21 +50,20 @@
                     </svg>
                 </span>
 
-                <x-text-input id="password" class="block w-full h-12 pl-11 pr-11"
-                    x-bind:type="showPassword ? 'text' : 'password'" name="password" required
+                <input id="password" class="block w-full h-12 pl-11 pr-11 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    type="password" name="password" required
                     autocomplete="new-password" placeholder="Create a new password" />
 
                 <button type="button"
                     class="absolute inset-y-0 right-3 inline-flex items-center text-muted-foreground/80 transition hover:text-foreground"
-                    @click="showPassword = !showPassword"
-                    :aria-label="showPassword ? 'Hide password' : 'Show password'">
-                    <svg x-show="!showPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.8" class="h-5 w-5" style="display: none;">
+                    onclick="togglePasswordVisibility('password', 'show-password-icon', 'hide-password-icon')">
+                    <svg id="show-password-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
                         <circle cx="12" cy="12" r="3" />
                     </svg>
-                    <svg x-show="showPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    <svg id="hide-password-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.8" class="h-5 w-5" style="display: none;">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -70,12 +72,14 @@
                 </button>
             </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            @error('password')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Confirm Password -->
         <div class="space-y-1.5">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <label for="password_confirmation" class="block font-medium text-sm text-gray-700">{{ __('Confirm Password') }}</label>
 
             <div class="relative group mt-1">
                 <span
@@ -87,21 +91,20 @@
                     </svg>
                 </span>
 
-                <x-text-input id="password_confirmation" class="block w-full h-12 pl-11 pr-11"
-                    x-bind:type="showConfirmPassword ? 'text' : 'password'" name="password_confirmation" required
+                <input id="password_confirmation" class="block w-full h-12 pl-11 pr-11 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    type="password" name="password_confirmation" required
                     autocomplete="new-password" placeholder="Confirm your new password" />
 
                 <button type="button"
                     class="absolute inset-y-0 right-3 inline-flex items-center text-muted-foreground/80 transition hover:text-foreground"
-                    @click="showConfirmPassword = !showConfirmPassword"
-                    :aria-label="showConfirmPassword ? 'Hide password confirmation' : 'Show password confirmation'">
-                    <svg x-show="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5" style="display: none;">
+                    onclick="togglePasswordVisibility('password_confirmation', 'show-confirm-password-icon', 'hide-confirm-password-icon')">
+                    <svg id="show-confirm-password-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
                         <circle cx="12" cy="12" r="3" />
                     </svg>
-                    <svg x-show="showConfirmPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    <svg id="hide-confirm-password-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5" style="display: none;">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -110,18 +113,33 @@
                 </button>
             </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            @error('password_confirmation')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
-        <x-primary-button class="w-full h-12 text-center">
-            <span x-show="!submitting" style="display: inline;">{{ __('Reset Password') }}</span>
-            <span x-show="submitting" class="inline-flex items-center gap-2" style="display: none;">
-                <svg class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"></path>
-                </svg>
-                <span>Updating password...</span>
-            </span>
-        </x-primary-button>
+        <div class="flex items-center justify-end mt-4">
+            <button type="submit" class="w-full h-12 text-center inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                {{ __('Reset Password') }}
+            </button>
+        </div>
     </form>
-</x-guest-layout>
+
+    <script>
+        function togglePasswordVisibility(inputId, showIconId, hideIconId) {
+            const passwordInput = document.getElementById(inputId);
+            const showIcon = document.getElementById(showIconId);
+            const hideIcon = document.getElementById(hideIconId);
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                showIcon.style.display = 'none';
+                hideIcon.style.display = 'block';
+            } else {
+                passwordInput.type = 'password';
+                showIcon.style.display = 'block';
+                hideIcon.style.display = 'none';
+            }
+        }
+    </script>
+@endsection
