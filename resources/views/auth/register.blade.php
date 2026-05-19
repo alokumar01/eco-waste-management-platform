@@ -137,7 +137,7 @@
             <p class="text-xs text-gray-400 font-semibold">
                 Already registered?
                 <a href="{{ route('login') }}" class="guest-link-green">
-                    Sign in here
+                    Log in here
                 </a>
             </p>
         </div>

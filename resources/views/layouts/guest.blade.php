@@ -8,20 +8,20 @@
 
     <title>{{ config('app.name', 'GreenLoop') }} - Authentication</title>
 
-    <!-- Google Fonts Plus Jakarta Sans & Outfit -->
+    <!-- Google Fonts PT Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'PT Sans', sans-serif;
         }
         h1, h2, h3, h4, .font-heading {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'PT Sans', sans-serif;
         }
 
         /* ========================================================
@@ -40,7 +40,7 @@
             font-size: 34px !important;
             line-height: 1.1 !important;
             font-weight: 800 !important;
-            font-family: 'Outfit', sans-serif !important;
+            font-family: 'PT Sans', sans-serif !important;
             letter-spacing: -0.025em !important;
         }
         body.guest-page .brand-showcase h2.showcase-heading span {

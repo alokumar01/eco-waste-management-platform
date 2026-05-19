@@ -11,12 +11,12 @@
     <!-- Premium Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'PT Sans', sans-serif;
             background-color: #ffffff;
             overflow-x: hidden;
         }
@@ -116,7 +116,7 @@
                     </a>
                 @else
                     <a href="{{ route('login') }}" class="px-6 py-3 rounded-xl bg-[#3E8B3A] hover:bg-[#2D7A28] text-white text-[13px] font-extrabold transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
-                        <i class="fa-regular fa-user"></i> Login
+                        <i class="fa-regular fa-user"></i> Log In
                     </a>
                 @endauth
             </div>

@@ -48,7 +48,7 @@
         @if (Route::has('login'))
             <p class="text-center text-sm text-muted-foreground">
                 Remember your password?
-                <a href="{{ route('login') }}" class="font-medium text-primary hover:text-primary/80 transition">Back to sign in</a>
+                <a href="{{ route('login') }}" class="font-medium text-primary hover:text-primary/80 transition">Back to log in</a>
             </p>
         @endif
     </form>

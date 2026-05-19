@@ -77,9 +77,9 @@
             @endif
         </div>
 
-        <!-- Sign In Button (Mockup Class) -->
+        <!-- Log In Button (Mockup Class) -->
         <button type="submit" class="w-full btn-primary-mockup text-center inline-flex items-center justify-center font-heading font-extrabold text-xs text-white tracking-wider uppercase select-none">
-            {{ __('Sign In') }}
+            {{ __('Log In') }}
         </button>
 
         <!-- Switch Auth Option -->
