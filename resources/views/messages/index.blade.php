@@ -1,6 +1,11 @@
 @extends('layouts.app')
-@section('no_container', true)
-@section('no_top_nav', true)
+
+@if(Auth::user()->role === 'provider')
+    @section('no_container', true)
+    @section('no_top_nav', true)
+@else
+    @section('no_container', true)
+@endif
 
 @section('content')
 @php
@@ -33,7 +38,7 @@
     $totalUnreadCount = $conversationsList->sum('unreadCount');
 @endphp
 
-<div class="flex h-screen bg-[#F4F7F6] font-sans overflow-hidden">
+<div class="flex {{ auth()->user()->role === 'provider' ? 'h-screen' : 'h-[calc(100vh-76px)]' }} bg-[#F4F7F6] font-sans overflow-hidden">
     <!-- Sidebar for Providers -->
     @if(auth()->user()->role === 'provider')
         @include('provider-dashboard-sidebar')
@@ -53,18 +58,18 @@
             <!-- Search Conversations input bar -->
             <div class="px-4 py-2 select-none shrink-0">
                 <div class="relative">
-                    <input type="text" id="conversation_search" oninput="searchConversations()" placeholder="Search conversations..." class="w-full pl-9 pr-4 py-2.5 border-0 bg-[#F4F7F6]/80 text-xs font-normal text-gray-700 placeholder-gray-400 rounded-xl focus:ring-1 focus:ring-green-600 focus:outline-none transition-all">
+                    <input type="text" id="conversation_search" oninput="searchConversations()" placeholder="Search conversations..." class="w-full pl-9 pr-4 py-2.5 border-0 bg-[#F4F7F6]/80 text-xs font-normal text-gray-700 placeholder-gray-400 rounded-xl focus:ring-1 focus:ring-provider-green focus:outline-none transition-all">
                     <i class="fa-solid fa-magnifying-glass text-gray-400 text-xs absolute left-3.5 top-1/2 -translate-y-1/2"></i>
                 </div>
             </div>
 
             <!-- Active Tab Filter buttons -->
             <div class="px-5 pt-3 select-none flex items-center gap-6 border-b border-gray-100 text-xs font-semibold text-gray-400 shrink-0">
-                <button id="tab_all" onclick="filterConversations('all')" class="pb-2.5 border-b-2 border-[#1B7339] text-gray-950 focus:outline-none">All</button>
-                <button id="tab_unread" onclick="filterConversations('unread')" class="pb-2.5 flex items-center gap-1.5 hover:text-gray-600 focus:outline-none">
+                <button id="tab_all" onclick="filterConversations('all')" class="pb-2.5 border-b-2 border-provider-green text-gray-950 focus:outline-none cursor-pointer">All</button>
+                <button id="tab_unread" onclick="filterConversations('unread')" class="pb-2.5 flex items-center gap-1.5 hover:text-gray-600 focus:outline-none cursor-pointer">
                     Unread 
                     @if($totalUnreadCount > 0)
-                        <span class="bg-[#1B7339] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">{{ $totalUnreadCount }}</span>
+                        <span class="bg-provider-green text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">{{ $totalUnreadCount }}</span>
                     @else
                         <span class="bg-gray-100 text-gray-400 text-[9px] font-bold px-1.5 py-0.5 rounded-full">0</span>
                     @endif
@@ -81,14 +86,14 @@
                         
                         <!-- Left Avatar -->
                         <div class="relative shrink-0 select-none">
-                            <img src="{{ $conv->profile_picture ? asset('storage/' . $conv->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($conv->name) . '&background=F4F7F6&color=1B7339' }}" class="w-11 h-11 rounded-full object-cover border border-gray-100/60">
+                            <img src="{{ $conv->profile_picture ? asset('storage/' . $conv->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($conv->name) . '&background=fefefe&color=40852b' }}" class="w-11 h-11 rounded-full object-cover border border-gray-100/60">
                         </div>
 
                         <!-- Middle Details content -->
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-1.5">
                                 <p class="font-semibold text-[12px] text-gray-950 truncate leading-none m-0 p-0" style="color: #0E2415;">{{ $conv->name }}</p>
-                                <span class="text-[9px] font-semibold text-emerald-600 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-100/40 select-none">Verified</span>
+                                <span class="text-[9px] font-semibold text-provider-green bg-provider-green-light px-1 py-0.2 rounded border border-provider-green/20 select-none">Verified</span>
                             </div>
                             <p class="text-[11.5px] text-gray-500 font-normal truncate mt-1.5 leading-tight mb-0">
                                 {{ $conv->lastMessage ? $conv->lastMessage->message : 'No messages yet' }}
@@ -103,7 +108,7 @@
                                 </span>
                             @endif
                             @if($conv->unreadCount > 0)
-                                <span class="bg-[#1B7339] text-white text-[9px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-sm">
+                                <span class="bg-provider-green text-white text-[9px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-sm">
                                     {{ $conv->unreadCount }}
                                 </span>
                             @endif
@@ -121,7 +126,7 @@
         <!-- Column 2: Blank Conversation State (right 2/3 width) -->
         <div class="hidden md:flex flex-1 flex-col justify-center items-center bg-[#F8FAF9] select-none text-center p-8">
             <div class="max-w-sm space-y-4">
-                <div class="w-16 h-16 rounded-3xl bg-[#E8F5E9] text-[#1B7339] flex items-center justify-center mx-auto shadow-sm">
+                <div class="w-16 h-16 rounded-3xl bg-[#E8F5E9] text-provider-green flex items-center justify-center mx-auto shadow-sm">
                     <i class="fa-regular fa-comments text-2xl"></i>
                 </div>
                 <div>
@@ -143,11 +148,11 @@
         const tabUnread = document.getElementById('tab_unread');
         
         if (filter === 'all') {
-            tabAll.className = 'pb-2.5 border-b-2 border-[#1B7339] text-gray-950 focus:outline-none';
+            tabAll.className = 'pb-2.5 border-b-2 border-provider-green text-gray-950 focus:outline-none';
             tabUnread.className = 'pb-2.5 flex items-center gap-1.5 hover:text-gray-600 focus:outline-none';
         } else {
             tabAll.className = 'pb-2.5 hover:text-gray-600 focus:outline-none';
-            tabUnread.className = 'pb-2.5 flex items-center gap-1.5 border-b-2 border-[#1B7339] text-gray-950 focus:outline-none';
+            tabUnread.className = 'pb-2.5 flex items-center gap-1.5 border-b-2 border-provider-green text-gray-950 focus:outline-none';
         }
         
         applySearchAndFilter();

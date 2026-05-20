@@ -30,6 +30,20 @@
     --color-green-theme: #357635;
     --color-green-light: #f0f7f1;
     --color-green-tint: #f4fcf4;
+
+    --color-provider-green: #40852b;
+    --color-provider-green-dark: #0e3c16;
+    --color-provider-green-light: #eef6ea;
+
+    --text-xs: 0.875rem;
+    --text-s: 0.75rem;
+    --text-2xs: 0.625rem;
+    --text-3xs: 0.5rem;
+    --text-4xs: 0.4375rem;
+    --text-11px: 0.6875rem;
+    --text-11-5px: 0.71875rem;
+    --text-10-5px: 0.65625rem;
+    --text-9px: 0.5625rem;
 }
 
 :root {

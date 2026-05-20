@@ -54,7 +54,7 @@ class RegisteredUserController extends Controller
         } elseif ($user->role === 'provider') {
             return redirect()->route('provider.dashboard');
         } else {
-            return redirect()->route('customer.dashboard');
+            return redirect()->route('dashboard');
         }
     }
 }

@@ -1,6 +1,11 @@
 @extends('layouts.app')
-@section('no_container', true)
-@section('no_top_nav', true)
+
+@if(Auth::user()->role === 'provider')
+    @section('no_container', true)
+    @section('no_top_nav', true)
+@else
+    @section('no_container', true)
+@endif
 
 @section('content')
 @php
@@ -38,7 +43,7 @@
     });
 @endphp
 
-<div class="flex h-screen bg-[#F4F7F6] font-sans overflow-hidden">
+<div class="flex {{ auth()->user()->role === 'provider' ? 'h-screen' : 'h-[calc(100vh-76px)]' }} bg-[#F4F7F6] font-sans overflow-hidden">
     <!-- Sidebar for Providers -->
     @if(auth()->user()->role === 'provider')
         @include('provider-dashboard-sidebar')
@@ -58,18 +63,18 @@
             <!-- Search Conversations input bar -->
             <div class="px-4 py-2 select-none shrink-0">
                 <div class="relative">
-                    <input type="text" id="conversation_search" oninput="searchConversations()" placeholder="Search conversations..." class="w-full pl-9 pr-4 py-2.5 border-0 bg-[#F4F7F6]/80 text-xs font-normal text-gray-700 placeholder-gray-400 rounded-xl focus:ring-1 focus:ring-green-600 focus:outline-none transition-all">
+                    <input type="text" id="conversation_search" oninput="searchConversations()" placeholder="Search conversations..." class="w-full pl-9 pr-4 py-2.5 border-0 bg-[#F4F7F6]/80 text-xs font-normal text-gray-700 placeholder-gray-400 rounded-xl focus:ring-1 focus:ring-provider-green focus:outline-none transition-all">
                     <i class="fa-solid fa-magnifying-glass text-gray-400 text-xs absolute left-3.5 top-1/2 -translate-y-1/2"></i>
                 </div>
             </div>
 
             <!-- Active Tab Filter buttons -->
             <div class="px-5 pt-3 select-none flex items-center gap-6 border-b border-gray-100 text-xs font-semibold text-gray-400 shrink-0">
-                <button id="tab_all" onclick="filterConversations('all')" class="pb-2.5 border-b-2 border-[#1B7339] text-gray-950 focus:outline-none">All</button>
-                <button id="tab_unread" onclick="filterConversations('unread')" class="pb-2.5 flex items-center gap-1.5 hover:text-gray-600 focus:outline-none">
+                <button id="tab_all" onclick="filterConversations('all')" class="pb-2.5 border-b-2 border-provider-green text-gray-950 focus:outline-none cursor-pointer">All</button>
+                <button id="tab_unread" onclick="filterConversations('unread')" class="pb-2.5 flex items-center gap-1.5 hover:text-gray-600 focus:outline-none cursor-pointer">
                     Unread 
                     @if($totalUnreadCount > 0)
-                        <span class="bg-[#1B7339] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">{{ $totalUnreadCount }}</span>
+                        <span class="bg-provider-green text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">{{ $totalUnreadCount }}</span>
                     @else
                         <span class="bg-gray-100 text-gray-400 text-[9px] font-bold px-1.5 py-0.5 rounded-full">0</span>
                     @endif
@@ -83,20 +88,20 @@
                         $isActive = isset($receiver) && $receiver->id === $conv->id;
                     @endphp
                     <a href="{{ auth()->user()->role === 'provider' ? route('messages.show', $conv) : route('customer.messages.show', $conv) }}" 
-                       class="conv-item flex items-center gap-3.5 px-4 py-3 transition-colors border-l-2 {{ $isActive ? 'bg-[#F1F7F3] border-[#1B7339]' : 'hover:bg-gray-50/50 border-transparent' }}"
+                       class="conv-item flex items-center gap-3.5 px-4 py-3 transition-colors border-l-2 {{ $isActive ? 'bg-provider-green-light/20 border-provider-green' : 'hover:bg-gray-50/50 border-transparent' }}"
                        data-name="{{ strtolower($conv->name) }}"
                        data-unread="{{ $conv->unreadCount }}">
                         
                         <!-- Left Avatar -->
                         <div class="relative shrink-0 select-none">
-                            <img src="{{ $conv->profile_picture ? asset('storage/' . $conv->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($conv->name) . '&background=' . ($isActive ? 'E8F5E9' : 'F4F7F6') . '&color=1B7339' }}" class="w-11 h-11 rounded-full object-cover border border-gray-100/60">
+                            <img src="{{ $conv->profile_picture ? asset('storage/' . $conv->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($conv->name) . '&background=' . ($isActive ? 'eef6ea' : 'fefefe') . '&color=40852b' }}" class="w-11 h-11 rounded-full object-cover border border-gray-100/60">
                         </div>
 
                         <!-- Middle Details content -->
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-1.5">
                                 <p class="font-semibold text-[12px] text-gray-950 truncate leading-none m-0 p-0" style="color: #0E2415;">{{ $conv->name }}</p>
-                                <span class="text-[9px] font-semibold text-emerald-600 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-100/40 select-none">Verified</span>
+                                <span class="text-[9px] font-semibold text-provider-green bg-provider-green-light px-1 py-0.2 rounded border border-provider-green/20 select-none">Verified</span>
                             </div>
                             <p class="text-[11.5px] text-gray-500 font-normal truncate mt-1.5 leading-tight mb-0">
                                 {{ $conv->lastMessage ? $conv->lastMessage->message : 'No messages yet' }}
@@ -111,7 +116,7 @@
                                 </span>
                             @endif
                             @if($conv->unreadCount > 0)
-                                <span class="bg-[#1B7339] text-white text-[9px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-sm">
+                                <span class="bg-provider-green text-white text-[9px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-sm">
                                     {{ $conv->unreadCount }}
                                 </span>
                             @endif
@@ -139,13 +144,13 @@
                     
                     <!-- Avatar image -->
                     <div class="relative shrink-0">
-                        <img src="{{ $receiver->profile_picture ? asset('storage/' . $receiver->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($receiver->name) . '&background=E8F5E9&color=1B7339' }}" class="w-10 h-10 rounded-full object-cover border border-gray-100">
+                        <img src="{{ $receiver->profile_picture ? asset('storage/' . $receiver->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($receiver->name) . '&background=eef6ea&color=40852b' }}" class="w-10 h-10 rounded-full object-cover border border-gray-100">
                     </div>
 
                     <div class="flex flex-col justify-center">
                         <div class="flex items-center gap-1.5">
                             <p class="font-semibold text-gray-950 leading-none mb-0" style="font-size: 20px !important;">{{ $receiver->name }}</p>
-                            <span class="text-[9px] font-medium text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100/50">Verified</span>
+                            <span class="text-[9px] font-medium text-provider-green bg-provider-green-light px-1.5 py-0.5 rounded border border-provider-green/20">Verified</span>
                         </div>
                     </div>
                 </div>
@@ -155,7 +160,7 @@
                     @if($booking)
                         <div class="hidden sm:block text-right">
                             <p class="text-[9px] text-gray-400 uppercase font-semibold tracking-wider leading-none">Related Booking</p>
-                            <p class="text-[11.5px] font-semibold text-[#1B7339] mt-1 max-w-[150px] truncate leading-none mb-0">{{ $booking->service->name }}</p>
+                            <p class="text-[11.5px] font-semibold text-provider-green mt-1 max-w-[150px] truncate leading-none mb-0">{{ $booking->service->name }}</p>
                         </div>
                     @endif
                 </div>
@@ -176,11 +181,10 @@
                         @if($message->sender_id === auth()->id())
                             <!-- Logged-in Sender Message (Sleek light green style with checkmark double-ticks) -->
                             <div class="flex justify-end" data-message-id="{{ $message->id }}">
-                                <div class="max-w-[70%] bg-[#E8F5E9] text-gray-900 rounded-2xl rounded-tr-sm shadow-[0_1px_2px_rgba(0,0,0,0.01)] border border-[#D9ECD8]/60 px-3.5 py-2.5 space-y-1.5">
+                                <div class="max-w-[70%] bg-provider-green-light text-gray-900 rounded-2xl rounded-tr-sm shadow-[0_1px_2px_rgba(0,0,0,0.01)] border border-provider-green/10 px-3.5 py-2.5 space-y-1.5">
                                     <p class="mb-0 text-xs md:text-[13px] font-normal leading-relaxed">{{ $message->message }}</p>
-                                    <div class="flex items-center justify-end text-[9.5px] text-emerald-800/80 font-medium mt-1 leading-none select-none gap-1">
+                                    <div class="flex items-center justify-end text-[9.5px] text-provider-green/80 font-medium mt-1 leading-none select-none gap-1">
                                         <span>{{ $message->created_at->format('h:i A') }}</span>
-                                        <!-- <i class="fa-solid fa-check-double text-emerald-600 text-[10px]"></i> -->
                                     </div>
                                 </div>
                             </div>
@@ -218,12 +222,12 @@
                     <!-- Sleek rounded text message input bar -->
                     <div class="flex-1 relative flex items-center">
                         <input type="text" name="message" required placeholder="Type a message..." 
-                               class="w-full px-4 py-2.5 border border-gray-200 focus:border-green-600 focus:ring-1 focus:ring-green-600 rounded-md text-xs font-normal text-gray-700 bg-gray-50/20 focus:bg-white placeholder-gray-400 transition-all"
+                               class="w-full px-4 py-2.5 border border-gray-200 focus:border-provider-green focus:ring-1 focus:ring-provider-green rounded-md text-xs font-normal text-gray-700 bg-gray-50/20 focus:bg-white placeholder-gray-400 transition-all"
                                autocomplete="off">
                     </div>
                     
                     <!-- Circular Send Button icon -->
-                    <button type="submit" class="bg-[#1B7339] hover:bg-[#12472F] text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all shrink-0" style="width: 38px !important; height: 38px !important; border-radius: 9999px !important;">
+                    <button type="submit" class="bg-provider-green hover:bg-provider-green-dark text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all shrink-0 cursor-pointer" style="width: 38px !important; height: 38px !important; border-radius: 9999px !important;">
                         <i class="fa-solid fa-paper-plane text-xs"></i>
                     </button>
                 </form>
@@ -249,9 +253,20 @@
     
     // Polling new message events every 2 seconds
     setInterval(function() {
-        fetch(fetchUrl + '?last_id=' + lastMessageId)
-            .then(response => response.json())
-            .then(data => {
+        fetch(fetchUrl + '?last_id=' + lastMessageId, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (response.status === 401) {
+                return { messages: [] };
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.messages) {
                 data.messages.forEach(msg => {
                     if (!displayedMessageIds.has(msg.id)) {
                         displayedMessageIds.add(msg.id);
@@ -263,11 +278,10 @@
                         
                         if (msg.is_sent_by_auth) {
                             messageDiv.innerHTML = `
-                                <div class="max-w-[70%] bg-[#E8F5E9] text-gray-900 rounded-2xl rounded-tr-sm shadow-[0_1px_2px_rgba(0,0,0,0.01)] border border-[#D9ECD8]/60 p-3.5 space-y-1.5">
+                                <div class="max-w-[70%] bg-provider-green-light text-gray-900 rounded-2xl rounded-tr-sm shadow-[0_1px_2px_rgba(0,0,0,0.01)] border border-provider-green/10 p-3.5 space-y-1.5">
                                     <p class="text-xs md:text-[13px] font-normal leading-relaxed">${escapeHtml(msg.message)}</p>
-                                    <div class="flex items-center justify-end text-[9.5px] text-emerald-800/80 font-medium mt-1 leading-none select-none gap-1">
+                                    <div class="flex items-center justify-end text-[9.5px] text-provider-green/80 font-medium mt-1 leading-none select-none gap-1">
                                         <span>${msg.created_at}</span>
-                                        <i class="fa-solid fa-check-double text-emerald-600 text-[10px]"></i>
                                     </div>
                                 </div>
                             `;
@@ -286,8 +300,9 @@
                         messageContainer.scrollTop = messageContainer.scrollHeight;
                     }
                 });
-            })
-            .catch(error => console.error('Error fetching messages:', error));
+            }
+        })
+        .catch(error => console.error('Error fetching messages:', error));
     }, 2000);
     
     function escapeHtml(text) {
@@ -358,11 +373,11 @@
         const tabUnread = document.getElementById('tab_unread');
         
         if (filter === 'all') {
-            tabAll.className = 'pb-2.5 border-b-2 border-[#1B7339] text-gray-950 focus:outline-none';
+            tabAll.className = 'pb-2.5 border-b-2 border-provider-green text-gray-950 focus:outline-none';
             tabUnread.className = 'pb-2.5 flex items-center gap-1.5 hover:text-gray-600 focus:outline-none';
         } else {
             tabAll.className = 'pb-2.5 hover:text-gray-600 focus:outline-none';
-            tabUnread.className = 'pb-2.5 flex items-center gap-1.5 border-b-2 border-[#1B7339] text-gray-950 focus:outline-none';
+            tabUnread.className = 'pb-2.5 flex items-center gap-1.5 border-b-2 border-provider-green text-gray-950 focus:outline-none';
         }
         
         applySearchAndFilter();

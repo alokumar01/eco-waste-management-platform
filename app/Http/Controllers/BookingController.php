@@ -56,7 +56,14 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return view('bookings.show', compact('booking'));
+        $user = Auth::user();
+        if ($user->id === $booking->provider_id) {
+            return redirect()->route('bookings.index')->with('highlight_booking', $booking->id);
+        } elseif ($user->id === $booking->customer_id) {
+            return redirect()->route('bookings.my')->with('highlight_booking', $booking->id);
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     /**

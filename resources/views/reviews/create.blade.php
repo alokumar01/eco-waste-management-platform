@@ -6,7 +6,7 @@
     <div class="max-w-[600px] mx-auto px-4 pt-12 space-y-6">
         
         <!-- Back Link -->
-        <a href="{{ route('bookings.my') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1B7339] hover:underline mb-2 transition-all group select-none">
+        <a href="{{ route('bookings.my') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#3E8B3A] hover:underline mb-2 transition-all group select-none">
             <svg class="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             <span>Back to My Bookings</span>
         </a>
@@ -32,7 +32,7 @@
                     <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Sustainable Service</p>
                     <h4 class="font-extrabold text-xs text-gray-900 leading-tight">{{ $booking->service->name }}</h4>
                     <p class="text-[9.5px] text-gray-400 font-bold uppercase tracking-wider pt-0.5">
-                        Provider: <span class="text-[#1B7339]">{{ $booking->provider->name }}</span>
+                        Provider: <span class="text-[#3E8B3A]">{{ $booking->provider->name }}</span>
                     </p>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                 <!-- Comment block -->
                 <div class="space-y-1.5">
                     <label for="comment" class="block text-[10px] font-extrabold text-gray-600 uppercase tracking-widest">Share Your Experience (Optional)</label>
-                    <textarea name="comment" id="comment" rows="4" maxlength="300" placeholder="Tell us about the quality, timeliness, and support..." class="w-full px-4 py-3 border border-gray-200 rounded-2xl text-xs text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-[#1B7339] focus:border-[#1B7339] resize-none" oninput="updateCharCount(this)">{{ old('comment') }}</textarea>
+                    <textarea name="comment" id="comment" rows="4" maxlength="300" placeholder="Tell us about the quality, timeliness, and support..." class="w-full px-4 py-3 border border-gray-200 rounded-2xl text-xs text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-[#3E8B3A] focus:border-[#3E8B3A] resize-none" oninput="updateCharCount(this)">{{ old('comment') }}</textarea>
                     <div class="flex justify-between items-center text-[9px] font-bold text-gray-400 select-none pt-0.5">
                         <span>Min 5 characters, Max 300 characters</span>
                         <span id="char_counter">0/300</span>
@@ -82,7 +82,7 @@
 
                 <!-- Action Button Block -->
                 <div class="flex items-center gap-3 pt-2">
-                    <button type="submit" class="flex-1 bg-[#1B7339] hover:bg-[#12472F] text-white font-extrabold py-3.5 rounded-xl text-xs tracking-wider uppercase transition-colors shadow-sm active:scale-[0.99] transform select-none">
+                    <button type="submit" class="flex-1 bg-[#3E8B3A] hover:bg-[#2E6F40] text-white font-extrabold py-3.5 rounded-xl text-xs tracking-wider uppercase transition-colors shadow-sm active:scale-[0.99] transform select-none">
                         Submit Review
                     </button>
                     <a href="{{ route('bookings.my') }}" class="px-5 py-3.5 border border-gray-200 hover:bg-gray-50 text-gray-600 font-extrabold rounded-xl text-xs tracking-wider uppercase text-center select-none">

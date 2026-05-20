@@ -28,6 +28,12 @@
         color: #2E6F40 !important;
         font-weight: 700 !important;
     }
+
+    .segment-pill[class*="bg-[#3E8B3A]"] span {
+        background-color: rgba(255, 255, 255, 0.25) !important;
+        color: #ffffff !important;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+    }
 </style>
 
 <div class="greenloop-directory py-6 select-none bg-[#FAFCFB] min-h-screen px-4 sm:px-6 lg:px-8">
@@ -53,7 +59,7 @@
                                 </div>
                                 <h4 class="text-xs font-bold text-gray-900">Filters Locked</h4>
                                 <p class="text-[9.5px] text-gray-500 mt-1 max-w-[170px] leading-relaxed font-semibold">Please log in to access search filters and categories.</p>
-                                <a href="{{ route('login') }}" class="mt-3.5 px-4 py-1.5 bg-[#2E6F40] hover:bg-green-800 text-white text-[10px] font-bold rounded-lg shadow-sm transition-all cursor-pointer text-center">
+                                <a href="{{ route('login') }}" class="mt-3.5 px-4 py-1.5 bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-[10px] font-bold rounded-lg shadow-sm transition-all cursor-pointer text-center">
                                     Log In to Access
                                 </a>
                             </div>
@@ -216,7 +222,7 @@
 
                         <!-- Search Button -->
                         <div class="shrink-0 w-full md:w-auto">
-                            <button type="submit" class="w-full md:w-auto h-11 px-6 bg-[#2E6F40] hover:bg-green-800 text-white rounded-xl text-xs font-bold transition-all shadow-sm hover:shadow active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer">
+                            <button type="submit" class="w-full md:w-auto h-11 px-6 bg-[#3E8B3A] hover:bg-[#2E6F40] text-white rounded-xl text-xs font-bold transition-all shadow-sm hover:shadow active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer">
                                 <i class="fa-solid fa-magnifying-glass text-xs"></i>
                                 Search
                             </button>
@@ -241,13 +247,13 @@
                             @endphp
                             
                             <!-- All Services Tab -->
-                            <button type="button" onclick="selectTab('all')" class="segment-pill text-xs font-bold px-4 py-2 rounded-full cursor-pointer transition-all select-none border {{ $isAllTab ? 'bg-[#E8F5E9] text-[#2E6F40] border-[#C1E1C9]' : 'bg-white hover:bg-gray-50 text-gray-600 border-gray-200' }}">
+                            <button type="button" onclick="selectTab('all')" class="segment-pill text-xs font-bold px-4 py-2 rounded-full cursor-pointer transition-all select-none border {{ $isAllTab ? 'bg-[#3E8B3A] text-white border-[#3E8B3A] shadow-sm' : 'bg-white hover:bg-gray-50 text-gray-600 border-gray-200' }}">
                                 <i class="fa-solid fa-leaf mr-1 text-[10px]"></i> All Services 
                                 <span class="ml-1 text-[9.5px] px-1.5 py-0.2 rounded-full {{ $isAllTab ? 'bg-[#2E6F40] text-white' : 'bg-gray-100 text-gray-400' }}">{{ $services->count() }}</span>
                             </button>
                             
                             <!-- Top Rated Tab -->
-                            <button type="button" onclick="selectTab('top_rated')" class="segment-pill text-xs font-bold px-4 py-2 rounded-full cursor-pointer transition-all select-none border {{ $isTopRatedTab ? 'bg-[#E8F5E9] text-[#2E6F40] border-[#C1E1C9]' : 'bg-white hover:bg-gray-50 text-gray-600 border-gray-200' }}">
+                            <button type="button" onclick="selectTab('top_rated')" class="segment-pill text-xs font-bold px-4 py-2 rounded-full cursor-pointer transition-all select-none border {{ $isTopRatedTab ? 'bg-[#3E8B3A] text-white border-[#3E8B3A] shadow-sm' : 'bg-white hover:bg-gray-50 text-gray-600 border-gray-200' }}">
                                 <i class="fa-solid fa-star mr-1 text-[10px]"></i> Top Rated
                             </button>
                             
@@ -308,6 +314,12 @@
                                     <span class="absolute top-3 right-3 bg-white text-gray-900 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border border-gray-100 shadow-sm z-10">
                                         <span style="font-family: system-ui, sans-serif !important;">₹</span>{{ number_format($service->price, 0) }}<span class="text-[8.5px] text-gray-400 font-semibold">/{{ $service->unit ?? 'kg' }}</span>
                                     </span>
+
+                                    @auth
+                                        <button type="button" onclick="toggleSaveProvider({{ $service->user->id }}, this, event)" class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/95 backdrop-blur-sm shadow-sm flex items-center justify-center text-gray-500 hover:text-red-500 hover:scale-105 active:scale-95 transition-all z-20 cursor-pointer focus:outline-none" title="Save Provider">
+                                            <i class="{{ Auth::user()->savedProviders->contains($service->user->id) ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart' }} text-xs"></i>
+                                        </button>
+                                    @endauth
                                     
                                     @guest
                                         <!-- Lock badge to indicate login is required for guest users -->
@@ -330,7 +342,7 @@
                                     <!-- Provider details row -->
                                     <div class="flex items-center gap-2 mb-3 select-none">
                                         <!-- Avatar image -->
-                                        <img src="{{ $service->user->profile_picture ? asset('storage/' . $service->user->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($service->user->name) . '&background=E8F5E9&color=1B7339' }}" class="w-8 h-8 rounded-full object-cover border border-gray-100 shrink-0">
+                                        <img src="{{ $service->user->profile_picture ? asset('storage/' . $service->user->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($service->user->name) . '&background=E8F5E9&color=3E8B3A' }}" class="w-8 h-8 rounded-full object-cover border border-gray-100 shrink-0">
                                         
                                         <div class="min-w-0 flex-1">
                                             <!-- Provider business name with Verified badges -->
@@ -386,11 +398,11 @@
                                         </div>
                                         
                                         @guest
-                                            <a href="{{ route('login') }}" class="px-2.5 py-1.5 text-white font-extrabold text-[9px] rounded-lg tracking-wider uppercase transition-all select-none hover:bg-green-800 flex items-center justify-center shrink-0 shadow-sm cursor-pointer" style="background-color: #2E6F40 !important;">
+                                            <a href="{{ route('login') }}" class="px-2.5 py-1.5 text-white font-extrabold text-[9px] rounded-lg tracking-wider uppercase transition-all select-none hover:bg-[#2E6F40] flex items-center justify-center shrink-0 shadow-sm cursor-pointer" style="background-color: #3E8B3A !important;">
                                                 <i class="fa-solid fa-lock mr-1 text-[8px]"></i> Log In to Book
                                             </a>
                                         @else
-                                            <a href="{{ route('bookings.create', $service) }}" class="px-2.5 py-1.5 text-white font-extrabold text-[9px] rounded-lg tracking-wider uppercase transition-all select-none hover:bg-green-800 flex items-center justify-center shrink-0 shadow-sm cursor-pointer" style="background-color: #2E6F40 !important;">
+                                            <a href="{{ route('bookings.create', $service) }}" class="px-2.5 py-1.5 text-white font-extrabold text-[9px] rounded-lg tracking-wider uppercase transition-all select-none hover:bg-[#2E6F40] flex items-center justify-center shrink-0 shadow-sm cursor-pointer" style="background-color: #3E8B3A !important;">
                                                 Book Now
                                             </a>
                                         @endguest
@@ -408,7 +420,7 @@
                                     <h4 class="text-base font-extrabold text-gray-900">No eco-services found</h4>
                                     <p class="text-xs text-gray-400 mt-1 max-w-sm mx-auto leading-relaxed">We couldn't find any composting or waste services matching your current filters. Try resetting search criteria or cities.</p>
                                 </div>
-                                <a href="{{ route('services.list') }}" class="inline-block px-5 py-2 text-white font-bold text-xs rounded-xl hover:bg-green-900 transition-colors" style="background-color: #2E6F40 !important;">
+                                <a href="{{ route('services.list') }}" class="inline-block px-5 py-2 text-white font-bold text-xs rounded-xl hover:bg-[#2E6F40] transition-colors" style="background-color: #3E8B3A !important;">
                                     View All Services
                                 </a>
                             </div>
@@ -424,7 +436,7 @@
                             <button type="button" class="w-7 h-7 flex items-center justify-center rounded border border-gray-200 text-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
                                 <i class="fa-solid fa-chevron-left text-[9px]"></i>
                             </button>
-                            <button type="button" class="w-7 h-7 flex items-center justify-center rounded bg-[#2E6F40] text-white text-[11px] font-bold shadow-sm">
+                            <button type="button" class="w-7 h-7 flex items-center justify-center rounded bg-[#3E8B3A] text-white text-[11px] font-bold shadow-sm">
                                 1
                             </button>
                             <button type="button" class="w-7 h-7 flex items-center justify-center rounded border border-transparent text-gray-600 hover:bg-gray-50 text-[11px] font-bold transition-colors cursor-pointer">

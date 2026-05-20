@@ -1,46 +1,68 @@
-<nav class="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-50">
+<style>
+    .nav-link-dashboard {
+        position: relative;
+        color: #6b7280; /* text-gray-500 */
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: color 0.3s ease;
+        padding-bottom: 4px;
+    }
+    .nav-link-dashboard::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -6px;
+        left: 50%;
+        background-color: #3E8B3A;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+    .nav-link-dashboard:hover::after, .nav-link-dashboard.active::after {
+        width: 100%;
+    }
+    .nav-link-dashboard:hover, .nav-link-dashboard.active {
+        color: #3E8B3A !important;
+    }
+</style>
+
+<nav class="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-50 pt-3 pb-2 select-none">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between items-center h-14">
             
             <!-- Left side (Logo & Main Links) -->
-            <div class="flex items-center gap-8">
+            <div class="flex items-center gap-10">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center gap-2">
-                    <a href="{{ url('/') }}" class="flex items-center gap-2 group">
-                        <img src="{{ asset('icon-landscap.svg') }}" alt="Logo" style="height: 2.5rem; width: auto; object-fit: contain;">
-                        <div class="flex flex-col">
-                            @auth
-                                @if(Auth::user()->role === 'provider')
-                                    <span class="text-[10px] text-gray-500 font-semibold tracking-wider uppercase leading-tight">Provider Hub</span>
-                                @else
-                                    <span class="text-[10px] text-gray-500 font-semibold tracking-wider uppercase leading-tight">Customer Portal</span>
-                                @endif
-                            @endauth
-                        </div>
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ url('/') }}" class="flex items-center">
+                        <img src="{{ asset('icon-landscap.svg') }}" alt="Logo" class="h-7 md:h-8 w-auto object-contain select-none pointer-events-none">
                     </a>
                 </div>
 
                 <!-- Desktop Links -->
-                <div class="hidden sm:flex sm:items-center ml-8" style="gap: 1.5rem;">
+                <div class="hidden sm:flex sm:items-center ml-4" style="gap: 1.75rem;">
                     @auth
-                        @if(Auth::user()->role === 'provider')
-                            <a href="{{ route('dashboard') }}" class="text-sm font-medium {{ request()->routeIs('dashboard') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Dashboard</a>
-                            <a href="{{ route('services.index') }}" class="text-sm font-medium {{ request()->routeIs('services.*') && !request()->routeIs('services.list') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">My Services</a>
-                            <a href="{{ route('bookings.index') }}" class="text-sm font-medium {{ request()->routeIs('bookings.*') && !request()->routeIs('bookings.my') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Bookings</a>
-                            <a href="#" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">Earnings</a>
-                            <a href="#" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">Reviews</a>
-                            <a href="{{ route('blog.index') }}" class="text-sm font-medium {{ request()->routeIs('blog.*') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Blog Posts</a>
-                        @else
-                            <a href="{{ route('dashboard') }}" class="text-sm font-medium {{ request()->routeIs('dashboard') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Dashboard</a>
-                            <a href="{{ route('services.list') }}" class="text-sm font-medium {{ request()->routeIs('services.list') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Browse Services</a>
-                            <a href="{{ route('bookings.my') }}" class="text-sm font-medium {{ request()->routeIs('bookings.my') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">My Bookings</a>
-                            <a href="{{ route('customer.messages.index') }}" class="text-sm font-medium {{ request()->routeIs('customer.messages.*') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Messages</a>
-                            <a href="{{ route('public.blog.index') }}" class="text-sm font-medium {{ request()->routeIs('public.blog.*') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Blog</a>
+                        @php
+                            $unreadMsgs = \App\Models\Message::where('receiver_id', Auth::id())->whereNull('read_at')->count();
+                        @endphp
+                        @if(Auth::user()->role === 'user')
+                            <a href="{{ route('dashboard') }}" class="nav-link-dashboard {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                            <a href="{{ route('services.list') }}" class="nav-link-dashboard {{ request()->routeIs('services.list') ? 'active' : '' }}">Browse Services</a>
+                            <a href="{{ route('bookings.my') }}" class="nav-link-dashboard {{ request()->routeIs('bookings.my') ? 'active' : '' }}">My Bookings</a>
+                            <a href="{{ route('customer.messages.index') }}" class="nav-link-dashboard {{ request()->routeIs('customer.messages.*') ? 'active' : '' }} flex items-center gap-1.5">
+                                Messages
+                                @if($unreadMsgs > 0)
+                                    <span class="bg-[#3E8B3A] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">{{ $unreadMsgs }}</span>
+                                @else
+                                    <span class="bg-gray-150 text-gray-400 text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">0</span>
+                                @endif
+                            </a>
+                            <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
                         @endif
                     @else
-                        <a href="{{ url('/') }}" class="text-sm font-medium {{ request()->is('/') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Home</a>
-                        <a href="{{ route('services.list') }}" class="text-sm font-medium {{ request()->routeIs('services.list') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Services</a>
-                        <a href="{{ route('public.blog.index') }}" class="text-sm font-medium {{ request()->routeIs('public.blog.*') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900 transition-colors' }}">Blog</a>
+                        <a href="{{ url('/') }}" class="nav-link-dashboard {{ request()->is('/') ? 'active' : '' }}">Home</a>
+                        <a href="{{ route('services.list') }}" class="nav-link-dashboard {{ request()->routeIs('services.list') ? 'active' : '' }}">Services</a>
+                        <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
                     @endauth
                 </div>
             </div>
@@ -60,8 +82,8 @@
                         <!-- Notification Bell -->
                         <div class="relative nav-dropdown-container">
                             <button id="notificationBtn" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-600 transition-colors relative">
-                                <i class="fa-regular fa-bell"></i>
-                                <span id="notificationBadge" class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white hidden"></span>
+                                <i class="fa-regular fa-bell text-lg"></i>
+                                <span id="notificationBadge" class="absolute -top-1 -right-1 bg-[#3E8B3A] text-white text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white hidden"></span>
                             </button>
                             
                             <!-- Notification Dropdown -->
@@ -83,8 +105,13 @@
                         </div>
 
                         <!-- Messages Icon -->
-                        <a href="{{ Auth::user()->role === 'provider' ? '#' : route('customer.messages.index') }}" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-600 transition-colors relative">
-                            <i class="fa-regular fa-comment-dots"></i>
+                        <a href="{{ Auth::user()->role === 'provider' ? route('messages.index') : route('customer.messages.index') }}" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-600 transition-colors relative">
+                            <i class="fa-regular fa-comment-dots text-lg"></i>
+                            @if($unreadMsgs > 0)
+                                <span class="absolute -top-1 -right-1 bg-[#3E8B3A] text-white text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">{{ $unreadMsgs }}</span>
+                            @else
+                                <span class="absolute -top-1 -right-1 bg-gray-150 text-gray-400 text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">0</span>
+                            @endif
                         </a>
                     </div>
 
@@ -184,52 +211,73 @@
             }
 
             function loadNotifications() {
-                fetch('{{ route("notifications.recent") }}')
-                    .then(response => response.json())
-                    .then(data => {
-                        const notificationList = document.getElementById('notificationList');
-                        
-                        if (data.notifications.length === 0) {
-                            notificationList.innerHTML = '<div class="p-6 text-center text-sm text-gray-500">No notifications</div>';
-                            return;
-                        }
+                fetch('{{ route("notifications.recent") }}', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        return { notifications: [] };
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const notificationList = document.getElementById('notificationList');
+                    
+                    if (!data.notifications || data.notifications.length === 0) {
+                        notificationList.innerHTML = '<div class="p-6 text-center text-sm text-gray-500">No notifications</div>';
+                        return;
+                    }
 
-                        let html = '';
-                        data.notifications.forEach(notification => {
-                            const readClass = notification.read_at ? 'bg-white' : 'bg-green-50';
-                            const newBadge = notification.read_at ? '' : '<span class="w-2 h-2 rounded-full bg-green-500 mt-1 shrink-0"></span>';
-                            
-                            html += `
-                                <a href="${notification.action_url || '#'}" class="block p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors ${readClass}">
-                                    <div class="flex justify-between items-start gap-3">
-                                        <div>
-                                            <p class="text-sm font-semibold text-gray-900">${notification.title}</p>
-                                            <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">${notification.message}</p>
-                                            <p class="text-[10px] text-gray-400 mt-1">${new Date(notification.created_at).toLocaleString()}</p>
-                                        </div>
-                                        ${newBadge}
-                                    </div>
-                                </a>
-                            `;
-                        });
+                    let html = '';
+                    data.notifications.forEach(notification => {
+                        const readClass = notification.read_at ? 'bg-white' : 'bg-green-50';
+                        const newBadge = notification.read_at ? '' : '<span class="w-2 h-2 rounded-full bg-green-500 mt-1 shrink-0"></span>';
                         
-                        notificationList.innerHTML = html;
-                    })
-                    .catch(error => console.error('Error loading notifications:', error));
+                        html += `
+                            <a href="${notification.action_url || '#'}" class="block p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors ${readClass}">
+                                <div class="flex justify-between items-start gap-3">
+                                    <div>
+                                        <p class="text-sm font-semibold text-gray-900">${notification.title}</p>
+                                        <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">${notification.message}</p>
+                                        <p class="text-[10px] text-gray-400 mt-1">${new Date(notification.created_at).toLocaleString()}</p>
+                                    </div>
+                                    ${newBadge}
+                                </div>
+                            </a>
+                        `;
+                    });
+                    
+                    notificationList.innerHTML = html;
+                })
+                .catch(error => console.error('Error loading notifications:', error));
             }
 
             function updateUnreadCount() {
-                fetch('{{ route("notifications.unread-count") }}')
-                    .then(response => response.json())
-                    .then(data => {
-                        const badge = document.getElementById('notificationBadge');
-                        if (data.unread_count > 0) {
-                            badge.classList.remove('hidden');
-                        } else {
-                            badge.classList.add('hidden');
-                        }
-                    })
-                    .catch(error => console.error('Error updating unread count:', error));
+                fetch('{{ route("notifications.unread-count") }}', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        return { unread_count: 0 };
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const badge = document.getElementById('notificationBadge');
+                    if (data && data.unread_count > 0) {
+                        badge.textContent = data.unread_count;
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                })
+                .catch(error => console.error('Error updating unread count:', error));
             }
         @endauth
     });

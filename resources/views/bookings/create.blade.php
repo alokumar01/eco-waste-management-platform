@@ -9,7 +9,7 @@
     <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         
         <!-- Back link -->
-        <a href="{{ route('services.list') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1B7339] hover:underline mb-6 transition-all group select-none">
+        <a href="{{ route('services.list') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#3E8B3A] hover:underline mb-6 transition-all group select-none">
             <svg class="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             <span>Back to Services</span>
         </a>
@@ -43,7 +43,7 @@
                             <div class="flex flex-wrap gap-3 select-none">
                                 @foreach ($service->images as $index => $imgPath)
                                     <div onclick="changeCoverImage('{{ asset('storage/' . $imgPath) }}', this)" 
-                                         class="w-20 h-16 rounded-xl overflow-hidden border-2 {{ $index === 0 ? 'border-[#1B7339]' : 'border-gray-100' }} bg-gray-50 cursor-pointer select-none transition-all hover:scale-105 active:scale-95 duration-200 gallery-thumb">
+                                         class="w-20 h-16 rounded-xl overflow-hidden border-2 {{ $index === 0 ? 'border-[#3E8B3A]' : 'border-gray-100' }} bg-gray-50 cursor-pointer select-none transition-all hover:scale-105 active:scale-95 duration-200 gallery-thumb">
                                         <img src="{{ asset('storage/' . $imgPath) }}" class="w-full h-full object-cover" />
                                     </div>
                                 @endforeach
@@ -53,7 +53,7 @@
 
                     <!-- Meta info title card -->
                     <div class="space-y-3 pt-2">
-                        <span class="inline-block bg-[#EAF5EE] text-[#1B7339] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider select-none">
+                        <span class="inline-block bg-[#EAF5EE] text-[#3E8B3A] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider select-none">
                             {{ $service->category ?? 'Composting' }}
                         </span>
                         
@@ -66,13 +66,13 @@
                         </p>
 
                         <div class="flex flex-wrap items-center gap-4 text-xs font-bold text-gray-500 pt-2 select-none">
-                            <span class="flex items-center gap-1 text-[#1B7339]">
+                            <span class="flex items-center gap-1 text-[#3E8B3A]">
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                                 {{ number_format($service->user->averageRating(), 1) }} ({{ $service->user->reviewCount() }} reviews)
                             </span>
                             <span class="text-gray-300">•</span>
-                            <span class="flex items-center gap-1.5 text-[#1B7339]">
-                                <svg class="w-4.5 h-4.5 text-[#1B7339]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span class="flex items-center gap-1.5 text-[#3E8B3A]">
+                                <svg class="w-4.5 h-4.5 text-[#3E8B3A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                 Verified Provider
                             </span>
                         </div>
@@ -84,7 +84,7 @@
                     <!-- Provider Block Details -->
                     <div class="flex items-center justify-between bg-[#F8F9FA]/50 border border-gray-100/70 p-4 rounded-2xl select-none">
                         <div class="flex items-center gap-3.5">
-                            <div class="w-11 h-11 rounded-full bg-[#E8F5E9] overflow-hidden flex items-center justify-center text-[#1B7339] font-bold text-sm border border-[#C1DDC6]/30">
+                            <div class="w-11 h-11 rounded-full bg-[#E8F5E9] overflow-hidden flex items-center justify-center text-[#3E8B3A] font-bold text-sm border border-[#C1DDC6]/30">
                                 @if ($service->user->profile_photo_path)
                                     <img src="{{ asset('storage/' . $service->user->profile_photo_path) }}" class="w-full h-full object-cover">
                                 @else
@@ -99,9 +99,16 @@
                                 <p class="text-[11px] text-gray-400 font-bold uppercase mt-0.5 tracking-wider">Service Provider</p>
                             </div>
                         </div>
-                        <div class="flex items-center gap-1 text-xs font-bold text-gray-500">
-                            <svg class="w-4 h-4 text-[#1B7339]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span>{{ $service->user->city }}, {{ $service->user->state }}</span>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-1 text-xs font-bold text-gray-500">
+                                <svg class="w-4 h-4 text-[#3E8B3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <span>{{ $service->user->city }}, {{ $service->user->state }}</span>
+                            </div>
+                            @auth
+                                <button type="button" onclick="toggleSaveProvider({{ $service->user->id }}, this)" class="w-9 h-9 rounded-xl bg-white border border-gray-200 hover:border-red-200 shadow-sm flex items-center justify-center text-gray-500 hover:text-red-500 hover:scale-105 active:scale-95 transition-all cursor-pointer focus:outline-none" title="Save Provider">
+                                    <i class="{{ Auth::user()->savedProviders->contains($service->user->id) ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart' }} text-sm"></i>
+                                </button>
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -122,15 +129,15 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 select-none">
                         <div class="bg-gray-50/50 p-4 rounded-xl border border-gray-100 flex flex-col justify-between">
                             <span class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest">Service Type</span>
-                            <span class="text-xs font-extrabold text-[#1B7339] mt-2 block">{{ ucfirst($service->type) }} Service</span>
+                            <span class="text-xs font-extrabold text-[#3E8B3A] mt-2 block">{{ ucfirst($service->type) }} Service</span>
                         </div>
                         <div class="bg-gray-50/50 p-4 rounded-xl border border-gray-100 flex flex-col justify-between">
                             <span class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest">Duration</span>
-                            <span class="text-xs font-extrabold text-[#1B7339] mt-2 block">{{ $service->duration ?? 'Ongoing subscription' }}</span>
+                            <span class="text-xs font-extrabold text-[#3E8B3A] mt-2 block">{{ $service->duration ?? 'Ongoing subscription' }}</span>
                         </div>
                         <div class="bg-gray-50/50 p-4 rounded-xl border border-gray-100 flex flex-col justify-between">
                             <span class="text-[10px] text-gray-400 font-extrabold uppercase tracking-widest">Best For</span>
-                            <span class="text-xs font-extrabold text-[#1B7339] mt-2 block">Homes & Offices in {{ $service->city }}</span>
+                            <span class="text-xs font-extrabold text-[#3E8B3A] mt-2 block">Homes & Offices in {{ $service->city }}</span>
                         </div>
                     </div>
                 </div>
@@ -163,12 +170,24 @@
                             <p class="text-5xl font-extrabold text-gray-950 leading-none">
                                 {{ $avgRating }}
                             </p>
-                            <div class="flex text-yellow-400 mt-2.5 justify-center">
-                                @php $fullStars = round($avgRating); @endphp
+                            <div class="flex text-yellow-400 mt-2.5 justify-center gap-0.5">
+                                @php
+                                    $rating = (float) $avgRating;
+                                    $fullStars = floor($rating);
+                                    $hasHalfStar = ($rating - $fullStars) >= 0.25 && ($rating - $fullStars) < 0.75;
+                                    if (($rating - $fullStars) >= 0.75) {
+                                        $fullStars += 1;
+                                        $hasHalfStar = false;
+                                    }
+                                @endphp
                                 @for ($i = 1; $i <= 5; $i++)
-                                    <svg class="w-4 h-4 {{ $i <= $fullStars ? 'fill-current' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
+                                    @if ($i <= $fullStars)
+                                        <i class="fa-solid fa-star text-sm text-yellow-400"></i>
+                                    @elseif ($i == $fullStars + 1 && $hasHalfStar)
+                                        <i class="fa-solid fa-star-half-stroke text-sm text-yellow-400"></i>
+                                    @else
+                                        <i class="fa-solid fa-star text-sm text-gray-200"></i>
+                                    @endif
                                 @endfor
                             </div>
                             <p class="text-[10px] text-gray-400 font-extrabold tracking-widest uppercase mt-2">
@@ -182,7 +201,7 @@
                                 <div class="flex items-center gap-3.5 text-xs font-semibold text-gray-500">
                                     <span class="w-10 select-none text-gray-400 font-bold text-[11px]">{{ $stars }} Star</span>
                                     <div class="flex-1 h-2 bg-gray-50 rounded-full overflow-hidden select-none border border-gray-100/30">
-                                        <div class="bg-[#1B7339] h-full rounded-full transition-all duration-500" style="width: {{ $starPercentages[$stars] }}%"></div>
+                                        <div class="bg-[#3E8B3A] h-full rounded-full transition-all duration-500" style="width: {{ $starPercentages[$stars] }}%"></div>
                                     </div>
                                     <span class="w-8 text-right select-none text-gray-400 font-bold text-[11px]">{{ $starPercentages[$stars] }}%</span>
                                 </div>
@@ -253,14 +272,14 @@
                     <!-- Price Tag badge block -->
                     <div class="bg-[#F8F9FA] border border-gray-100 px-4 py-3 rounded-xl flex items-center justify-between select-none">
                         <span class="text-xs font-bold text-gray-600">Service Price</span>
-                        <span class="text-sm font-extrabold text-[#1B7339]">₹{{ number_format($service->price, 0) }}<span class="text-[10px] text-gray-400 font-bold"> / {{ $service->unit ?? 'kg' }}</span></span>
+                        <span class="text-sm font-extrabold text-[#3E8B3A]">₹{{ number_format($service->price, 0) }}<span class="text-[10px] text-gray-400 font-bold"> / {{ $service->unit ?? 'kg' }}</span></span>
                     </div>
 
                     <!-- Date picker field -->
                     <div class="space-y-1.5">
                         <label class="block text-[10px] font-bold text-gray-600 uppercase tracking-wider">Select Date <span class="text-red-500">*</span></label>
                         <div class="relative">
-                            <input type="date" id="booking_date" min="{{ date('Y-m-d') }}" max="{{ date('Y-m-d', strtotime('+30 days')) }}" value="{{ date('Y-m-d') }}" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#1B7339] focus:border-[#1B7339] text-gray-700 bg-gray-50/20" required>
+                            <input type="date" id="booking_date" min="{{ date('Y-m-d') }}" max="{{ date('Y-m-d', strtotime('+30 days')) }}" value="{{ date('Y-m-d') }}" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-xs font-bold focus:outline-none focus:ring-1 focus:ring-[#3E8B3A] focus:border-[#3E8B3A] text-gray-700 bg-gray-50/20" required>
                         </div>
                         <p class="text-[9px] text-gray-400 font-semibold leading-tight">You can schedule a service any day between today and 30 days from now.</p>
                     </div>
@@ -272,7 +291,7 @@
                         <input type="hidden" id="selected_time_slot" value="9:00 AM - 11:00 AM">
 
                         <div class="grid grid-cols-2 gap-2.5 select-none">
-                            <button type="button" onclick="selectTimeSlot('9:00 AM - 11:00 AM', this)" class="time-slot-btn border-2 border-[#1B7339] text-[#1B7339] bg-green-50/30 rounded-xl py-2.5 px-3 text-[11px] font-bold transition-all text-center focus:outline-none select-none">
+                            <button type="button" onclick="selectTimeSlot('9:00 AM - 11:00 AM', this)" class="time-slot-btn border-2 border-[#3E8B3A] text-[#3E8B3A] bg-green-50/30 rounded-xl py-2.5 px-3 text-[11px] font-bold transition-all text-center focus:outline-none select-none">
                                 9:00 AM - 11:00 AM
                             </button>
                             <button type="button" onclick="selectTimeSlot('11:00 AM - 1:00 PM', this)" class="time-slot-btn border border-gray-200 text-gray-600 bg-white rounded-xl py-2.5 px-3 text-[11px] font-bold hover:border-gray-300 transition-all text-center focus:outline-none select-none">
@@ -291,7 +310,7 @@
                     <div class="space-y-1.5">
                         <label class="block text-[10px] font-bold text-gray-600 uppercase tracking-wider">Frequency <span class="text-red-500">*</span></label>
                         <div class="relative">
-                            <select id="frequency" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-xs font-bold text-gray-700 bg-gray-50/20 focus:outline-none focus:ring-1 focus:ring-[#1B7339] focus:border-[#1B7339] appearance-none cursor-pointer">
+                            <select id="frequency" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-xs font-bold text-gray-700 bg-gray-50/20 focus:outline-none focus:ring-1 focus:ring-[#3E8B3A] focus:border-[#3E8B3A] appearance-none cursor-pointer">
                                 <option value="One-time Collection" selected>One-time Collection</option>
                                 <option value="Weekly Collection">Weekly Collection</option>
                                 <option value="Bi-weekly Collection">Bi-weekly Collection</option>
@@ -307,7 +326,7 @@
                     <div class="space-y-1.5">
                         <label class="block text-[10px] font-bold text-gray-600 uppercase tracking-wider">Special Instructions (Optional)</label>
                         <div class="relative">
-                            <textarea id="instructions" maxlength="200" rows="3" placeholder="Any specific instructions for the provider..." class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-[#1B7339] focus:border-[#1B7339] resize-none" oninput="updateCharCount(this)"></textarea>
+                            <textarea id="instructions" maxlength="200" rows="3" placeholder="Any specific instructions for the provider..." class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-[#3E8B3A] focus:border-[#3E8B3A] resize-none" oninput="updateCharCount(this)"></textarea>
                             <span id="char_counter" class="absolute right-4 bottom-2.5 text-[9px] font-bold text-gray-400">0/200</span>
                         </div>
                     </div>
@@ -321,7 +340,7 @@
                             <p class="text-xs font-bold text-gray-900 leading-none">Total Amount</p>
                             <p class="text-[9.5px] text-gray-400 font-semibold mt-1">You can cancel or reschedule before the service starts.</p>
                         </div>
-                        <p class="text-3xl font-extrabold text-[#1B7339] leading-none">
+                        <p class="text-3xl font-extrabold text-[#3E8B3A] leading-none">
                             ₹{{ number_format($service->price, 0) }}
                         </p>
                     </div>
@@ -350,7 +369,7 @@
                             <p class="text-[10px] text-gray-400 font-semibold mt-0.5">Chat with our support team.</p>
                         </div>
                     </div>
-                    <a href="{{ route('customer.messages.index') }}" class="bg-white border border-gray-200 hover:border-[#1B7339] text-gray-700 hover:text-[#1B7339] font-bold py-1.5 px-3.5 rounded-xl text-[10px] transition-all select-none">
+                    <a href="{{ route('customer.messages.index') }}" class="bg-white border border-gray-200 hover:border-[#3E8B3A] text-gray-700 hover:text-[#3E8B3A] font-bold py-1.5 px-3.5 rounded-xl text-[10px] transition-all select-none">
                         Chat Now
                     </a>
                 </div>
@@ -371,7 +390,7 @@
         });
         
         // Add active styling to clicked button
-        element.className = "time-slot-btn border-2 border-[#1B7339] text-[#1B7339] bg-green-50/30 rounded-xl py-2.5 px-3 text-[11px] font-bold transition-all text-center focus:outline-none select-none";
+        element.className = "time-slot-btn border-2 border-[#3E8B3A] text-[#3E8B3A] bg-green-50/30 rounded-xl py-2.5 px-3 text-[11px] font-bold transition-all text-center focus:outline-none select-none";
     }
 
     function updateCharCount(textarea) {
@@ -407,10 +426,10 @@
         
         // Update thumbnail borders
         document.querySelectorAll('.gallery-thumb').forEach(thumb => {
-            thumb.classList.remove('border-[#1B7339]');
+            thumb.classList.remove('border-[#3E8B3A]');
             thumb.classList.add('border-gray-100');
         });
-        element.classList.add('border-[#1B7339]');
+        element.classList.add('border-[#3E8B3A]');
         element.classList.remove('border-gray-100');
     }
 

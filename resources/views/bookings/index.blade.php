@@ -42,7 +42,7 @@
 
         <div class="flex-1 overflow-y-auto bg-[#F4F7F6] p-6 md:p-10 pb-20">
             @if (session('success'))
-                <div class="bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800 p-4 mb-6 rounded-r-xl shadow-sm select-none" role="alert">
+                <div class="bg-provider-green-light border-l-4 border-provider-green text-provider-green p-4 mb-6 rounded-r-xl shadow-sm select-none" role="alert">
                     <p class="font-bold text-xs">{{ session('success') }}</p>
                 </div>
             @endif
@@ -67,7 +67,7 @@
                     
                     <!-- Filter statuses Tabs Row -->
                     <div class="flex flex-wrap items-center gap-2 select-none border-b border-gray-200/60 pb-3">
-                        <button type="button" id="tab_all" onclick="filterStatus('all', this)" class="px-4 py-2 text-xs font-bold rounded-xl transition-all bg-emerald-600 text-white shadow-sm border border-emerald-600">
+                        <button type="button" id="tab_all" onclick="filterStatus('all', this)" class="px-4 py-2 text-xs font-bold rounded-xl transition-all bg-provider-green text-white shadow-sm border border-provider-green">
                             All Bookings <span class="ml-1 text-[10px] opacity-90">{{ $totalBookingsCount }}</span>
                         </button>
                         <button type="button" id="tab_pending" onclick="filterStatus('pending', this)" class="px-4 py-2 text-xs font-bold rounded-xl transition-all bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">
@@ -77,7 +77,7 @@
                             Confirmed <span class="ml-1 bg-blue-50 text-blue-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-blue-200/50">{{ $confirmedCount }}</span>
                         </button>
                         <button type="button" id="tab_completed" onclick="filterStatus('completed', this)" class="px-4 py-2 text-xs font-bold rounded-xl transition-all bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">
-                            Completed <span class="ml-1 bg-emerald-50 text-emerald-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-emerald-200/50">{{ $completedCount }}</span>
+                            Completed <span class="ml-1 bg-provider-green-light text-provider-green text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-provider-green/20">{{ $completedCount }}</span>
                         </button>
                         <button type="button" id="tab_cancelled" onclick="filterStatus('cancelled', this)" class="px-4 py-2 text-xs font-bold rounded-xl transition-all bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">
                             Cancelled <span class="ml-1 bg-gray-50 text-gray-500 text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-gray-200/50">{{ $cancelledCount }}</span>
@@ -88,13 +88,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-white p-4 rounded-2xl border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.01)] select-none">
                         <!-- Search bar input -->
                         <div class="md:col-span-2 relative">
-                            <input type="text" id="search_query" oninput="runFilters()" placeholder="Search by customer or service..." class="w-full pl-4 pr-10 py-2 border border-gray-200 rounded-xl text-xs bg-gray-50/20 focus:outline-none focus:ring-1 focus:ring-green-600 focus:border-green-600 transition-all text-gray-700 font-medium">
+                            <input type="text" id="search_query" oninput="runFilters()" placeholder="Search by customer or service..." class="w-full pl-4 pr-10 py-2 border border-gray-200 rounded-xl text-xs bg-gray-50/20 focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green transition-all text-gray-700 font-medium">
                             <i class="fa-solid fa-magnifying-glass text-gray-400 absolute right-3.5 top-1/2 -translate-y-1/2"></i>
                         </div>
 
                         <!-- Service Select Category filter -->
                         <div class="relative">
-                            <select id="filter_service" onchange="runFilters()" class="w-full px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-600 bg-gray-50/20 focus:outline-none focus:ring-1 focus:ring-green-600 focus:border-green-600 appearance-none cursor-pointer font-bold">
+                            <select id="filter_service" onchange="runFilters()" class="w-full px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-600 bg-gray-50/20 focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green appearance-none cursor-pointer font-bold">
                                 <option value="all">All Services</option>
                                 @foreach ($uniqueServices as $serv)
                                     <option value="{{ $serv->id }}">{{ $serv->name }}</option>
@@ -107,7 +107,7 @@
 
                         <!-- Sort select option picker -->
                         <div class="relative">
-                            <select id="sort_criteria" onchange="runFilters()" class="w-full px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-600 bg-gray-50/20 focus:outline-none focus:ring-1 focus:ring-green-600 focus:border-green-600 appearance-none cursor-pointer font-bold">
+                            <select id="sort_criteria" onchange="runFilters()" class="w-full px-4 py-2 border border-gray-200 rounded-xl text-xs text-gray-600 bg-gray-50/20 focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green appearance-none cursor-pointer font-bold">
                                 <option value="newest">Newest First</option>
                                 <option value="oldest">Oldest First</option>
                                 <option value="highest_price">Highest Amount</option>
@@ -126,14 +126,14 @@
                                 $statusColors = [
                                     'pending' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-800', 'border' => 'border-amber-200/50'],
                                     'confirmed' => ['bg' => 'bg-blue-50', 'text' => 'text-blue-800', 'border' => 'border-blue-200/50'],
-                                    'completed' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-800', 'border' => 'border-emerald-200/50'],
+                                    'completed' => ['bg' => 'bg-provider-green-light', 'text' => 'text-provider-green', 'border' => 'border-provider-green/20'],
                                     'cancelled' => ['bg' => 'bg-red-50', 'text' => 'text-red-800', 'border' => 'border-red-200/50'],
                                 ];
                                 $color = $statusColors[$booking->status] ?? $statusColors['pending'];
                             @endphp
 
                             <!-- Individual Booking Card Row -->
-                            <div class="booking-row bg-white p-5 rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.01)] hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
+                            <div id="booking-{{ $booking->id }}" class="booking-row bg-white p-5 rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.01)] hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
                                  data-status="{{ $booking->status }}"
                                  data-service-id="{{ $booking->service->id }}"
                                  data-price="{{ $booking->price }}"
@@ -148,7 +148,7 @@
                                             <img src="{{ asset('storage/' . $booking->service->image_path) }}" class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full bg-[#E2E4DE] flex items-center justify-center select-none">
-                                                <i class="fa-solid fa-leaf text-emerald-700 text-lg"></i>
+                                                <i class="fa-solid fa-leaf text-provider-green text-lg"></i>
                                             </div>
                                         @endif
                                     </div>
@@ -199,7 +199,7 @@
                                 <!-- Column 3: Amount detail block -->
                                 <div class="shrink-0 select-none">
                                     <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider leading-none">Amount</p>
-                                    <p class="text-base font-extrabold text-[#1B7339] mt-1 leading-none">
+                                    <p class="text-base font-extrabold text-provider-green mt-1 leading-none">
                                         ₹{{ number_format($booking->price, 0) }}
                                     </p>
                                 </div>
@@ -212,7 +212,7 @@
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="status" value="confirmed">
-                                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[10.5px] py-1.5 px-3 rounded-lg transition-colors shadow-sm select-none">
+                                            <button type="submit" class="bg-provider-green hover:bg-provider-green-dark text-white font-extrabold text-[10.5px] py-1.5 px-3 rounded-lg transition-colors shadow-sm select-none cursor-pointer">
                                                 Accept
                                             </button>
                                         </form>
@@ -222,7 +222,7 @@
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="status" value="cancelled">
-                                            <button type="submit" class="border border-gray-200 hover:bg-gray-50 text-gray-600 font-extrabold text-[10.5px] py-1.5 px-3 rounded-lg transition-colors select-none">
+                                            <button type="submit" class="border border-gray-200 hover:bg-gray-50 text-gray-600 font-extrabold text-[10.5px] py-1.5 px-3 rounded-lg transition-colors select-none cursor-pointer">
                                                 Decline
                                             </button>
                                         </form>
@@ -233,27 +233,27 @@
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="status" value="completed">
-                                            <button type="submit" class="border border-emerald-600 hover:bg-emerald-50 text-emerald-800 font-extrabold text-[10.5px] py-1.5 px-3.5 rounded-lg transition-colors select-none">
+                                            <button type="submit" class="border border-provider-green hover:bg-provider-green-light text-provider-green font-extrabold text-[10.5px] py-1.5 px-3.5 rounded-lg transition-colors select-none cursor-pointer">
                                                 Mark as Completed
                                             </button>
                                         </form>
 
                                     @else
                                         <!-- View Details display -->
-                                        <button type="button" class="border border-gray-200 hover:bg-gray-50 text-gray-500 font-extrabold text-[10.5px] py-1.5 px-3.5 rounded-lg transition-colors select-none">
+                                        <button type="button" class="border border-gray-200 hover:bg-gray-50 text-gray-500 font-extrabold text-[10.5px] py-1.5 px-3.5 rounded-lg transition-colors select-none cursor-pointer">
                                             View Details
                                         </button>
                                     @endif
 
                                     <!-- Three Dot Vertical Menu Dropdown -->
                                     <div class="relative dropdown-container">
-                                        <button type="button" onclick="toggleDropdown(this)" class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-150 hover:bg-gray-50 text-gray-400 hover:text-gray-600 transition-colors select-none">
+                                        <button type="button" onclick="toggleDropdown(this)" class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-150 hover:bg-gray-50 text-gray-400 hover:text-gray-600 transition-colors select-none cursor-pointer">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                         <!-- Dropdown Menu -->
                                         <div class="hidden dropdown-menu absolute right-0 mt-1 w-44 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden z-20">
-                                            <a href="{{ route('messages.show', ['receiver' => $booking->customer->id, 'booking_id' => $booking->id]) }}" class="block px-4 py-2.5 text-[11px] font-bold text-gray-600 hover:bg-gray-50 hover:text-green-700 transition-colors flex items-center gap-2">
-                                                <i class="fa-solid fa-comments text-emerald-700"></i>
+                                            <a href="{{ route('messages.show', ['receiver' => $booking->customer->id, 'booking_id' => $booking->id]) }}" class="block px-4 py-2.5 text-[11px] font-bold text-gray-600 hover:bg-gray-50 hover:text-provider-green transition-colors flex items-center gap-2">
+                                                <i class="fa-solid fa-comments text-provider-green"></i>
                                                 Chat with Customer
                                             </a>
                                         </div>
@@ -285,7 +285,7 @@
                     <div class="bg-white p-4.5 rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.015)] space-y-3.5">
                         <div class="flex items-center justify-between border-b border-gray-50 pb-2 select-none">
                             <h3 class="text-xs font-bold text-gray-900 uppercase tracking-wider">Booking Summary</h3>
-                            <span class="text-[9.5px] font-bold text-[#1B7339] bg-green-50 px-2 py-0.5 rounded-md">This Month</span>
+                            <span class="text-[9.5px] font-bold text-provider-green bg-provider-green-light px-2 py-0.5 rounded-md">This Month</span>
                         </div>
 
                         <div class="space-y-3">
@@ -300,7 +300,7 @@
                                         <p class="font-extrabold text-[13px] text-gray-900 mt-1 leading-none">{{ $totalBookingsCount }}</p>
                                     </div>
                                 </div>
-                                <span class="text-[10px] font-bold text-emerald-600">↑ 18%</span>
+                                <span class="text-[10px] font-bold text-provider-green">↑ 18%</span>
                             </div>
 
                             <!-- Metric 2: Pending -->
@@ -314,21 +314,21 @@
                                         <p class="font-extrabold text-[13px] text-gray-900 mt-1 leading-none">{{ $pendingCount }}</p>
                                     </div>
                                 </div>
-                                <span class="text-[10px] font-bold text-emerald-600">↑ 12%</span>
+                                <span class="text-[10px] font-bold text-provider-green">↑ 12%</span>
                             </div>
 
                             <!-- Metric 3: Completed -->
                             <div class="flex items-center justify-between select-none">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
-                                        <i class="fa-solid fa-circle-check text-emerald-700 text-xs"></i>
+                                    <div class="w-7 h-7 rounded-lg bg-provider-green-light text-provider-green flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-circle-check text-provider-green text-xs"></i>
                                     </div>
                                     <div>
                                         <p class="text-[9.5px] text-gray-400 font-extrabold uppercase tracking-wide leading-none">Completed</p>
                                         <p class="font-extrabold text-[13px] text-gray-900 mt-1 leading-none">{{ $completedCount }}</p>
                                     </div>
                                 </div>
-                                <span class="text-[10px] font-bold text-emerald-600">↑ 20%</span>
+                                <span class="text-[10px] font-bold text-provider-green">↑ 20%</span>
                             </div>
 
                             <!-- Metric 4: Cancelled -->
@@ -376,7 +376,7 @@
                                         $isToday = ($day == $now->day);
                                     @endphp
                                     <div class="py-1.5 rounded-lg flex flex-col items-center justify-between h-9 transition-colors relative
-                                        {{ $isToday ? 'bg-emerald-600 text-white shadow-sm' : 'hover:bg-gray-50' }}">
+                                        {{ $isToday ? 'bg-provider-green text-white shadow-sm' : 'hover:bg-gray-50' }}">
                                         
                                         <span class="select-none leading-none">{{ $day }}</span>
                                         
@@ -388,7 +388,7 @@
                                                         @switch($db->status)
                                                             @case('pending') bg-amber-400 @break
                                                             @case('confirmed') bg-blue-500 @break
-                                                            @case('completed') bg-emerald-500 @break
+                                                            @case('completed') bg-provider-green @break
                                                             @default bg-gray-400
                                                         @endswitch">
                                                     </span>
@@ -406,7 +406,7 @@
                         <div class="flex items-center justify-center gap-3 text-[9px] font-extrabold text-gray-400 uppercase tracking-wider pt-2 border-t border-gray-50 select-none">
                             <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 bg-amber-400 rounded-full"></span> Pending</span>
                             <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Confirmed</span>
-                            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Completed</span>
+                            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 bg-provider-green rounded-full"></span> Completed</span>
                         </div>
                     </div>
                 </div>
@@ -430,13 +430,13 @@
         
         // Add active color styles to clicked tab
         if (status === 'all') {
-            btnElement.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-emerald-600 text-white shadow-sm border border-emerald-600";
+            btnElement.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-provider-green text-white shadow-sm border border-provider-green";
         } else if (status === 'pending') {
             btnElement.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-amber-500 text-white shadow-sm border border-amber-500";
         } else if (status === 'confirmed') {
             btnElement.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-blue-600 text-white shadow-sm border border-blue-600";
         } else if (status === 'completed') {
-            btnElement.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-emerald-700 text-white shadow-sm border border-emerald-700";
+            btnElement.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-provider-green-dark text-white shadow-sm border border-provider-green-dark";
         } else if (status === 'cancelled') {
             btnElement.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-red-600 text-white shadow-sm border border-red-600";
         }
@@ -528,6 +528,19 @@
     // Run filters initially on page load
     document.addEventListener('DOMContentLoaded', () => {
         runFilters();
+
+        @if(session('highlight_booking'))
+            const targetBooking = document.getElementById('booking-{{ session('highlight_booking') }}');
+            if (targetBooking) {
+                // Auto scroll to target
+                targetBooking.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Add highlight flash effect
+                targetBooking.classList.add('ring-2', 'ring-provider-green', 'bg-provider-green-light/10');
+                setTimeout(() => {
+                    targetBooking.classList.remove('ring-2', 'ring-provider-green', 'bg-provider-green-light/10');
+                }, 3000);
+            }
+        @endif
     });
 </script>
 @endsection

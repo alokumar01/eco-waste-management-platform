@@ -51,12 +51,19 @@ class NotificationController extends Controller
     public function markAsRead(Notification $notification)
     {
         if ($notification->user_id !== Auth::id()) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+            if (request()->expectsJson() || request()->ajax()) {
+                return response()->json(['error' => 'Unauthorized'], 403);
+            }
+            abort(403);
         }
 
         $notification->markAsRead();
 
-        return response()->json(['success' => true]);
+        if (request()->expectsJson() || request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
+        return back()->with('success', 'Notification marked as read.');
     }
 
     /**
@@ -68,7 +75,11 @@ class NotificationController extends Controller
             ->whereNull('read_at')
             ->update(['read_at' => now()]);
 
-        return response()->json(['success' => true]);
+        if (request()->expectsJson() || request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
+        return back()->with('success', 'All notifications marked as read.');
     }
 
     /**

@@ -39,9 +39,23 @@
                         <p class="text-5xl font-extrabold text-gray-950 leading-none">{{ $avgRating }}</p>
                         
                         <div class="flex text-yellow-400 justify-center">
-                            @php $fullStars = round($avgRating); @endphp
+                            @php
+                                $rating = (float) $avgRating;
+                                $fullStars = floor($rating);
+                                $hasHalfStar = ($rating - $fullStars) >= 0.25 && ($rating - $fullStars) < 0.75;
+                                if (($rating - $fullStars) >= 0.75) {
+                                    $fullStars += 1;
+                                    $hasHalfStar = false;
+                                }
+                            @endphp
                             @for ($i = 1; $i <= 5; $i++)
-                                <i class="fa-solid fa-star text-sm {{ $i <= $fullStars ? 'text-yellow-400' : 'text-gray-200' }} mx-0.5"></i>
+                                @if ($i <= $fullStars)
+                                    <i class="fa-solid fa-star text-sm text-yellow-400 mx-0.5"></i>
+                                @elseif ($i == $fullStars + 1 && $hasHalfStar)
+                                    <i class="fa-solid fa-star-half-stroke text-sm text-yellow-400 mx-0.5"></i>
+                                @else
+                                    <i class="fa-solid fa-star text-sm text-gray-200 mx-0.5"></i>
+                                @endif
                             @endfor
                         </div>
 

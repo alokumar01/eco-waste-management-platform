@@ -1,59 +1,69 @@
-<section class="space-y-6">
+<section class="space-y-6 select-none">
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-base font-extrabold text-gray-900 flex items-center gap-2">
+            <i class="fa-solid fa-triangle-exclamation text-red-600 text-sm"></i>
             {{ __('Delete Account') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
         </p>
     </header>
 
-    <button type="button" onclick="openModal('confirm-user-deletion')" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150">{{ __('Delete Account') }}</button>
+    <button type="button" onclick="openModal('confirm-profile-page-user-deletion')" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white text-xs font-bold rounded-xl shadow-sm transition-all flex items-center gap-2 cursor-pointer">
+        <i class="fa-regular fa-trash-can"></i> {{ __('Delete Account') }}
+    </button>
 
-    <div id="confirm-user-deletion" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    <!-- Modal for Profile Page Deletion -->
+    <div id="confirm-profile-page-user-deletion" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Overlay -->
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true" onclick="closeModal('confirm-profile-page-user-deletion')">
+                <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"></div>
             </div>
 
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full border border-gray-100">
                 <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
                     @csrf
                     @method('delete')
 
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        {{ __('Are you sure you want to delete your account?') }}
-                    </h2>
+                    <div class="flex items-center gap-3 mb-4 text-red-600">
+                        <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-lg shrink-0">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h3 class="text-base font-extrabold text-gray-900">
+                            {{ __('Are you sure you want to delete your account?') }}
+                        </h3>
+                    </div>
 
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-xs text-gray-500 font-semibold leading-relaxed mb-6">
                         {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
                     </p>
 
-                    <div class="mt-6">
-                        <label for="password" class="sr-only">{{ __('Password') }}</label>
-
+                    <div class="space-y-2">
+                        <label for="profile_password" class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">{{ __('Password') }}</label>
                         <input
-                            id="password"
+                            id="profile_password"
                             name="password"
                             type="password"
-                            class="mt-1 block w-3/4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                            placeholder="{{ __('Password') }}"
+                            required
+                            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-semibold text-gray-700 focus:outline-none focus:ring-1 focus:ring-red-500 focus:bg-white transition-colors"
+                            placeholder="{{ __('Enter your account password') }}"
                         />
 
                         @error('password', 'userDeletion')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p class="text-[11px] text-red-600 font-semibold mt-1.5"><i class="fa-solid fa-circle-exclamation mr-1"></i>{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <div class="mt-6 flex justify-end">
-                        <button type="button" onclick="closeModal('confirm-user-deletion')" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition ease-in-out duration-150">
+                    <div class="mt-6 flex justify-end gap-3.5">
+                        <button type="button" onclick="closeModal('confirm-profile-page-user-deletion')" class="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-xs font-bold rounded-lg border border-gray-200 transition-colors cursor-pointer">
                             {{ __('Cancel') }}
                         </button>
 
-                        <button type="submit" class="ms-3 inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg shadow-sm transition-colors cursor-pointer">
                             {{ __('Delete Account') }}
                         </button>
                     </div>
@@ -61,13 +71,24 @@
             </div>
         </div>
     </div>
+
     <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+        // Ensure Modal utility is defined or handled correctly
+        if (typeof openModal !== 'function') {
+            window.openModal = function(modalId) {
+                document.getElementById(modalId).style.display = 'block';
+            }
+        }
+        if (typeof closeModal !== 'function') {
+            window.closeModal = function(modalId) {
+                document.getElementById(modalId).style.display = 'none';
+            }
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
+        @if ($errors->userDeletion->isNotEmpty())
+            document.addEventListener('DOMContentLoaded', function() {
+                openModal('confirm-profile-page-user-deletion');
+            });
+        @endif
     </script>
 </section>

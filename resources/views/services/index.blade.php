@@ -22,8 +22,8 @@
         <!-- Scrollable Content Body -->
         <div class="flex-1 overflow-y-auto bg-[#F4F7F6] p-6 md:p-10 pb-20">
             @if (session('success'))
-                <div class="bg-green-50 border border-green-100 text-[#609953] py-2.5 px-4 mb-6 rounded-2xl flex items-center gap-2 text-xs font-bold shadow-sm" role="alert">
-                    <svg class="w-4 h-4 text-[#609953] shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="bg-green-50 border border-green-100 text-provider-green py-2.5 px-4 mb-6 rounded-2xl flex items-center gap-2 text-xs font-bold shadow-sm" role="alert">
+                    <svg class="w-4 h-4 text-provider-green shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span>{{ session('success') }}</span>
                 </div>
             @endif
@@ -34,7 +34,7 @@
                     <h1 class="text-2xl font-extrabold text-[#0E2415] tracking-tight">My Services</h1>
                     <p class="text-xs text-gray-400 font-medium mt-1">Manage and monitor all the waste & composting services you've added.</p>
                 </div>
-                <a href="{{ route('services.create') }}" class="bg-[#1A4D2E] hover:bg-green-900 text-white font-bold text-sm px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2 self-start sm:self-center select-none">
+                <a href="{{ route('services.create') }}" class="bg-provider-green hover:bg-provider-green-dark text-white font-bold text-sm px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2 self-start sm:self-center select-none">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
                     <span>Add New Service</span>
                 </a>
@@ -45,7 +45,7 @@
                 <!-- Card 1: Total Services -->
                 <div class="bg-white p-4.5 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100/70 flex flex-col justify-between min-w-0">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-emerald-50/70 text-emerald-700">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-provider-green-light text-provider-green">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <rect x="3" y="3" width="7" height="7" rx="1.5" />
                                 <rect x="14" y="3" width="7" height="7" rx="1.5" />
@@ -58,7 +58,7 @@
                         <p class="text-[10.5px] text-gray-400 font-bold uppercase tracking-wider mb-1 truncate">Total Services</p>
                         <div class="flex items-baseline gap-2">
                             <span class="text-[22px] font-bold text-gray-900 leading-none tracking-tight">{{ $totalServices }}</span>
-                            <span class="text-[10px] font-bold text-[#609953] bg-green-50/80 px-1.5 py-0.5 rounded truncate">All listings</span>
+                            <span class="text-[10px] font-bold text-provider-green bg-provider-green-light px-1.5 py-0.5 rounded truncate">All listings</span>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <!-- Card 2: Active Services -->
                 <div class="bg-white p-4.5 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100/70 flex flex-col justify-between min-w-0">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-blue-50/70 text-blue-700">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-provider-green-light text-provider-green">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -76,7 +76,7 @@
                         <p class="text-[10.5px] text-gray-400 font-bold uppercase tracking-wider mb-1 truncate">Active Services</p>
                         <div class="flex items-baseline gap-2">
                             <span class="text-[22px] font-bold text-gray-900 leading-none tracking-tight">{{ $activeServices }}</span>
-                            <span class="text-[10px] font-bold text-blue-700 bg-blue-50/80 px-1.5 py-0.5 rounded truncate">Live in catalog</span>
+                            <span class="text-[10px] font-bold text-provider-green bg-provider-green-light px-1.5 py-0.5 rounded truncate">Live in catalog</span>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                 <!-- Card 3: Total Bookings -->
                 <div class="bg-white p-4.5 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100/70 flex flex-col justify-between min-w-0">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-amber-50/70 text-amber-700">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-provider-green-light text-provider-green">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                 <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -97,7 +97,7 @@
                         <p class="text-[10.5px] text-gray-400 font-bold uppercase tracking-wider mb-1 truncate">Total Bookings</p>
                         <div class="flex items-baseline gap-2">
                             <span class="text-[22px] font-bold text-gray-900 leading-none tracking-tight">{{ $totalBookings }}</span>
-                            <span class="text-[10px] font-bold text-amber-700 bg-amber-50/80 px-1.5 py-0.5 rounded truncate">Across all services</span>
+                            <span class="text-[10px] font-bold text-provider-green bg-provider-green-light px-1.5 py-0.5 rounded truncate">Across all services</span>
                         </div>
                     </div>
                 </div>
@@ -105,9 +105,9 @@
                 <!-- Card 4: Avg Rating -->
                 <div class="bg-white p-4.5 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100/70 flex flex-col justify-between min-w-0">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-purple-50/70 text-purple-700">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-provider-green-light text-provider-green">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                             </svg>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                         <p class="text-[10.5px] text-gray-400 font-bold uppercase tracking-wider mb-1 truncate">Avg. Rating</p>
                         <div class="flex items-baseline gap-2">
                             <span class="text-[22px] font-bold text-gray-900 leading-none tracking-tight">{{ $avgRating }}</span>
-                            <span class="text-[10px] font-bold text-purple-700 bg-purple-50/80 px-1.5 py-0.5 rounded truncate">Based on {{ $reviewCount }} reviews</span>
+                            <span class="text-[10px] font-bold text-provider-green bg-provider-green-light px-1.5 py-0.5 rounded truncate">Based on {{ $reviewCount }} reviews</span>
                         </div>
                     </div>
                 </div>
@@ -125,21 +125,21 @@
             <div class="bg-white border border-[#E3F2E6] rounded-2xl p-4.5 shadow-sm mb-6 flex flex-col md:flex-row gap-3 items-center justify-between">
                 <!-- Search bar -->
                 <div class="relative w-full md:w-[280px]">
-                    <input type="text" id="serviceSearch" placeholder="Search services..." class="w-full pl-9 pr-4 py-2 border border-[#D2E3D6] rounded-xl text-xs bg-[#FCFDFD] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#609953] focus:border-[#609953] transition-all placeholder-gray-400 font-semibold" style="padding-left: 2.25rem !important;">
+                    <input type="text" id="serviceSearch" placeholder="Search services..." class="w-full pl-9 pr-4 py-2 border border-[#D2E3D6] rounded-xl text-xs bg-[#FCFDFD] focus:bg-white focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green transition-all placeholder-gray-400 font-semibold" style="padding-left: 2.25rem !important;">
                     <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
 
                 <!-- Dropdowns -->
                 <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
                     <!-- Status Filter -->
-                    <select id="statusFilter" class="px-3.5 py-2 border border-[#D2E3D6] bg-white rounded-xl text-xs font-semibold text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#609953] focus:border-[#609953] shadow-sm select-none">
+                    <select id="statusFilter" class="px-3.5 py-2 border border-[#D2E3D6] bg-white rounded-xl text-xs font-semibold text-gray-600 focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green shadow-sm select-none">
                         <option value="all">All Status</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
 
                     <!-- Category Filter -->
-                    <select id="categoryFilter" class="px-3.5 py-2 border border-[#D2E3D6] bg-white rounded-xl text-xs font-semibold text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#609953] focus:border-[#609953] shadow-sm select-none">
+                    <select id="categoryFilter" class="px-3.5 py-2 border border-[#D2E3D6] bg-white rounded-xl text-xs font-semibold text-gray-600 focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green shadow-sm select-none">
                         <option value="all">All Categories</option>
                         @foreach ($services->pluck('category')->unique()->filter() as $cat)
                             <option value="{{ strtolower($cat) }}">{{ $cat }}</option>
@@ -147,14 +147,14 @@
                     </select>
 
                     <!-- Type Filter -->
-                    <select id="typeFilter" class="px-3.5 py-2 border border-[#D2E3D6] bg-white rounded-xl text-xs font-semibold text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#609953] focus:border-[#609953] shadow-sm select-none">
+                    <select id="typeFilter" class="px-3.5 py-2 border border-[#D2E3D6] bg-white rounded-xl text-xs font-semibold text-gray-600 focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green shadow-sm select-none">
                         <option value="all">All Service Types</option>
                         <option value="pickup">Pickup</option>
                         <option value="onsite">On-site Visit</option>
                     </select>
 
                     <!-- Sort -->
-                    <select id="sortFilter" class="px-3.5 py-2 border border-[#D2E3D6] bg-white rounded-xl text-xs font-semibold text-gray-600 focus:outline-none focus:ring-1 focus:ring-[#609953] focus:border-[#609953] shadow-sm select-none">
+                    <select id="sortFilter" class="px-3.5 py-2 border border-[#D2E3D6] bg-white rounded-xl text-xs font-semibold text-gray-600 focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green shadow-sm select-none">
                         <option value="newest">Sort By: Newest</option>
                         <option value="oldest">Sort By: Oldest</option>
                         <option value="price-low">Price: Low to High</option>
@@ -197,7 +197,7 @@
                                                     <img src="{{ asset('storage/' . $service->image_path) }}" class="w-full h-full object-cover" />
                                                 @else
                                                     <div class="w-full h-full bg-gradient-to-br from-[#E2E4DE] to-[#C2C9BD] flex items-center justify-center">
-                                                        <svg class="w-6 h-6 text-[#609953]/60" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                                        <svg class="w-6 h-6 text-provider-green/60" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M3 12h18M12 3c4 0 7 3 7 7v4c0 3-3 5-7 5s-7-2-7-5v-4c0-4 3-7 7-7z" />
                                                         </svg>
                                                     </div>
@@ -214,7 +214,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @php
                                             $catName = $service->category ?: 'Composting';
-                                            $catColor = 'bg-green-50 text-green-700 border-green-100/50';
+                                            $catColor = 'bg-provider-green-light text-provider-green border-provider-green/20';
                                             if (stripos($catName, 'recycl') !== false) {
                                                 $catColor = 'bg-purple-50 text-purple-700 border-purple-100/50';
                                             } elseif (stripos($catName, 'waste') !== false) {
@@ -229,7 +229,7 @@
                                     <!-- Type (Pickup / Onsite) -->
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if ($service->type == 'pickup')
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[9px] font-bold border border-green-100 bg-[#EAF5EE] text-[#1B7339]">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-[9px] font-bold border border-provider-green/20 bg-provider-green-light text-provider-green">
                                                 Pickup Service
                                             </span>
                                         @else
@@ -268,7 +268,7 @@
                                     <!-- Listing Status capsule tags -->
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if ($service->status == 'active')
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-[#EAF5EE] text-[#1B7339] border border-green-100">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-provider-green-light text-provider-green border border-provider-green/20">
                                                 Active
                                             </span>
                                         @else
@@ -282,7 +282,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-xs font-medium">
                                         <div class="flex items-center justify-end gap-2.5 select-none">
                                             <!-- Edit button -->
-                                            <a href="{{ route('services.edit', $service->id) }}" class="p-1.5 border border-gray-100 hover:border-[#609953] bg-white text-gray-500 hover:text-[#609953] rounded-lg transition-all shadow-sm">
+                                            <a href="{{ route('services.edit', $service->id) }}" class="p-1.5 border border-gray-100 hover:border-provider-green bg-white text-gray-500 hover:text-provider-green rounded-lg transition-all shadow-sm">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                             </a>
                                             <!-- Delete Form trigger -->
@@ -300,12 +300,12 @@
                                 <tr id="emptyRow">
                                     <td colspan="8" class="px-6 py-16 text-center select-none">
                                         <div class="max-w-[340px] mx-auto flex flex-col items-center">
-                                            <div class="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center mb-4">
-                                                <svg class="w-8 h-8 text-[#609953]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                            <div class="w-16 h-16 rounded-2xl bg-provider-green-light flex items-center justify-center mb-4">
+                                                <svg class="w-8 h-8 text-provider-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                                             </div>
                                             <h3 class="font-extrabold text-sm text-gray-900 leading-snug">No Services Found</h3>
                                             <p class="text-[10px] text-gray-400 font-semibold mt-1 leading-relaxed">Add your very first eco-composting service listing to begin accepting bookings!</p>
-                                            <a href="{{ route('services.create') }}" class="mt-4 bg-[#1A4D2E] hover:bg-green-900 text-white font-bold text-sm px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2 select-none">Add First Service</a>
+                                            <a href="{{ route('services.create') }}" class="mt-4 bg-provider-green hover:bg-provider-green-dark text-white font-bold text-sm px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2 select-none">Add First Service</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -332,7 +332,7 @@
                     </p>
                     <div class="flex items-center gap-1.5">
                         <button class="px-3 py-1.5 border border-gray-200 hover:bg-gray-100 rounded-lg text-xs font-bold text-gray-500 disabled:opacity-50" disabled>&lt;</button>
-                        <button class="px-3.5 py-1.5 bg-[#609953] text-white rounded-lg text-xs font-bold shadow-sm">1</button>
+                        <button class="px-3.5 py-1.5 bg-provider-green text-white rounded-lg text-xs font-bold shadow-sm">1</button>
                         <button class="px-3 py-1.5 border border-gray-200 hover:bg-gray-100 rounded-lg text-xs font-bold text-gray-500 disabled:opacity-50" disabled>&gt;</button>
                     </div>
                 </div>

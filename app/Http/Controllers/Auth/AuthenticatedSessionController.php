@@ -30,6 +30,17 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = $request->user();
+        
+        // Clean up background AJAX/polling URLs from the intended redirect URL
+        $intended = session()->get('url.intended');
+        if ($intended && (
+            str_contains($intended, 'notifications/unread-count') || 
+            str_contains($intended, 'notifications/recent') ||
+            (str_contains($intended, 'messages') && str_contains($intended, 'fetch'))
+        )) {
+            session()->forget('url.intended');
+        }
+
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
         } elseif ($user->role === 'provider') {

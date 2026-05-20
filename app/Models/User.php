@@ -89,6 +89,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Notification::class);
     }
 
+    public function savedProviders()
+    {
+        return $this->belongsToMany(User::class, 'saved_providers', 'user_id', 'provider_id')->withTimestamps();
+    }
+
+    public function savedByCustomers()
+    {
+        return $this->belongsToMany(User::class, 'saved_providers', 'provider_id', 'user_id')->withTimestamps();
+    }
+
     /**
      * Get the average rating for the provider.
      */

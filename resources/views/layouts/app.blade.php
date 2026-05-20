@@ -12,7 +12,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
         <!-- FontAwesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -74,10 +74,81 @@
             @endif
 
             <!-- Page Content -->
-            <main class="@hasSection('no_container') @else container py-4 @endif">
+            <main class="@hasSection('no_container') @else container mx-auto px-4 py-4 @endif">
                 @yield('content')
             </main>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> --}}
+        <!-- Global Toast Notification -->
+        <div id="toast-notification" class="fixed top-5 right-5 z-[100] transform translate-y-[-100px] opacity-0 transition-all duration-300 pointer-events-none">
+            <div class="bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-lg flex items-center gap-3 border border-emerald-500/20 text-xs font-bold">
+                <i class="fa-solid fa-circle-check text-base"></i>
+                <span id="toast-message">Success</span>
+            </div>
+        </div>
+
+        <script>
+            // Global Toast Notification engine
+            function showToast(message) {
+                const toast = document.getElementById('toast-notification');
+                const msgEl = document.getElementById('toast-message');
+                if (!toast || !msgEl) return;
+                msgEl.textContent = message;
+                toast.className = "fixed top-5 right-5 z-[100] transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto";
+                setTimeout(() => {
+                    toast.className = "fixed top-5 right-5 z-[100] transform translate-y-[-100px] opacity-0 transition-all duration-300 pointer-events-none";
+                }, 3000);
+            }
+
+            // Global Saved Provider Toggler AJAX helper
+            function toggleSaveProvider(providerId, buttonElement, event) {
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                
+                fetch(`/providers/${providerId}/toggle-save`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        window.location.href = "{{ route('login') }}";
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.success) {
+                        showToast(data.message);
+                        
+                        // Update all matching heart buttons on the page for this provider
+                        const heartIcons = document.querySelectorAll(`[data-provider-id="${providerId}"] i, button[onclick*="toggleSaveProvider(${providerId}"] i`);
+                        heartIcons.forEach(icon => {
+                            if (data.is_saved) {
+                                icon.className = "fa-solid fa-heart text-red-500";
+                            } else {
+                                icon.className = "fa-regular fa-heart";
+                            }
+                        });
+
+                        // If on dashboard, reload the page or update list dynamically to reflect in modal
+                        if (window.location.pathname.includes('/dashboard')) {
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 500);
+                        }
+                    } else if (data && data.error) {
+                        showToast(data.error);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error toggling saved provider:", err);
+                });
+            }
+        </script>
     </body>
 </html>
