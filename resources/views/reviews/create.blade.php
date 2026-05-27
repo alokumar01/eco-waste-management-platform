@@ -25,7 +25,9 @@
                     @if ($booking->service->image_path)
                         <img src="{{ asset('storage/' . $booking->service->image_path) }}" class="w-full h-full object-cover">
                     @else
-                        <div class="w-full h-full bg-[#E2E4DE] flex items-center justify-center text-lg text-emerald-800 font-bold select-none">🌱</div>
+                        <div class="w-full h-full bg-[#E2E4DE] flex items-center justify-center text-lg text-emerald-800 font-bold select-none">
+                            <i class="fa-solid fa-seedling text-emerald-800 text-lg"></i>
+                        </div>
                     @endif
                 </div>
                 <div class="space-y-0.5">
@@ -98,15 +100,22 @@
 <!-- Interactive Star Trigger Logic -->
 <script>
     const labels = {
-        1: "Extremely Poor 😠",
-        2: "Disappointing 🙁",
-        3: "Average & Decent 😐",
-        4: "Very Good & Clean 🙂",
-        5: "Excellent & Green! 🌿"
+        1: { text: "Extremely Poor", icon: "fa-solid fa-face-angry text-red-500" },
+        2: { text: "Disappointing", icon: "fa-solid fa-face-frown text-orange-400" },
+        3: { text: "Average & Decent", icon: "fa-solid fa-face-meh text-yellow-500" },
+        4: { text: "Very Good & Clean", icon: "fa-solid fa-face-smile text-emerald-500" },
+        5: { text: "Excellent & Green!", icon: "fa-solid fa-leaf text-green-600" }
     };
 
     function highlightStars(rating) {
-        document.getElementById('rating_label').textContent = labels[rating] || "Click a star to rate";
+        const ratingLabel = document.getElementById('rating_label');
+        if (labels[rating]) {
+            ratingLabel.innerHTML = `<i class="${labels[rating].icon} text-xs"></i> <span>${labels[rating].text}</span>`;
+            ratingLabel.className = "inline-flex items-center gap-1.5 text-[10px] text-gray-500 font-extrabold uppercase tracking-widest pt-1";
+        } else {
+            ratingLabel.textContent = "Click a star to rate";
+            ratingLabel.className = "inline-block text-[10px] text-gray-400 font-extrabold uppercase tracking-widest pt-1";
+        }
         
         // Loop and paint star fill colors
         for (let i = 1; i <= 5; i++) {

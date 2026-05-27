@@ -154,7 +154,7 @@
                         </div>
                         <div class="flex flex-col">
                             <span class="flex items-center gap-2 text-gray-700 font-semibold mb-1"><span class="w-2.5 h-2.5 bg-[#8cc67b] rounded-full shrink-0"></span>Upcoming</span>
-                            <span class="text-gray-400 ml-4.5">{{ $bookings->where('status', 'confirmed')->count() }} ({{ $totalBookings > 0 ? round($bookings->where('status', 'confirmed')->count() / $totalBookings * 100) : 0 }}%)</span>
+                            <span class="text-gray-400 ml-4.5">{{ $bookings->whereIn('status', ['confirmed', 'accepted'])->count() }} ({{ $totalBookings > 0 ? round($bookings->whereIn('status', ['confirmed', 'accepted'])->count() / $totalBookings * 100) : 0 }}%)</span>
                         </div>
                         <div class="flex flex-col">
                             <span class="flex items-center gap-2 text-gray-700 font-semibold mb-1"><span class="w-2.5 h-2.5 bg-gray-200 rounded-full shrink-0"></span>Cancelled</span>
@@ -173,13 +173,23 @@
 
                 <div class="relative z-10 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-5">
-                        <h2 class="text-[13px] font-bold text-white tracking-wide">Complete Your Profile</h2>
+                        <h2 class="text-[13px] font-bold text-white tracking-wide">
+                            @if($profileCompletion == 100)
+                                Profile Completed
+                            @else
+                                Complete Your Profile
+                            @endif
+                        </h2>
                         <span class="text-[11px] font-semibold text-white">{{ $profileCompletion }}% Complete</span>
                     </div>
                     <div class="w-full bg-provider-green-dark/40 rounded-full h-1.5 mb-5 overflow-hidden">
                         <div class="bg-white h-1.5 rounded-full" style="width: {{ $profileCompletion }}%"></div>
                     </div>
-                    <p class="text-white/90 mb-6 text-xs leading-relaxed font-medium">Add more details to build trust and attract more customers.</p>
+                    @if($profileCompletion == 100)
+                        <p class="text-white/90 mb-6 text-xs leading-relaxed font-medium">Your profile is fully complete and verified. Keep it updated to build trust.</p>
+                    @else
+                        <p class="text-white/90 mb-6 text-xs leading-relaxed font-medium">Add more details to build trust and attract more customers.</p>
+                    @endif
                     <ul class="space-y-4 text-xs font-semibold text-white flex-grow">
                         <!-- Step 1: Basic Info -->
                         <li class="flex items-center gap-3">
@@ -236,7 +246,11 @@
                             @endif
                         </li>
                     </ul>
-                    <a href="{{ route('provider.profile.edit') }}" class="w-full text-center bg-provider-green-dark hover:bg-black text-white font-bold py-3 px-4 rounded-xl mt-8 text-xs transition-colors shadow-sm inline-block select-none active:scale-[0.98]">Complete Now</a>
+                    @if($profileCompletion == 100)
+                        <a href="{{ route('provider.profile.edit') }}" class="w-full text-center bg-provider-green-dark hover:bg-black text-white font-bold py-3 px-4 rounded-xl mt-8 text-xs transition-colors shadow-sm inline-block select-none active:scale-[0.98]">Edit Profile</a>
+                    @else
+                        <a href="{{ route('provider.profile.edit') }}" class="w-full text-center bg-provider-green-dark hover:bg-black text-white font-bold py-3 px-4 rounded-xl mt-8 text-xs transition-colors shadow-sm inline-block select-none active:scale-[0.98]">Complete Now</a>
+                    @endif
                 </div>
             </div>
 
@@ -430,7 +444,7 @@
                 datasets: [{
                     data: [
                         {{ $bookings->where('status', 'completed')->count() }},
-                        {{ $bookings->where('status', 'confirmed')->count() }},
+                        {{ $bookings->whereIn('status', ['confirmed', 'accepted'])->count() }},
                         {{ $bookings->where('status', 'cancelled')->count() }}
                     ],
                     backgroundColor: [

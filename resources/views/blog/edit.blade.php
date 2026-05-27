@@ -4,10 +4,18 @@
 
 @section('content')
 <div class="flex h-screen bg-[#F4F7F6] font-sans overflow-hidden">
-    @include('provider-dashboard-sidebar')
+    @if(auth()->user()->role === 'admin')
+        @include('admin-dashboard-sidebar')
+    @else
+        @include('provider-dashboard-sidebar')
+    @endif
 
     <div class="flex-1 flex flex-col h-full overflow-hidden">
-        @include('provider-dashboard-header')
+        @if(auth()->user()->role === 'admin')
+            @include('admin-dashboard-header')
+        @else
+            @include('provider-dashboard-header')
+        @endif
 
         <div class="flex-1 overflow-y-auto bg-[#F4F7F6] p-6 md:p-10 pb-20">
 
@@ -112,24 +120,29 @@
                         <!-- Block 3: Featured Image -->
                         <div class="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.015)] border border-gray-100 space-y-4">
                             <h2 class="text-[13px] font-bold text-gray-800 tracking-wide border-b border-gray-50 pb-3">Featured Image</h2>
+                            
                             <div id="image-dropzone"
-                                class="border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/50 p-8 text-center cursor-pointer hover:border-green-400 hover:bg-green-50/20 transition-all relative overflow-hidden group min-h-[180px] flex items-center justify-center">
-                                <div id="dropzone-content" class="transition-opacity duration-300 z-10 relative {{ $post->featured_image ? 'opacity-0 pointer-events-none' : '' }}">
-                                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm text-green-600 group-hover:scale-110 transition-transform">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                    </div>
-                                    <p class="text-xs font-bold text-gray-700">Drag & drop or <span class="text-green-600">click to browse</span></p>
-                                    <p class="text-[10px] text-gray-400 mt-1">Leave empty to keep current image</p>
+                                class="border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/50 p-6 text-center cursor-pointer hover:border-green-400 hover:bg-green-50/20 transition-all group flex flex-col items-center justify-center min-h-[140px]">
+                                <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center mx-auto mb-2 shadow-sm text-green-600 group-hover:scale-110 transition-transform">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                 </div>
-                                <img id="image-preview" class="{{ $post->featured_image ? '' : 'hidden' }} absolute inset-0 w-full h-full object-cover z-0"
-                                    src="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : '' }}" alt="Preview">
-                                <div id="change-image-overlay" class="{{ $post->featured_image ? 'flex' : 'hidden' }} absolute inset-0 bg-black/40 items-center justify-center text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                                    <div class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-lg border border-white/30 text-xs">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                        Change Image
-                                    </div>
-                                </div>
+                                <p class="text-xs font-bold text-gray-700">Drag & drop or <span class="text-green-600">click to browse</span></p>
+                                <p class="text-[9px] text-gray-400 mt-1">Leave empty to keep current image</p>
                                 <input type="file" name="featured_image" id="file-input" accept="image/*" class="hidden">
+                            </div>
+
+                            <!-- Selected file information and tiny thumbnail (No stretching!) -->
+                            <div id="file-preview-info" class="{{ $post->featured_image ? 'flex' : 'hidden' }} items-center gap-4 p-3 bg-gray-50 border border-gray-150 rounded-xl">
+                                <div class="w-16 h-12 rounded-lg overflow-hidden border border-gray-200 shrink-0 bg-white">
+                                    <img id="image-preview" class="w-full h-full object-cover" src="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : '' }}" alt="Thumbnail">
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <p id="preview-filename" class="text-xs font-bold text-gray-700 truncate">{{ $post->featured_image ? 'Current Image' : 'No file selected' }}</p>
+                                    <p id="preview-filesize" class="text-[10px] text-gray-400 font-bold mt-0.5">{{ $post->featured_image ? 'Existing File' : '0 KB' }}</p>
+                                </div>
+                                <button type="button" id="btn-remove-image" class="text-xs font-bold text-red-500 hover:text-red-700 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-red-50 cursor-pointer">
+                                    Remove
+                                </button>
                             </div>
                         </div>
 
@@ -137,6 +150,28 @@
 
                     <!-- Right: Publish Panel (1/3) -->
                     <div class="space-y-5">
+
+                        <!-- Blog Preview Widget -->
+                        <div class="bg-white p-5 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.015)] border border-gray-100 flex flex-col items-center">
+                            <h2 class="text-[13px] font-bold text-gray-800 tracking-wide border-b border-gray-50 pb-3 w-full mb-4">Blog Post Preview</h2>
+                            
+                            <!-- Small Card Preview -->
+                            <div class="w-full border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white mb-4">
+                                <div class="relative aspect-video bg-gray-100 flex items-center justify-center overflow-hidden">
+                                    <img id="sidebar-preview-image" src="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' }}" class="w-full h-full object-cover">
+                                    <span id="sidebar-preview-category" class="absolute top-3 left-3 bg-[#1A4D2E] text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">{{ $post->category }}</span>
+                                </div>
+                                <div class="p-3.5 space-y-2">
+                                    <h4 id="sidebar-preview-title" class="font-bold text-gray-800 text-xs line-clamp-2">{{ $post->title }}</h4>
+                                    <p id="sidebar-preview-excerpt" class="text-[10px] text-gray-400 font-semibold line-clamp-2">{{ $post->excerpt ?? 'A short summary of your article will appear here.' }}</p>
+                                </div>
+                            </div>
+                            
+                            <button type="button" onclick="openBlogMockPreview()" class="w-full bg-green-50 hover:bg-green-100 text-green-800 font-bold py-2.5 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 border border-green-200/50 cursor-pointer">
+                                <i class="fa-solid fa-eye text-xs"></i>
+                                <span>Open Live Mock Preview</span>
+                            </button>
+                        </div>
 
                         <!-- Publish Options -->
                         <div class="bg-white p-5 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.015)] border border-gray-100 space-y-5">
@@ -215,6 +250,86 @@
     </div>
 </div>
 
+<!-- Blog Preview Modal -->
+<div id="blog_preview_modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm overflow-y-auto flex items-center justify-center p-4 font-sans">
+    <div class="bg-[#F4F7F6] w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        <!-- Modal Header -->
+        <div class="bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+                <span class="text-xs font-bold text-gray-800 uppercase tracking-wider">Article Preview Mode</span>
+            </div>
+            <button type="button" onclick="closeBlogMockPreview()" class="text-gray-400 hover:text-gray-700 transition-colors text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                Close Preview
+            </button>
+        </div>
+        
+        <!-- Modal Body (Scrollable container replicating the real post detail layout) -->
+        <div class="flex-1 overflow-y-auto p-6 md:p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left: Article Content -->
+                <div class="lg:col-span-9 bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+                    <article class="prose lg:prose-lg max-w-none text-gray-600">
+                        <div class="mb-8">
+                            <span id="mock_blog_category" class="text-green-theme text-sm font-semibold bg-green-100 px-3 py-1 rounded-md">Category</span>
+                            <h1 id="mock_blog_title" class="mt-4 text-2xl md:text-3xl font-bold text-gray-900 leading-tight">Your article title will appear here</h1>
+                            <p id="mock_blog_excerpt" class="lead mt-4 text-base text-gray-500 font-medium leading-relaxed">A short summary of your article will appear here.</p>
+                            
+                            <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500 mt-6 border-y border-gray-50 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold">
+                                        {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
+                                    </div>
+                                    <span class="font-semibold text-gray-900 text-xs">{{ Auth::user()->name ?? 'Admin' }}</span>
+                                </div>
+                                <span>{{ date('M d, Y') }}</span>
+                                <div id="mock_blog_tags" class="flex gap-2 ml-4">
+                                    <!-- Dynamic tags -->
+                                </div>
+                                
+                                <div class="ml-auto flex items-center gap-2 text-gray-400 w-full md:w-auto mt-4 md:mt-0">
+                                    <span class="text-xs font-semibold mr-1">Share:</span>
+                                    <div class="w-7 h-7 flex items-center justify-center rounded-full bg-gray-50 border border-gray-100 text-blue-600 opacity-60"><i class="fab fa-facebook-f text-[10px]"></i></div>
+                                    <div class="w-7 h-7 flex items-center justify-center rounded-full bg-gray-50 border border-gray-100 text-blue-400 opacity-60"><i class="fab fa-twitter text-[10px]"></i></div>
+                                    <div class="w-7 h-7 flex items-center justify-center rounded-full bg-gray-50 border border-gray-100 text-blue-700 opacity-60"><i class="fab fa-linkedin-in text-[10px]"></i></div>
+                                    <div class="w-7 h-7 flex items-center justify-center rounded-full bg-gray-50 border border-gray-100 text-green-600 opacity-60"><i class="fa-solid fa-link text-[10px]"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <img id="mock_blog_image" src="https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="rounded-xl my-6 w-full object-cover shadow-sm" style="max-height: 400px;">
+                        
+                        <div id="mock_blog_content" class="prose text-sm text-gray-600 mt-6 leading-relaxed">
+                            <!-- Quill content will render here -->
+                        </div>
+                    </article>
+                </div>
+                
+                <!-- Right: TOC Sidebar -->
+                <div class="lg:col-span-3 space-y-6">
+                    <!-- Table of Contents -->
+                    <div id="mock_blog_toc_container" class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-3 text-sm">Table of Contents</h3>
+                        <ul id="mock_blog_toc_list" class="text-xs font-semibold p-0 m-0 list-none space-y-2 text-gray-500">
+                            <!-- Dynamic TOC items -->
+                        </ul>
+                    </div>
+                    
+                    <!-- Dummy sidebar cards for visual fidelity -->
+                    <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm opacity-60">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i class="fa-solid fa-leaf text-green-700 text-xs"></i>
+                            <h3 class="font-bold text-gray-900 text-sm">Related Articles</h3>
+                        </div>
+                        <div class="text-[10px] text-gray-400 font-bold">Related articles will be visible after publishing.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -251,14 +366,31 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('content-input').value = quill.root.innerHTML;
     });
 
-    // --- Counters ---
+    // --- Counters & Live Sidebar Card Updating ---
     const titleEl = document.getElementById('blog_title');
     const titleCounter = document.getElementById('title_counter');
-    titleEl.addEventListener('input', () => titleCounter.textContent = `${titleEl.value.length}/150`);
+    const sidebarTitle = document.getElementById('sidebar-preview-title');
+    
+    titleEl.addEventListener('input', () => {
+        titleCounter.textContent = `${titleEl.value.length}/150`;
+        sidebarTitle.textContent = titleEl.value.trim() || 'Your article title will appear here';
+    });
 
     const excerptEl = document.querySelector('textarea[name="excerpt"]');
     const excerptCounter = document.getElementById('excerpt_counter');
-    excerptEl.addEventListener('input', () => excerptCounter.textContent = `${excerptEl.value.length}/200`);
+    const sidebarExcerpt = document.getElementById('sidebar-preview-excerpt');
+    
+    excerptEl.addEventListener('input', () => {
+        excerptCounter.textContent = `${excerptEl.value.length}/200`;
+        sidebarExcerpt.textContent = excerptEl.value.trim() || 'A short summary of your article will appear here.';
+    });
+
+    const categorySelect = document.querySelector('select[name="category"]');
+    const sidebarCategory = document.getElementById('sidebar-preview-category');
+    
+    categorySelect.addEventListener('change', () => {
+        sidebarCategory.textContent = categorySelect.options[categorySelect.selectedIndex].text;
+    });
 
     // --- Status toggle ---
     const statusSelect = document.getElementById('status-select');
@@ -273,8 +405,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const dropzone = document.getElementById('image-dropzone');
     const fileInput = document.getElementById('file-input');
     const preview = document.getElementById('image-preview');
-    const dropzoneContent = document.getElementById('dropzone-content');
-    const changeOverlay = document.getElementById('change-image-overlay');
+    const previewInfo = document.getElementById('file-preview-info');
+    const previewFilename = document.getElementById('preview-filename');
+    const previewFilesize = document.getElementById('preview-filesize');
+    const btnRemoveImage = document.getElementById('btn-remove-image');
+    const sidebarPreviewImage = document.getElementById('sidebar-preview-image');
 
     dropzone.addEventListener('click', () => fileInput.click());
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(ev => dropzone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); }));
@@ -286,18 +421,139 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     fileInput.addEventListener('change', function() { if (this.files.length) handleFile(this.files[0]); });
 
+    const hasOriginalImage = {{ $post->featured_image ? 'true' : 'false' }};
+    const originalImageUrl = "{{ $post->featured_image ? asset('storage/' . $post->featured_image) : '' }}";
+
+    if (btnRemoveImage) {
+        btnRemoveImage.addEventListener('click', () => {
+            fileInput.value = '';
+            // If they clicked remove, let's revert back to original database image or fallback if none
+            if (hasOriginalImage) {
+                preview.src = originalImageUrl;
+                previewFilename.textContent = 'Current Image';
+                previewFilesize.textContent = 'Existing File';
+                if (sidebarPreviewImage) {
+                    sidebarPreviewImage.src = originalImageUrl;
+                }
+            } else {
+                previewInfo.classList.add('hidden');
+                previewInfo.classList.remove('flex');
+                preview.src = '';
+                if (sidebarPreviewImage) {
+                    sidebarPreviewImage.src = 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80';
+                }
+            }
+        });
+    }
+
     function handleFile(file) {
-        if (!file.type.startsWith('image/')) { alert('Please select a valid image file.'); return; }
+        if (!file.type.startsWith('image/')) {
+            alert('Please select a valid image file.');
+            fileInput.value = '';
+            return;
+        }
+        // Check size limit: 2MB (2,097,152 bytes)
+        if (file.size > 2 * 1024 * 1024) {
+            alert('The featured image exceeds the 2MB size limit. Please compress the image or choose a smaller one.');
+            fileInput.value = '';
+            if (hasOriginalImage) {
+                preview.src = originalImageUrl;
+                previewFilename.textContent = 'Current Image';
+                previewFilesize.textContent = 'Existing File';
+                if (sidebarPreviewImage) {
+                    sidebarPreviewImage.src = originalImageUrl;
+                }
+            } else {
+                previewInfo.classList.add('hidden');
+                previewInfo.classList.remove('flex');
+                preview.src = '';
+                if (sidebarPreviewImage) {
+                    sidebarPreviewImage.src = 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80';
+                }
+            }
+            return;
+        }
+        
+        previewFilename.textContent = file.name;
+        previewFilesize.textContent = (file.size / 1024).toFixed(1) + ' KB';
+
         const reader = new FileReader();
         reader.onload = e => {
             preview.src = e.target.result;
-            preview.classList.remove('hidden');
-            changeOverlay.classList.remove('hidden');
-            changeOverlay.classList.add('flex');
-            dropzoneContent.classList.add('opacity-0', 'pointer-events-none');
+            previewInfo.classList.remove('hidden');
+            previewInfo.classList.add('flex');
+            if (sidebarPreviewImage) {
+                sidebarPreviewImage.src = e.target.result;
+            }
         };
         reader.readAsDataURL(file);
     }
+
+    // --- Mock Preview Functions ---
+    window.openBlogMockPreview = function() {
+        const titleVal = titleEl.value.trim() || 'Untitled Article';
+        const categoryVal = categorySelect.selectedIndex > 0 ? categorySelect.options[categorySelect.selectedIndex].text : 'Uncategorized';
+        const excerptVal = excerptEl.value.trim() || 'Article excerpt...';
+        const tagsVal = document.querySelector('input[name="tags"]')?.value || '';
+        const contentVal = quill.root.innerHTML;
+
+        document.getElementById('mock_blog_title').textContent = titleVal;
+        document.getElementById('mock_blog_category').textContent = categoryVal;
+        document.getElementById('mock_blog_excerpt').textContent = excerptVal;
+        document.getElementById('mock_blog_content').innerHTML = contentVal;
+
+        const tagsContainer = document.getElementById('mock_blog_tags');
+        tagsContainer.innerHTML = '';
+        if (tagsVal) {
+            tagsVal.split(',').map(t => t.trim()).forEach(tag => {
+                if (tag) {
+                    const span = document.createElement('span');
+                    span.className = 'bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold';
+                    span.textContent = tag;
+                    tagsContainer.appendChild(span);
+                }
+            });
+        }
+
+        const mockImg = document.getElementById('mock_blog_image');
+        if (preview && preview.src && previewInfo && !previewInfo.classList.contains('hidden')) {
+            mockImg.src = preview.src;
+        } else {
+            mockImg.src = 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
+        }
+
+        // Dynamic TOC for Preview
+        const mockTOCContainer = document.getElementById('mock_blog_toc_container');
+        const mockTOCList = document.getElementById('mock_blog_toc_list');
+        mockTOCList.innerHTML = '';
+        
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = contentVal;
+        const headings = tempDiv.querySelectorAll('h1, h2');
+        
+        if (headings.length === 0) {
+            mockTOCContainer.classList.add('hidden');
+        } else {
+            mockTOCContainer.classList.remove('hidden');
+            headings.forEach((heading, index) => {
+                const li = document.createElement('li');
+                const isH2 = heading.tagName.toLowerCase() === 'h2';
+                li.innerHTML = `
+                    <div class="flex items-center gap-2 ${isH2 ? 'pl-6' : 'p-1.5'} rounded-lg text-gray-500 hover:text-green-800">
+                        <div class="rounded-full ${isH2 ? 'w-1 h-1 bg-gray-300' : 'w-1.5 h-1.5 bg-gray-400'} shrink-0"></div>
+                        <span class="truncate ${isH2 ? 'text-xs font-semibold' : ''}">${heading.textContent.trim()}</span>
+                    </div>
+                `;
+                mockTOCList.appendChild(li);
+            });
+        }
+
+        document.getElementById('blog_preview_modal').classList.remove('hidden');
+    };
+
+    window.closeBlogMockPreview = function() {
+        document.getElementById('blog_preview_modal').classList.add('hidden');
+    };
 });
 </script>
 @endsection

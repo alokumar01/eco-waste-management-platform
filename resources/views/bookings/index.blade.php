@@ -13,7 +13,7 @@
         // Count bookings by status
         $totalBookingsCount = count($bookings);
         $pendingCount = $bookings->where('status', 'pending')->count();
-        $confirmedCount = $bookings->where('status', 'confirmed')->count();
+        $confirmedCount = $bookings->whereIn('status', ['confirmed', 'accepted'])->count();
         $completedCount = $bookings->where('status', 'completed')->count();
         $cancelledCount = $bookings->where('status', 'cancelled')->count();
         
@@ -53,17 +53,13 @@
                     <h1 class="text-[22px] font-bold text-gray-950 leading-none tracking-tight">Bookings</h1>
                     <p class="text-[11.5px] text-gray-500 font-medium mt-1.5">Manage and track all your bookings in one place.</p>
                 </div>
-                <button type="button" class="inline-flex items-center gap-1.5 px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-xl bg-white text-xs font-bold text-gray-700 shadow-sm transition-all shrink-0 select-none">
-                    <i class="fa-solid fa-download text-gray-400 text-xs"></i>
-                    <span>Export</span>
-                </button>
             </div>
 
             <!-- Two Column Grid Area -->
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+            <div class="grid grid-cols-1 xl:grid-cols-4 gap-8 items-start">
                 
-                <!-- Left Area: Bookings list feed (2/3 width) -->
-                <div class="xl:col-span-2 space-y-6">
+                <!-- Left Area: Bookings list feed (3/4 width) -->
+                <div class="xl:col-span-3 space-y-6">
                     
                     <!-- Filter statuses Tabs Row -->
                     <div class="flex flex-wrap items-center gap-2 select-none border-b border-gray-200/60 pb-3">
@@ -125,11 +121,18 @@
                             @php
                                 $statusColors = [
                                     'pending' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-800', 'border' => 'border-amber-200/50'],
+                                    'accepted' => ['bg' => 'bg-purple-50', 'text' => 'text-purple-800', 'border' => 'border-purple-200/50'],
                                     'confirmed' => ['bg' => 'bg-blue-50', 'text' => 'text-blue-800', 'border' => 'border-blue-200/50'],
                                     'completed' => ['bg' => 'bg-provider-green-light', 'text' => 'text-provider-green', 'border' => 'border-provider-green/20'],
                                     'cancelled' => ['bg' => 'bg-red-50', 'text' => 'text-red-800', 'border' => 'border-red-200/50'],
                                 ];
-                                $color = $statusColors[$booking->status] ?? $statusColors['pending'];
+                                if ($booking->status === 'accepted') {
+                                    $color = $statusColors['accepted'];
+                                    $statusLabel = 'Accepted (Awaiting Payment)';
+                                } else {
+                                    $color = $statusColors[$booking->status] ?? $statusColors['pending'];
+                                    $statusLabel = $booking->status;
+                                }
                             @endphp
 
                             <!-- Individual Booking Card Row -->
@@ -141,7 +144,7 @@
                                  data-searchable="{{ strtolower($booking->customer->name) }} {{ strtolower($booking->service->name) }}">
                                 
                                 <!-- Column 1: Image & Details block -->
-                                <div class="flex items-start gap-4">
+                                <div class="flex items-start gap-4 flex-1 min-w-0">
                                     <!-- Image Thumbnail -->
                                     <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0 flex items-center justify-center select-none">
                                         @if ($booking->service->image_path)
@@ -154,10 +157,10 @@
                                     </div>
                                     
                                     <!-- Detail Text content -->
-                                    <div class="space-y-1">
+                                    <div class="space-y-1 flex-1 min-w-0">
                                         <!-- Capsule Status Badge -->
                                         <span class="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase border {{ $color['bg'] }} {{ $color['text'] }} {{ $color['border'] }} select-none">
-                                            {{ $booking->status }}
+                                            {{ $statusLabel }}
                                         </span>
                                         
                                         <!-- Service Name -->
@@ -205,13 +208,13 @@
                                 </div>
 
                                 <!-- Column 4: Functional buttons block -->
-                                <div class="flex items-center gap-2 shrink-0 select-none">
+                                <div class="flex flex-wrap items-center gap-2 shrink-0 select-none">
                                     @if ($booking->status === 'pending')
                                         <!-- Accept Form Button -->
                                         <form action="{{ route('bookings.update', $booking->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <input type="hidden" name="status" value="confirmed">
+                                            <input type="hidden" name="status" value="accepted">
                                             <button type="submit" class="bg-provider-green hover:bg-provider-green-dark text-white font-extrabold text-[10.5px] py-1.5 px-3 rounded-lg transition-colors shadow-sm select-none cursor-pointer">
                                                 Accept
                                             </button>
@@ -228,15 +231,12 @@
                                         </form>
 
                                     @elseif($booking->status === 'confirmed')
-                                        <!-- Mark as Completed Form Button -->
-                                        <form action="{{ route('bookings.update', $booking->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <input type="hidden" name="status" value="completed">
-                                            <button type="submit" class="border border-provider-green hover:bg-provider-green-light text-provider-green font-extrabold text-[10.5px] py-1.5 px-3.5 rounded-lg transition-colors select-none cursor-pointer">
-                                                Mark as Completed
-                                            </button>
-                                        </form>
+                                        <!-- Mark as Completed Button triggering Modal -->
+                                        <button type="button" 
+                                            onclick="openCompleteModal({{ $booking->id }}, '{{ addslashes($booking->service->name) }}', '{{ addslashes($booking->service->unit) }}', '{{ route('bookings.update', $booking->id) }}')" 
+                                            class="border border-provider-green hover:bg-provider-green-light text-provider-green font-extrabold text-[10.5px] py-1.5 px-3.5 rounded-lg transition-colors select-none cursor-pointer">
+                                            Mark as Completed
+                                        </button>
 
                                     @else
                                         <!-- View Details display -->
@@ -350,7 +350,12 @@
                     <!-- Dynamic Calendar Widget -->
                     <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.015)] space-y-4 select-none">
                         <div class="flex items-center justify-between border-b border-gray-50 pb-2 select-none">
-                            <h3 class="text-xs font-bold text-gray-900 uppercase tracking-wider">Calendar</h3>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-xs font-bold text-gray-900 uppercase tracking-wider">Calendar</h3>
+                                <button type="button" id="clear_date_btn" onclick="clearDateFilter()" class="hidden text-[10px] text-red-500 font-bold hover:underline select-none">
+                                    Clear Filter
+                                </button>
+                            </div>
                             <span class="text-[10.5px] font-extrabold text-gray-700 select-none">{{ $monthName }}</span>
                         </div>
 
@@ -375,8 +380,10 @@
                                         $dayBookings = $bookingsByDate[$dayDateStr] ?? [];
                                         $isToday = ($day == $now->day);
                                     @endphp
-                                    <div class="py-1.5 rounded-lg flex flex-col items-center justify-between h-9 transition-colors relative
-                                        {{ $isToday ? 'bg-provider-green text-white shadow-sm' : 'hover:bg-gray-50' }}">
+                                    <div class="py-1.5 rounded-lg flex flex-col items-center justify-between h-9 transition-colors relative cursor-pointer calendar-day
+                                        {{ $isToday ? 'bg-provider-green text-white shadow-sm' : 'hover:bg-gray-50' }}"
+                                         data-date="{{ $dayDateStr }}"
+                                         onclick="filterDate('{{ $dayDateStr }}')">
                                         
                                         <span class="select-none leading-none">{{ $day }}</span>
                                         
@@ -419,6 +426,47 @@
 <!-- Interactive Client side filter engine javascript -->
 <script>
     let currentStatusFilter = 'all';
+    let currentDateFilter = null;
+
+    function filterDate(dateStr) {
+        if (currentDateFilter === dateStr) {
+            clearDateFilter();
+            return;
+        }
+
+        currentDateFilter = dateStr;
+
+        document.querySelectorAll('.calendar-day').forEach(el => {
+            el.classList.remove('ring-2', 'ring-provider-green', 'ring-offset-1');
+        });
+
+        const selectedEl = document.querySelector(`.calendar-day[data-date="${dateStr}"]`);
+        if (selectedEl) {
+            selectedEl.classList.add('ring-2', 'ring-provider-green', 'ring-offset-1');
+        }
+
+        const clearBtn = document.getElementById('clear_date_btn');
+        if (clearBtn) {
+            clearBtn.classList.remove('hidden');
+        }
+
+        runFilters();
+    }
+
+    function clearDateFilter() {
+        currentDateFilter = null;
+
+        document.querySelectorAll('.calendar-day').forEach(el => {
+            el.classList.remove('ring-2', 'ring-provider-green', 'ring-offset-1');
+        });
+
+        const clearBtn = document.getElementById('clear_date_btn');
+        if (clearBtn) {
+            clearBtn.classList.add('hidden');
+        }
+
+        runFilters();
+    }
 
     function filterStatus(status, btnElement) {
         currentStatusFilter = status;
@@ -480,12 +528,14 @@
             const status = row.getAttribute('data-status');
             const serviceId = row.getAttribute('data-service-id');
             const searchableText = row.getAttribute('data-searchable');
+            const bookingDate = row.getAttribute('data-date');
             
-            const matchStatus = (currentStatusFilter === 'all' || status === currentStatusFilter);
+            const matchStatus = (currentStatusFilter === 'all' || status === currentStatusFilter || (currentStatusFilter === 'confirmed' && status === 'accepted'));
             const matchService = (serviceFilter === 'all' || serviceId === serviceFilter);
             const matchSearch = (query === '' || searchableText.includes(query));
+            const matchDate = (currentDateFilter === null || bookingDate === currentDateFilter);
             
-            if (matchStatus && matchService && matchSearch) {
+            if (matchStatus && matchService && matchSearch && matchDate) {
                 row.classList.remove('hidden');
                 visibleCount++;
             } else {
@@ -542,5 +592,74 @@
             }
         @endif
     });
+
+    function openCompleteModal(bookingId, serviceTitle, serviceUnit, formAction) {
+        document.getElementById('complete-service-title').textContent = serviceTitle;
+        document.getElementById('complete-service-unit').textContent = serviceUnit || 'kg';
+        document.getElementById('complete-input-unit-label').textContent = serviceUnit || 'kg';
+        
+        const form = document.getElementById('complete-booking-form');
+        form.action = formAction;
+        
+        // Reset the input field
+        document.getElementById('complete-waste-amount').value = '';
+        
+        document.getElementById('complete-modal').style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
 </script>
+
+<!-- Complete Booking Modal -->
+<div id="complete-modal" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true" onclick="closeModal('complete-modal')">
+            <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="relative inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full border border-gray-100 p-6 space-y-4">
+            <div class="flex justify-between items-start">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-provider-green-light text-provider-green flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-sm text-gray-900">Complete Pickup</h3>
+                        <p class="text-2xs text-gray-400 font-semibold mt-0.5" id="complete-service-title">Dry Waste Pickup</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeModal('complete-modal')" class="text-gray-400 hover:text-gray-600 text-base focus:outline-none">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <form id="complete-booking-form" action="" method="POST" class="space-y-4">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="status" value="completed">
+                
+                <p class="text-11px text-gray-500 font-semibold leading-relaxed">
+                    Please log the actual waste quantity collected for this pickup. This updates the customer's eco impact dashboard metrics.
+                </p>
+
+                <div class="space-y-1.5">
+                    <label for="complete-waste-amount" class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">
+                        Waste Amount Collected (in <span id="complete-service-unit">kg</span>)
+                    </label>
+                    <div class="relative">
+                        <input type="number" step="0.01" min="0" id="complete-waste-amount" name="waste_amount" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-provider-green focus:ring-1 focus:ring-provider-green rounded-xl text-xs font-semibold text-gray-700 focus:bg-white focus:outline-none transition-colors" placeholder="e.g. 15.5" required>
+                        <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-2xs font-extrabold text-gray-400" id="complete-input-unit-label">kg</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 bg-provider-green hover:bg-[#2E6F40] active:scale-[0.98] text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5 focus:outline-none">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Confirm & Complete Pickup</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection

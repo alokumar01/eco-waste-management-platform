@@ -15,7 +15,7 @@
                     <span>Mark All as Read</span>
                 </button>
             </form>
-            <form action="{{ route('notifications.destroy-all') }}" method="POST" class="inline" onsubmit="return confirm('Delete all notifications?')">
+            <form action="{{ route('notifications.destroy-all') }}" method="POST" class="inline" data-confirm="Are you sure you want to delete all notifications?" data-confirm-title="Clear Notifications" data-confirm-text="Delete All">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2 border border-gray-200 hover:bg-gray-50 text-gray-600 text-xs font-bold rounded-lg transition-colors shadow-sm select-none cursor-pointer">

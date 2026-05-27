@@ -33,7 +33,7 @@
                     
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-[#F0F7F2] text-[#3E8B3A] flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-shield-check"></i>
+                            <i class="fa-solid fa-shield-halved"></i>
                         </div>
                         <div>
                             <h4 class="text-[12px] font-extrabold text-gray-900">Trusted Support</h4>
@@ -97,8 +97,8 @@
                         <i class="fa-solid fa-location-dot text-xl"></i>
                     </div>
                     <h4 class="text-[14px] font-extrabold text-gray-900 mb-2">Visit Us</h4>
-                    <p class="text-[11px] text-gray-600 font-bold leading-relaxed mb-1">GreenLoop Office, 2nd Floor,</p>
-                    <p class="text-[11px] text-gray-500 font-medium leading-relaxed">Eco Tower, Koramangala,<br>Bengaluru - 560034<br>Karnataka, India</p>
+                    <p class="text-[11px] text-gray-600 font-bold leading-relaxed mb-1">Lovely Professional University,</p>
+                    <p class="text-[11px] text-gray-500 font-medium leading-relaxed">Jalandhar - Delhi, G.T. Road,<br>Phagwara, Punjab - 144411<br>India</p>
                 </div>
 
                 <!-- Card 4 -->
@@ -107,7 +107,11 @@
                         <i class="fa-solid fa-headset text-xl"></i>
                     </div>
                     <h4 class="text-[14px] font-extrabold text-gray-900 mb-2">Support</h4>
-                    <a href="mailto:support@greenloop.com" class="text-[12px] text-gray-600 font-bold hover:text-[#3E8B3A] transition-colors mb-3">support@greenloop.com</a>
+                    @auth
+                        <a href="{{ route('help.message-admin') }}" class="text-[12px] text-gray-600 font-bold hover:text-[#3E8B3A] transition-colors mb-3">Chat with Admin</a>
+                    @else
+                        <a href="mailto:support@greenloop.com" class="text-[12px] text-gray-600 font-bold hover:text-[#3E8B3A] transition-colors mb-3">support@greenloop.com</a>
+                    @endauth
                     <p class="text-[11px] text-gray-500 font-medium leading-relaxed">For help with bookings and services.</p>
                 </div>
 
@@ -120,22 +124,16 @@
     <section class="py-20 px-6 lg:px-12 bg-white">
         <div class="landing-container grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             
-            <!-- Left Map Placeholder -->
-            <div class="relative w-full aspect-square md:aspect-[4/3] bg-[#E5F2E7] rounded-[2rem] overflow-hidden border border-gray-100 shadow-inner flex items-center justify-center">
-                <!-- Abstract map placeholder -->
-                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#3E8B3A 1px, transparent 1px); background-size: 24px 24px;"></div>
-                <i class="fa-solid fa-map-location-dot text-[8rem] text-[#3E8B3A] opacity-40"></i>
-                
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#E4405F] text-4xl drop-shadow-md">
-                    <i class="fa-solid fa-location-dot animate-bounce"></i>
-                </div>
-
-                <!-- Floating Office Card -->
-                <div class="absolute top-6 left-6 bg-white rounded-xl p-5 shadow-lg max-w-[240px] border border-gray-100">
-                    <h4 class="text-[13px] font-extrabold text-gray-900 mb-2">GreenLoop Office</h4>
-                    <p class="text-[11px] text-gray-500 font-medium leading-relaxed mb-3">2nd Floor, Eco Tower, Koramangala, Bengaluru - 560034, Karnataka, India</p>
-                    <a href="#" class="text-[#3E8B3A] text-[11px] font-extrabold hover:text-[#2D7A28] flex items-center gap-1">View larger map <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i></a>
-                </div>
+            <!-- Left Map Embed -->
+            <div class="relative w-full aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden border border-gray-100 shadow-md">
+                <!-- Google Maps Iframe -->
+                <iframe 
+                    src="https://maps.google.com/maps?q=Lovely+Professional+University,+Phagwara,+Punjab&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+                    class="absolute inset-0 w-full h-full border-0 z-0" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
 
             <!-- Right Contact Form -->
@@ -178,7 +176,7 @@
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pt-2">
                         <div class="flex items-center gap-3 text-left">
                             <div class="w-10 h-10 rounded-full bg-[#F4FCF4] text-[#3E8B3A] flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-shield-check text-lg"></i>
+                                <i class="fa-solid fa-shield-halved text-lg"></i>
                             </div>
                             <div>
                                 <p class="text-[11px] font-bold text-gray-900">We respect your privacy.</p>
@@ -186,7 +184,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#3E8B3A] hover:bg-[#2D7A28] text-white text-[13px] font-extrabold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                        <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-[13px] font-extrabold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
                             Send Message <i class="fa-regular fa-paper-plane"></i>
                         </button>
                     </div>
@@ -212,7 +210,7 @@
                     <p class="text-[13px] text-gray-500 font-medium mt-2">Find quick answers to common questions.</p>
                 </div>
                 
-                <a href="#" class="inline-flex items-center gap-2 text-[#3E8B3A] text-xs font-extrabold hover:text-[#2D7A28] transition-colors bg-white px-5 py-2.5 rounded-full shadow-sm border border-gray-100 hover:border-green-100">
+                <a href="#" class="inline-flex items-center gap-2 text-[#3E8B3A] text-xs font-extrabold hover:text-[#2E6F40] transition-colors bg-white px-5 py-2.5 rounded-full shadow-sm border border-gray-100 hover:border-green-100">
                     View All FAQs <div class="w-5 h-5 rounded-full bg-[#3E8B3A] text-white flex items-center justify-center"><i class="fa-solid fa-arrow-right text-[9px]"></i></div>
                 </a>
             </div>
@@ -266,7 +264,7 @@
             <!-- Center Input & Submit -->
             <div class="flex-1 max-w-xl w-full flex items-center gap-3">
                 <input type="email" placeholder="Enter your email address" class="flex-1 bg-white border border-gray-200 rounded-xl px-5 py-3 focus:outline-none focus:border-[#3E8B3A] focus:ring-2 focus:ring-[#3E8B3A]/20 text-[12px] font-medium text-gray-700 shadow-sm transition-all">
-                <button class="px-8 py-3 rounded-xl bg-[#3E8B3A] hover:bg-[#2D7A28] text-white text-[12px] font-extrabold transition-colors shadow-md">
+                <button class="px-8 py-3 rounded-xl bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-[12px] font-extrabold transition-colors shadow-md">
                     Subscribe
                 </button>
             </div>

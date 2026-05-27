@@ -58,6 +58,14 @@
                                 @endif
                             </a>
                             <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
+                        @elseif(Auth::user()->role === 'admin')
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link-dashboard {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
+                            <a href="{{ route('services.list') }}" class="nav-link-dashboard {{ request()->routeIs('services.list') ? 'active' : '' }}">Services</a>
+                            <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
+                        @elseif(Auth::user()->role === 'provider')
+                            <a href="{{ route('provider.dashboard') }}" class="nav-link-dashboard {{ request()->routeIs('provider.dashboard') ? 'active' : '' }}">Dashboard</a>
+                            <a href="{{ route('services.list') }}" class="nav-link-dashboard {{ request()->routeIs('services.list') ? 'active' : '' }}">Services</a>
+                            <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
                         @endif
                     @else
                         <a href="{{ url('/') }}" class="nav-link-dashboard {{ request()->is('/') ? 'active' : '' }}">Home</a>
@@ -71,11 +79,7 @@
             <div class="flex items-center gap-4">
                 
                 @auth
-                    <!-- Search Bar -->
-                    <div class="hidden md:flex relative mr-2">
-                        <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                        <input type="text" placeholder="Search anything..." class="w-48 lg:w-64 pl-9 pr-4 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:bg-white transition-colors">
-                    </div>
+
 
                     <!-- Icons -->
                     <div class="flex items-center gap-2 mr-2">
@@ -135,12 +139,17 @@
                         <!-- Profile Menu -->
                         <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50 transform origin-top-right transition-all">
                             <div class="py-1">
-                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-green-600 transition-colors flex items-center gap-2">
+                                @if(Auth::user()->role === 'admin')
+                                <a href="{{ route('admin.profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-green-600 transition-colors flex items-center gap-2">
                                     <i class="fa-regular fa-user w-4"></i> Profile
                                 </a>
-                                @if(Auth::user()->role === 'provider')
+                                @elseif(Auth::user()->role === 'provider')
                                 <a href="{{ route('provider.profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-green-600 transition-colors flex items-center gap-2">
-                                    <i class="fa-solid fa-store w-4"></i> Business Settings
+                                    <i class="fa-regular fa-user w-4"></i> Profile
+                                </a>
+                                @else
+                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-green-600 transition-colors flex items-center gap-2">
+                                    <i class="fa-regular fa-user w-4"></i> Profile
                                 </a>
                                 @endif
                                 <hr class="my-1 border-gray-100">

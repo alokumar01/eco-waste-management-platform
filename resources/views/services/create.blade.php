@@ -188,17 +188,61 @@
                                         </div>
                                         <select name="city" class="w-full pl-10 pr-10 py-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green transition-all bg-gray-50/20 appearance-none text-gray-700" required>
                                             <option value="" disabled selected>Select your city</option>
-                                            <option value="Bengaluru" {{ old('city') == 'Bengaluru' ? 'selected' : '' }}>Bengaluru</option>
-                                            <option value="Mumbai" {{ old('city') == 'Mumbai' ? 'selected' : '' }}>Mumbai</option>
-                                            <option value="Delhi NCR" {{ old('city') == 'Delhi NCR' ? 'selected' : '' }}>Delhi NCR</option>
-                                            <option value="Hyderabad" {{ old('city') == 'Hyderabad' ? 'selected' : '' }}>Hyderabad</option>
-                                            <option value="Chennai" {{ old('city') == 'Chennai' ? 'selected' : '' }}>Chennai</option>
-                                            <option value="Pune" {{ old('city') == 'Pune' ? 'selected' : '' }}>Pune</option>
-                                            <option value="Kolkata" {{ old('city') == 'Kolkata' ? 'selected' : '' }}>Kolkata</option>
                                             <option value="Ahmedabad" {{ old('city') == 'Ahmedabad' ? 'selected' : '' }}>Ahmedabad</option>
-                                            <option value="Surat" {{ old('city') == 'Surat' ? 'selected' : '' }}>Surat</option>
-                                            <option value="Jaipur" {{ old('city') == 'Jaipur' ? 'selected' : '' }}>Jaipur</option>
+                                            <option value="Amritsar" {{ old('city') == 'Amritsar' ? 'selected' : '' }}>Amritsar</option>
+                                            <option value="Aurangabad" {{ old('city') == 'Aurangabad' ? 'selected' : '' }}>Aurangabad</option>
+                                            <option value="Bengaluru" {{ old('city') == 'Bengaluru' ? 'selected' : '' }}>Bengaluru</option>
+                                            <option value="Bhopal" {{ old('city') == 'Bhopal' ? 'selected' : '' }}>Bhopal</option>
+                                            <option value="Bhubaneswar" {{ old('city') == 'Bhubaneswar' ? 'selected' : '' }}>Bhubaneswar</option>
                                             <option value="Chandigarh" {{ old('city') == 'Chandigarh' ? 'selected' : '' }}>Chandigarh</option>
+                                            <option value="Chennai" {{ old('city') == 'Chennai' ? 'selected' : '' }}>Chennai</option>
+                                            <option value="Coimbatore" {{ old('city') == 'Coimbatore' ? 'selected' : '' }}>Coimbatore</option>
+                                            <option value="Dehradun" {{ old('city') == 'Dehradun' ? 'selected' : '' }}>Dehradun</option>
+                                            <option value="Delhi NCR" {{ old('city') == 'Delhi NCR' ? 'selected' : '' }}>Delhi NCR</option>
+                                            <option value="Dhanbad" {{ old('city') == 'Dhanbad' ? 'selected' : '' }}>Dhanbad</option>
+                                            <option value="Faridabad" {{ old('city') == 'Faridabad' ? 'selected' : '' }}>Faridabad</option>
+                                            <option value="Ghaziabad" {{ old('city') == 'Ghaziabad' ? 'selected' : '' }}>Ghaziabad</option>
+                                            <option value="Gurugram" {{ old('city') == 'Gurugram' ? 'selected' : '' }}>Gurugram (Gurgaon)</option>
+                                            <option value="Guwahati" {{ old('city') == 'Guwahati' ? 'selected' : '' }}>Guwahati</option>
+                                            <option value="Gwalior" {{ old('city') == 'Gwalior' ? 'selected' : '' }}>Gwalior</option>
+                                            <option value="Howrah" {{ old('city') == 'Howrah' ? 'selected' : '' }}>Howrah</option>
+                                            <option value="Hyderabad" {{ old('city') == 'Hyderabad' ? 'selected' : '' }}>Hyderabad</option>
+                                            <option value="Indore" {{ old('city') == 'Indore' ? 'selected' : '' }}>Indore</option>
+                                            <option value="Jabalpur" {{ old('city') == 'Jabalpur' ? 'selected' : '' }}>Jabalpur</option>
+                                            <option value="Jaipur" {{ old('city') == 'Jaipur' ? 'selected' : '' }}>Jaipur</option>
+                                            <option value="Jamshedpur" {{ old('city') == 'Jamshedpur' ? 'selected' : '' }}>Jamshedpur</option>
+                                            <option value="Jodhpur" {{ old('city') == 'Jodhpur' ? 'selected' : '' }}>Jodhpur</option>
+                                            <option value="Kalyan-Dombivli" {{ old('city') == 'Kalyan-Dombivli' ? 'selected' : '' }}>Kalyan-Dombivli</option>
+                                            <option value="Kanpur" {{ old('city') == 'Kanpur' ? 'selected' : '' }}>Kanpur</option>
+                                            <option value="Kochi" {{ old('city') == 'Kochi' ? 'selected' : '' }}>Kochi</option>
+                                            <option value="Kolkata" {{ old('city') == 'Kolkata' ? 'selected' : '' }}>Kolkata</option>
+                                            <option value="Kota" {{ old('city') == 'Kota' ? 'selected' : '' }}>Kota</option>
+                                            <option value="Lucknow" {{ old('city') == 'Lucknow' ? 'selected' : '' }}>Lucknow</option>
+                                            <option value="Ludhiana" {{ old('city') == 'Ludhiana' ? 'selected' : '' }}>Ludhiana</option>
+                                            <option value="Madurai" {{ old('city') == 'Madurai' ? 'selected' : '' }}>Madurai</option>
+                                            <option value="Mangaluru" {{ old('city') == 'Mangaluru' ? 'selected' : '' }}>Mangaluru (Mangalore)</option>
+                                            <option value="Meerut" {{ old('city') == 'Meerut' ? 'selected' : '' }}>Meerut</option>
+                                            <option value="Mumbai" {{ old('city') == 'Mumbai' ? 'selected' : '' }}>Mumbai</option>
+                                            <option value="Mysore" {{ old('city') == 'Mysore' ? 'selected' : '' }}>Mysore</option>
+                                            <option value="Nagpur" {{ old('city') == 'Nagpur' ? 'selected' : '' }}>Nagpur</option>
+                                            <option value="Nashik" {{ old('city') == 'Nashik' ? 'selected' : '' }}>Nashik</option>
+                                            <option value="Navi Mumbai" {{ old('city') == 'Navi Mumbai' ? 'selected' : '' }}>Navi Mumbai</option>
+                                            <option value="Noida" {{ old('city') == 'Noida' ? 'selected' : '' }}>Noida</option>
+                                            <option value="Patna" {{ old('city') == 'Patna' ? 'selected' : '' }}>Patna</option>
+                                            <option value="Pimpri-Chinchwad" {{ old('city') == 'Pimpri-Chinchwad' ? 'selected' : '' }}>Pimpri-Chinchwad</option>
+                                            <option value="Prayagraj" {{ old('city') == 'Prayagraj' ? 'selected' : '' }}>Prayagraj (Allahabad)</option>
+                                            <option value="Pune" {{ old('city') == 'Pune' ? 'selected' : '' }}>Pune</option>
+                                            <option value="Raipur" {{ old('city') == 'Raipur' ? 'selected' : '' }}>Raipur</option>
+                                            <option value="Rajkot" {{ old('city') == 'Rajkot' ? 'selected' : '' }}>Rajkot</option>
+                                            <option value="Ranchi" {{ old('city') == 'Ranchi' ? 'selected' : '' }}>Ranchi</option>
+                                            <option value="Srinagar" {{ old('city') == 'Srinagar' ? 'selected' : '' }}>Srinagar</option>
+                                            <option value="Surat" {{ old('city') == 'Surat' ? 'selected' : '' }}>Surat</option>
+                                            <option value="Thane" {{ old('city') == 'Thane' ? 'selected' : '' }}>Thane</option>
+                                            <option value="Thiruvananthapuram" {{ old('city') == 'Thiruvananthapuram' ? 'selected' : '' }}>Thiruvananthapuram</option>
+                                            <option value="Vadodara" {{ old('city') == 'Vadodara' ? 'selected' : '' }}>Vadodara</option>
+                                            <option value="Varanasi" {{ old('city') == 'Varanasi' ? 'selected' : '' }}>Varanasi</option>
+                                            <option value="Vijayawada" {{ old('city') == 'Vijayawada' ? 'selected' : '' }}>Vijayawada</option>
+                                            <option value="Visakhapatnam" {{ old('city') == 'Visakhapatnam' ? 'selected' : '' }}>Visakhapatnam</option>
                                         </select>
                                         <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>

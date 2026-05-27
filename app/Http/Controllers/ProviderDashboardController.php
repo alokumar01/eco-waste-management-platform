@@ -31,7 +31,7 @@ class ProviderDashboardController extends Controller
         $avgRating = $reviews->count() > 0 ? $reviews->avg('rating') : 0;
         $totalReviews = $reviews->count();
 
-        $upcomingBookings = $bookings->whereIn('status', ['confirmed', 'pending'])
+        $upcomingBookings = $bookings->whereIn('status', ['confirmed', 'accepted', 'pending'])
                                      ->where('scheduled_at', '>=', now()->startOfDay())
                                      ->sortBy('scheduled_at')
                                      ->take(5);

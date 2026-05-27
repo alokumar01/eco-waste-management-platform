@@ -15,10 +15,10 @@
             <div class="flex items-center justify-between mt-auto">
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-xs">
-                        {{ substr($featuredPost->user->name ?? 'A', 0, 1) }}
+                        {{ substr($featuredPost->author->name ?? 'A', 0, 1) }}
                     </div>
                     <div>
-                        <div class="text-xs font-bold text-gray-900">{{ $featuredPost->user->name ?? 'Admin' }}</div>
+                        <div class="text-xs font-bold text-gray-900">{{ $featuredPost->author->name ?? 'Admin' }}</div>
                         <div class="text-[11px] text-gray-500">{{ $featuredPost->published_at ? $featuredPost->published_at->format('M d, Y') : $featuredPost->created_at->format('M d, Y') }} • 5 min read</div>
                     </div>
                 </div>

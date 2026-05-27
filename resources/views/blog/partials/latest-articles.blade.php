@@ -13,10 +13,10 @@
                 <h4 class="font-bold text-sm text-gray-900 mb-3 flex-grow group-hover:text-green-theme transition-colors">{{ $post->title }}</h4>
                 <div class="flex items-center gap-2 mt-auto">
                     <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-[10px]">
-                        {{ substr($post->user->name ?? 'A', 0, 1) }}
+                        {{ substr($post->author->name ?? 'A', 0, 1) }}
                     </div>
                     <div>
-                        <div class="text-[11px] font-semibold text-gray-900">{{ $post->user->name ?? 'Admin' }}</div>
+                        <div class="text-[11px] font-semibold text-gray-900">{{ $post->author->name ?? 'Admin' }}</div>
                         <div class="text-[10px] text-gray-500">{{ $post->published_at ? $post->published_at->format('M d, Y') : $post->created_at->format('M d, Y') }} • 5 min read</div>
                     </div>
                 </div>

@@ -227,9 +227,11 @@
                             </div>
                         </div>
 
-                    </div>
-                </div>
             </form>
+
+            <div class="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.015)] border border-gray-100 max-w-xl mt-6">
+                @include('profile.partials.delete-user-form')
+            </div>
         </div>
     </div>
 </div>

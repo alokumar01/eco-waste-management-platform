@@ -16,8 +16,11 @@ class Booking extends Model
         'customer_id',
         'provider_id',
         'scheduled_at',
+        'original_scheduled_at',
         'status',
+        'payment_status',
         'price',
+        'waste_amount',
     ];
 
     protected static function boot()

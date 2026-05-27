@@ -42,6 +42,9 @@
             <button type="button" onclick="filterCustomerBookings('pending', this)" class="cust-tab-btn px-4 py-2 text-xs font-bold rounded-full transition-all bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">
                 Pending <span class="ml-1 bg-amber-50 text-amber-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-amber-200/50">{{ $bookings->where('status', 'pending')->count() }}</span>
             </button>
+            <button type="button" onclick="filterCustomerBookings('accepted', this)" class="cust-tab-btn px-4 py-2 text-xs font-bold rounded-full transition-all bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">
+                Awaiting Payment <span class="ml-1 bg-emerald-50 text-emerald-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-emerald-200/50">{{ $bookings->where('status', 'accepted')->count() }}</span>
+            </button>
             <button type="button" onclick="filterCustomerBookings('confirmed', this)" class="cust-tab-btn px-4 py-2 text-xs font-bold rounded-full transition-all bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">
                 Confirmed <span class="ml-1 bg-blue-50 text-blue-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-blue-200/50">{{ $bookings->where('status', 'confirmed')->count() }}</span>
             </button>
@@ -59,6 +62,7 @@
                 @php
                     $statusConfig = [
                         'pending' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-800', 'border' => 'border-amber-200/40'],
+                        'accepted' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-800', 'border' => 'border-emerald-200/40'],
                         'confirmed' => ['bg' => 'bg-blue-50', 'text' => 'text-blue-800', 'border' => 'border-blue-200/40'],
                         'completed' => ['bg' => 'bg-[#E8F5E9]', 'text' => 'text-[#2E6F40]', 'border' => 'border-[#C1E1C9]'],
                         'cancelled' => ['bg' => 'bg-red-50', 'text' => 'text-red-800', 'border' => 'border-red-200/40'],
@@ -83,7 +87,13 @@
                         </div>
                         <div class="space-y-1">
                             <span class="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase border {{ $config['bg'] }} {{ $config['text'] }} {{ $config['border'] }} select-none">
-                                {{ $booking->status }}
+                                @if($booking->status === 'accepted')
+                                    Accepted (Awaiting Payment)
+                                @elseif($booking->status === 'pending')
+                                    Pending Approval
+                                @else
+                                    {{ $booking->status }}
+                                @endif
                             </span>
                             <h3 class="font-extrabold text-[14.5px] text-gray-900 leading-tight">
                                 {{ $booking->service->name }}
@@ -111,21 +121,33 @@
                             <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                         </a>
 
-                        @if ($booking->status === 'completed')
+                        @if ($booking->status === 'accepted')
+                            <a href="{{ route('bookings.payment', ['booking_id' => $booking->id]) }}" 
+                               class="inline-flex items-center gap-1.5 px-4.5 py-2.5 bg-green-700 hover:bg-green-800 text-white text-xs font-extrabold rounded-xl transition-all shadow-sm select-none">
+                                Proceed to Payment
+                            </a>
+                        @elseif ($booking->status === 'completed')
                             @if (!$booking->review)
                                 <!-- slek rate button -->
                                 <a href="{{ route('reviews.create', ['booking' => $booking->id]) }}" 
                                    class="inline-flex items-center gap-1.5 px-4.5 py-2.5 bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-xs font-extrabold rounded-xl transition-all shadow-sm select-none">
-                                    <span>Rate Service</span>
-                                    <span>★</span>
+                                    <span class="text-white">Rate Service</span>
+                                    <span class="text-white">★</span>
                                 </a>
                             @else
                                 <!-- Already rated capsule -->
-                                <div class="px-3.5 py-2 bg-yellow-50/50 border border-yellow-100 rounded-xl flex items-center gap-1 select-none text-[11px] font-extrabold text-yellow-700">
-                                    <span>★</span>
-                                    <span>Rated ({{ $booking->review->rating }} / 5)</span>
+                                <div class="px-3.5 py-2 bg-yellow-50/50 border border-yellow-100 rounded-xl flex items-center gap-1.5 select-none text-[11px] font-extrabold">
+                                    <div class="flex text-amber-400 gap-0.5">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <i class="fa-solid fa-star text-xs {{ $i <= $booking->review->rating ? 'text-amber-400' : 'text-gray-200' }}"></i>
+                                        @endfor
+                                    </div>
                                 </div>
                             @endif
+                        @elseif ($booking->status === 'cancelled')
+                            <button type="button" disabled class="px-4.5 py-2.5 bg-red-50 border border-red-100 text-red-500 text-xs font-extrabold rounded-xl select-none">
+                                {{ $booking->payment_status === 'refunded' ? 'Cancelled (Refunded)' : 'Cancelled' }}
+                            </button>
                         @else
                             <button type="button" disabled class="px-4.5 py-2.5 bg-gray-50 border border-gray-150 text-gray-400 text-xs font-extrabold rounded-xl select-none">
                                 Active Order
@@ -170,6 +192,8 @@
             tabButton.className = "cust-tab-btn px-4 py-2 text-xs font-bold rounded-full transition-all bg-[#3E8B3A] text-white border border-[#3E8B3A] shadow-sm";
         } else if (status === 'pending') {
             tabButton.className = "cust-tab-btn px-4 py-2 text-xs font-bold rounded-full transition-all bg-amber-500 text-white border border-amber-500 shadow-sm";
+        } else if (status === 'accepted') {
+            tabButton.className = "cust-tab-btn px-4 py-2 text-xs font-bold rounded-full transition-all bg-emerald-600 text-white border border-emerald-600 shadow-sm";
         } else if (status === 'confirmed') {
             tabButton.className = "cust-tab-btn px-4 py-2 text-xs font-bold rounded-full transition-all bg-blue-600 text-white border border-blue-600 shadow-sm";
         } else if (status === 'completed') {

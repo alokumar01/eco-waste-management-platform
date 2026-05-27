@@ -1,17 +1,124 @@
 <div class="space-y-6">
     <!-- Table of Contents -->
-    <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+    <div id="toc-container" class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hidden">
         <h3 class="font-bold text-gray-900 mb-4 text-lg">Table of Contents</h3>
-        <ul class="space-y-2 text-sm font-medium p-0 m-0 list-none">
-            <li><a href="#" class="flex items-center gap-3 p-2.5 rounded-lg bg-green-50 text-green-800"><div class="w-1.5 h-1.5 rounded-full bg-green-600"></div> Why Compost at Home?</a></li>
-            <li><a href="#" class="flex items-center gap-3 p-2.5 rounded-lg text-gray-500 hover:bg-gray-50"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> What Can You Compost?</a></li>
-            <li><a href="#" class="flex items-center gap-3 p-2.5 rounded-lg text-gray-500 hover:bg-gray-50"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Choosing a Composting Method</a></li>
-            <li><a href="#" class="flex items-center gap-3 p-2.5 rounded-lg text-gray-500 hover:bg-gray-50"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Step-by-Step Guide</a></li>
-            <li><a href="#" class="flex items-center gap-3 p-2.5 rounded-lg text-gray-500 hover:bg-gray-50"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Tips for Successful Composting</a></li>
-            <li><a href="#" class="flex items-center gap-3 p-2.5 rounded-lg text-gray-500 hover:bg-gray-50"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Common Mistakes to Avoid</a></li>
-            <li><a href="#" class="flex items-center gap-3 p-2.5 rounded-lg text-gray-500 hover:bg-gray-50"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Benefits of Home Composting</a></li>
+        <ul id="toc-list" class="text-sm font-medium p-0 m-0 list-none">
+            <!-- Dynamic TOC items injected via JS -->
         </ul>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const article = document.querySelector('article.prose');
+        if (!article) return;
+
+        const headings = article.querySelectorAll('h1, h2');
+        const tocContainer = document.getElementById('toc-container');
+        const tocList = document.getElementById('toc-list');
+
+        if (!tocContainer || !tocList) return;
+
+        if (headings.length === 0) {
+            tocContainer.classList.add('hidden');
+            return;
+        }
+
+        tocContainer.classList.remove('hidden');
+
+        headings.forEach((heading, index) => {
+            if (!heading.id) {
+                heading.id = 'heading-' + index + '-' + heading.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            }
+
+            const li = document.createElement('li');
+            const isH2 = heading.tagName.toLowerCase() === 'h2';
+            
+            li.innerHTML = `
+                <a href="#${heading.id}" class="toc-link flex items-center gap-3 py-2 px-0 rounded-lg text-gray-500 hover:bg-gray-50 hover:text-green-800 transition-all ${isH2 ? 'pl-5 text-xs font-semibold' : ''}">
+                    <div class="rounded-full ${isH2 ? 'w-1 h-1 bg-gray-300' : 'w-1.5 h-1.5 bg-gray-400'} shrink-0 dot-marker transition-colors"></div>
+                    <span class="truncate">${heading.textContent.trim()}</span>
+                </a>
+            `;
+            tocList.appendChild(li);
+        });
+
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const navBar = document.querySelector('nav') || document.querySelector('header');
+                    const navHeight = navBar ? navBar.offsetHeight : 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - navHeight - 24; // 24px extra padding
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    history.pushState(null, null, '#' + targetId);
+                }
+            });
+        });
+        
+        function highlightToc() {
+            let currentActive = null;
+            const scrollPosition = window.scrollY + 120;
+
+            headings.forEach(heading => {
+                if (scrollPosition >= heading.offsetTop) {
+                    currentActive = heading.id;
+                }
+            });
+
+            tocLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                const dot = link.querySelector('.dot-marker');
+                if (href === `#${currentActive}`) {
+                    link.classList.remove('text-gray-500');
+                    link.classList.add('bg-green-50', 'text-green-800');
+                    if (dot) {
+                        dot.classList.remove('bg-gray-300', 'bg-gray-400');
+                        dot.classList.add('bg-green-600');
+                    }
+                } else {
+                    link.classList.remove('bg-green-50', 'text-green-800');
+                    link.classList.add('text-gray-500');
+                    if (dot) {
+                        dot.classList.remove('bg-green-600');
+                        const isH2Link = link.classList.contains('pl-5');
+                        dot.classList.add(isH2Link ? 'bg-gray-300' : 'bg-gray-400');
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightToc);
+        highlightToc();
+
+        // Handle initial load with hash
+        if (window.location.hash) {
+            setTimeout(() => {
+                const targetId = window.location.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const navBar = document.querySelector('nav') || document.querySelector('header');
+                    const navHeight = navBar ? navBar.offsetHeight : 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - navHeight - 24;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 100);
+        }
+    });
+    </script>
 
     <!-- Related Articles -->
     <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">

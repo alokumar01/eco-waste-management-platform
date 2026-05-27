@@ -5,7 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'GreenLoop | Smart Waste. Green Future.' }}</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">
+    <!-- Favicon Suite -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon_io/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('favicon_io/android-chrome-512x512.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicon_io/android-chrome-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon_io/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon_io/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('favicon_io/site.webmanifest') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon_io/favicon.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Premium Google Fonts -->
@@ -80,7 +87,7 @@
 
         /* Beautiful Green Text Gradient */
         .text-gradient-green {
-            background: linear-gradient(135deg, #2D7A28 0%, #4CAF50 100%);
+            background: linear-gradient(135deg, #2E6F40 0%, #4CAF50 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -90,7 +97,7 @@
 <body class="antialiased selection:bg-[#3E8B3A] selection:text-white">
 
     <!-- Navbar -->
-    <nav class="bg-white pt-6 pb-4 px-6 lg:px-12 relative z-50 border-b border-gray-50">
+    <nav class="bg-white pt-4 pb-3 px-6 lg:px-12 sticky top-0 z-50 border-b border-gray-100 shadow-sm">
         <div class="landing-container flex items-center justify-between">
             
             <!-- Logo -->
@@ -111,11 +118,11 @@
             <div class="hidden md:flex items-center gap-5">
                 <!-- Auth Button -->
                 @auth
-                    <a href="{{ route('dashboard') }}" class="px-6 py-3 rounded-xl bg-[#3E8B3A] hover:bg-[#2D7A28] text-white text-xs font-extrabold tracking-wide uppercase transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
+                    <a href="{{ route('dashboard') }}" class="px-6 py-3 rounded-xl bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-xs font-extrabold tracking-wide uppercase transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
                         <i class="fa-regular fa-user"></i> Dashboard
                     </a>
                 @else
-                    <a href="{{ route('login') }}" class="px-6 py-3 rounded-xl bg-[#3E8B3A] hover:bg-[#2D7A28] text-white text-[13px] font-extrabold transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
+                    <a href="{{ route('login') }}" class="px-6 py-3 rounded-xl bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-[13px] font-extrabold transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
                         <i class="fa-regular fa-user"></i> Log In
                     </a>
                 @endauth
@@ -136,14 +143,14 @@
     <footer class="bg-white pt-16 pb-8 border-t border-gray-100 selection:bg-[#3E8B3A] selection:text-white">
         <div class="landing-container px-6 lg:px-12">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16 select-none">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16 select-none">
                 
                 <!-- Brand Column -->
-                <div class="lg:col-span-1 space-y-4">
+                <div class="space-y-4">
                     <a href="/" class="flex items-center mb-6">
                         <img src="{{ asset('icon-landscap.svg') }}" alt="GreenLoop Logo" class="h-6 md:h-7 w-auto object-contain select-none pointer-events-none">
                     </a>
-                    <p class="text-[11px] text-gray-500 font-medium leading-relaxed max-w-[200px]">
+                    <p class="text-[11px] text-gray-500 font-medium leading-relaxed max-w-[240px]">
                         Connecting communities with trusted waste management and composting services for a cleaner, greener tomorrow.
                     </p>
                 </div>
@@ -160,56 +167,17 @@
                     </ul>
                 </div>
 
-                <!-- Services -->
-                <div>
-                    <h4 class="text-[13px] font-extrabold text-gray-900 mb-5">Services</h4>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Composting</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Recycling</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">E-Waste Management</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Organic Waste Pickup</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Garden Waste Collection</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Commercial Solutions</a></li>
-                    </ul>
-                </div>
-
                 <!-- Support -->
                 <div>
                     <h4 class="text-[13px] font-extrabold text-gray-900 mb-5">Support</h4>
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Help Center</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">FAQs</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Terms & Conditions</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Refund Policy</a></li>
-                        <li><a href="#" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Contact Support</a></li>
+                        <li><a href="{{ route('public.help') }}" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Help Center</a></li>
+                        <li><a href="{{ route('public.faqs') }}" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">FAQs</a></li>
+                        <li><a href="{{ route('public.terms') }}" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Terms & Conditions</a></li>
+                        <li><a href="{{ route('public.privacy') }}" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Privacy Policy</a></li>
+                        <li><a href="{{ route('public.refund-policy') }}" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Refund Policy</a></li>
+                        <li><a href="{{ route('public.contact') }}" class="text-[12px] text-gray-500 hover:text-[#3E8B3A] font-medium transition-colors">Contact Support</a></li>
                     </ul>
-                </div>
-
-                <!-- Download App -->
-                <div>
-                    <h4 class="text-[13px] font-extrabold text-gray-900 mb-5">Download Our App</h4>
-                    <p class="text-[11px] text-gray-500 font-medium leading-relaxed max-w-[200px] mb-4">
-                        Book services, track pickups and more from our mobile app.
-                    </p>
-                    <div class="flex gap-2">
-                        <!-- Generic Play Store Badge -->
-                        <a href="#" class="h-9 rounded flex items-center justify-center bg-black hover:bg-gray-900 text-white transition-colors px-2.5">
-                            <i class="fa-brands fa-google-play text-lg mr-1.5"></i>
-                            <div class="flex flex-col items-start leading-none">
-                                <span class="text-[6px] text-gray-300 uppercase">Get it on</span>
-                                <span class="text-[11px] font-semibold">Google Play</span>
-                            </div>
-                        </a>
-                        <!-- Generic App Store Badge -->
-                        <a href="#" class="h-9 rounded flex items-center justify-center bg-black hover:bg-gray-900 text-white transition-colors px-2.5">
-                            <i class="fa-brands fa-apple text-xl mr-1.5 pb-0.5"></i>
-                            <div class="flex flex-col items-start leading-none">
-                                <span class="text-[6px] text-gray-300">Download on the</span>
-                                <span class="text-[11px] font-semibold">App Store</span>
-                            </div>
-                        </a>
-                    </div>
                 </div>
 
             </div>
@@ -225,5 +193,148 @@
         </div>
     </footer>
 
+    <!-- Global Premium Confirmation Modal -->
+    <div id="confirm-modal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4">
+        <!-- Backdrop with premium glassmorphism blur -->
+        <div id="confirm-modal-backdrop" class="absolute inset-0 bg-gray-900/60 backdrop-blur-[4px] opacity-0 transition-opacity duration-300"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative bg-white rounded-3xl border border-gray-100 max-w-sm w-full p-6 shadow-2xl transform scale-95 opacity-0 transition-all duration-300 flex flex-col items-center text-center select-none" id="confirm-modal-content">
+            <!-- Warning Icon -->
+            <div class="w-14 h-14 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-4 shadow-sm border border-red-100">
+                <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+            </div>
+            
+            <!-- Title & Message -->
+            <h3 class="text-base font-extrabold text-gray-900 mb-2" id="confirm-modal-title">Confirm Action</h3>
+            <p class="text-xs text-gray-550 font-semibold leading-relaxed mb-6" id="confirm-modal-message">Are you sure you want to perform this action? This cannot be undone.</p>
+            
+            <!-- Actions Row -->
+            <div class="flex items-center gap-3 w-full">
+                <button type="button" id="confirm-modal-cancel" class="flex-1 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-650 text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer">
+                    Cancel
+                </button>
+                <button type="button" id="confirm-modal-confirm" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            let activeCallback = null;
+
+            window.showConfirmModal = function(options) {
+                const modal = document.getElementById('confirm-modal');
+                const backdrop = document.getElementById('confirm-modal-backdrop');
+                const content = document.getElementById('confirm-modal-content');
+                const titleEl = document.getElementById('confirm-modal-title');
+                const messageEl = document.getElementById('confirm-modal-message');
+                const confirmBtn = document.getElementById('confirm-modal-confirm');
+
+                if (!modal || !backdrop || !content) return;
+
+                titleEl.textContent = options.title || 'Confirm Action';
+                messageEl.textContent = options.message || 'Are you sure you want to proceed?';
+                activeCallback = options.onConfirm || null;
+
+                if (options.confirmText) {
+                    confirmBtn.textContent = options.confirmText;
+                } else {
+                    confirmBtn.textContent = 'Confirm';
+                }
+
+                if (options.confirmClass) {
+                    confirmBtn.className = `flex-1 py-2.5 text-white text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer ${options.confirmClass}`;
+                } else {
+                    confirmBtn.className = "flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer";
+                }
+
+                // Show elements
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+
+                // Force reflow
+                modal.offsetHeight;
+
+                // Animate in
+                backdrop.classList.remove('opacity-0');
+                backdrop.classList.add('opacity-100');
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            };
+
+            window.hideConfirmModal = function() {
+                const modal = document.getElementById('confirm-modal');
+                const backdrop = document.getElementById('confirm-modal-backdrop');
+                const content = document.getElementById('confirm-modal-content');
+
+                if (!modal || !backdrop || !content) return;
+
+                backdrop.classList.remove('opacity-100');
+                backdrop.classList.add('opacity-0');
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+
+                setTimeout(() => {
+                    modal.classList.remove('flex');
+                    modal.classList.add('hidden');
+                    activeCallback = null;
+                }, 300);
+            };
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const confirmBtn = document.getElementById('confirm-modal-confirm');
+                const cancelBtn = document.getElementById('confirm-modal-cancel');
+                const backdrop = document.getElementById('confirm-modal-backdrop');
+
+                if (confirmBtn) {
+                    confirmBtn.addEventListener('click', function() {
+                        if (activeCallback) activeCallback();
+                        window.hideConfirmModal();
+                    });
+                }
+
+                if (cancelBtn) {
+                    cancelBtn.addEventListener('click', function() {
+                        window.hideConfirmModal();
+                    });
+                }
+
+                if (backdrop) {
+                    backdrop.addEventListener('click', function() {
+                        window.hideConfirmModal();
+                    });
+                }
+
+                // Global interception of form submission with data-confirm
+                document.addEventListener('submit', function(e) {
+                    const confirmMsg = e.target.getAttribute('data-confirm');
+                    if (confirmMsg) {
+                        if (e.target.dataset.confirmed === 'true') {
+                            return;
+                        }
+                        e.preventDefault();
+                        
+                        const confirmText = e.target.getAttribute('data-confirm-text') || 'Confirm';
+                        const confirmTitle = e.target.getAttribute('data-confirm-title') || 'Confirm Action';
+                        const confirmClass = e.target.getAttribute('data-confirm-class') || 'bg-red-600 hover:bg-red-700';
+
+                        window.showConfirmModal({
+                            title: confirmTitle,
+                            message: confirmMsg,
+                            confirmText: confirmText,
+                            confirmClass: confirmClass,
+                            onConfirm: function() {
+                                e.target.dataset.confirmed = 'true';
+                                e.target.submit();
+                            }
+                        });
+                    }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>

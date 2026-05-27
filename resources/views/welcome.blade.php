@@ -118,7 +118,7 @@
                     <!-- Stat 3 -->
                     <div class="flex items-center gap-5 px-4 pt-6 md:pt-0">
                         <div class="w-16 h-16 rounded-full bg-[#E5F2E7] flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-shield-check text-xl text-[#3E8B3A]"></i>
+                            <i class="fa-solid fa-user-shield text-xl text-[#3E8B3A]"></i>
                         </div>
                         <div>
                             <h4 class="text-[28px] font-black text-gray-900 leading-none mb-1">150+</h4>
@@ -165,7 +165,7 @@
                 </p>
                 
                 <div class="flex flex-wrap items-center gap-4 pt-2">
-                    <a href="{{ route('services.list') }}" class="px-6 py-3.5 rounded-xl bg-[#3E8B3A] hover:bg-[#2D7A28] text-white text-xs font-extrabold tracking-wide transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                    <a href="{{ route('services.list') }}" class="px-6 py-3.5 rounded-xl bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-xs font-extrabold tracking-wide transition-all shadow-md hover:shadow-lg flex items-center gap-2">
                         Explore All Services <i class="fa-solid fa-arrow-right ml-1"></i>
                     </a>
                 </div>
@@ -183,7 +183,7 @@
                         ['icon' => 'fa-recycle', 'title' => 'Recycling Services', 'desc' => 'Recycle plastic, paper, glass, metal and more.'],
                         ['icon' => 'fa-battery-empty', 'title' => 'E-Waste Management', 'desc' => 'Safe collection and responsible disposal of e-waste.'],
                         ['icon' => 'fa-truck-fast', 'title' => 'Organic Waste Pickup', 'desc' => 'Doorstep pickup of organic waste from your home.'],
-                        ['icon' => 'fa-sack-xmark', 'title' => 'Garden Waste Collection', 'desc' => 'We collect and recycle garden waste efficiently.'],
+                        ['icon' => 'fa-leaf', 'title' => 'Garden Waste Collection', 'desc' => 'We collect and recycle garden waste efficiently.'],
                         ['icon' => 'fa-building', 'title' => 'Commercial Solutions', 'desc' => 'Tailored waste management for businesses.']
                     ];
                 @endphp
@@ -279,7 +279,7 @@
                 <!-- Left Content -->
                 <div class="flex items-center gap-5 shrink-0">
                     <div class="w-14 h-14 rounded-2xl bg-[#F4FCF4] text-[#3E8B3A] border border-green-100 flex items-center justify-center">
-                        <i class="fa-solid fa-shield-check text-2xl"></i>
+                        <i class="fa-solid fa-shield-halved text-2xl"></i>
                     </div>
                     <div>
                         <h3 class="text-lg font-extrabold text-gray-900 leading-tight mb-1">Trusted by Thousands</h3>
@@ -472,7 +472,7 @@
                         <button class="w-8 h-8 rounded-full bg-[#F0F7F2] text-[#3E8B3A] hover:bg-[#E1EFE4] flex items-center justify-center transition-colors">
                             <i class="fa-solid fa-arrow-left text-xs"></i>
                         </button>
-                        <button class="w-8 h-8 rounded-full bg-[#3E8B3A] text-white hover:bg-[#2D7A28] flex items-center justify-center transition-colors shadow-md">
+                        <button class="w-8 h-8 rounded-full bg-[#3E8B3A] text-white hover:bg-[#2E6F40] flex items-center justify-center transition-colors shadow-md">
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </button>
                     </div>
@@ -511,10 +511,10 @@
                 </p>
 
                 <div class="flex flex-wrap items-center gap-4">
-                    <a href="{{ route('login') }}" class="px-6 py-3.5 rounded-xl bg-[#3E8B3A] hover:bg-[#2D7A28] text-white text-xs font-extrabold tracking-wide transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                    <a href="{{ route('login') }}" class="px-6 py-3.5 rounded-xl bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-xs font-extrabold tracking-wide transition-all shadow-md hover:shadow-lg flex items-center gap-2">
                         Get Started Now <i class="fa-solid fa-arrow-right ml-1"></i>
                     </a>
-                    <a href="{{ route('register') }}" class="px-5 py-3.5 rounded-xl bg-transparent border-2 border-[#3E8B3A] text-[#3E8B3A] hover:bg-[#3E8B3A] hover:text-white text-xs font-extrabold tracking-wide transition-all flex items-center gap-2">
+                    <a href="{{ route('register') }}" class="px-5 py-3.5 rounded-xl bg-[#3E8B3A] border-2 border-[#3E8B3A] text-white hover:bg-[#2E6F40] hover:border-[#2E6F40] text-xs font-extrabold tracking-wide transition-all flex items-center gap-2">
                         Become a Service Provider <i class="fa-solid fa-users text-[10px]"></i>
                     </a>
                 </div>
@@ -584,7 +584,7 @@
             <div class="flex-1 max-w-xl w-full">
                 <div class="relative flex items-center w-full">
                     <input type="email" placeholder="Enter your email address" class="w-full bg-white border border-gray-200 rounded-xl pl-5 pr-32 py-3.5 focus:outline-none focus:border-[#3E8B3A] focus:ring-2 focus:ring-[#3E8B3A]/20 text-[13px] font-medium text-gray-700 shadow-sm transition-all">
-                    <button class="absolute right-1.5 px-6 py-2.5 rounded-lg bg-[#3E8B3A] hover:bg-[#2D7A28] text-white text-[12px] font-extrabold transition-colors">
+                    <button class="absolute right-1.5 px-6 py-2.5 rounded-lg bg-[#3E8B3A] hover:bg-[#2E6F40] text-white text-[12px] font-extrabold transition-colors">
                         Subscribe
                     </button>
                 </div>

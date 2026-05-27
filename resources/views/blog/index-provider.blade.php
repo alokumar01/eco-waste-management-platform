@@ -4,10 +4,18 @@
 
 @section('content')
 <div class="flex h-screen bg-[#F4F7F6] font-sans overflow-hidden">
-    @include('provider-dashboard-sidebar')
+    @if(auth()->user()->role === 'admin')
+        @include('admin-dashboard-sidebar')
+    @else
+        @include('provider-dashboard-sidebar')
+    @endif
 
     <div class="flex-1 flex flex-col h-full overflow-hidden">
-        @include('provider-dashboard-header')
+        @if(auth()->user()->role === 'admin')
+            @include('admin-dashboard-header')
+        @else
+            @include('provider-dashboard-header')
+        @endif
 
         <div class="flex-1 overflow-y-auto bg-[#F4F7F6] p-6 md:p-10 pb-20">
         <div class="flex justify-between items-center mb-6">
@@ -57,8 +65,9 @@
                                     {{ $post->created_at->format('M d, Y') }}
                                 </td>
                                 <td class="px-6 py-4 text-right space-x-3">
+                                    <a href="{{ route('provider.blog.preview', $post->id) }}" target="_blank" title="Preview Article" class="text-gray-400 hover:text-green-600 transition-colors inline-block"><i class="fa-solid fa-eye"></i></a>
                                     <a href="{{ route('blog.edit', $post->id) }}" class="text-gray-400 hover:text-green-600 transition-colors inline-block"><i class="fa-solid fa-pen"></i></a>
-                                    <form action="{{ route('blog.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone.');">
+                                    <form action="{{ route('blog.destroy', $post->id) }}" method="POST" class="inline-block" data-confirm="Are you sure you want to delete this post? This action cannot be undone." data-confirm-title="Delete Post" data-confirm-text="Delete">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors bg-transparent border-0 p-0 cursor-pointer">

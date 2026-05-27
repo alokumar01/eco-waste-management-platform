@@ -260,7 +260,6 @@
                 <!-- Main Form Block -->
                 <form action="{{ route('bookings.store') }}" method="POST" id="booking_form" class="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_2px_15px_rgba(0,0,0,0.02)] space-y-6">
                     @csrf
-                    
                     <input type="hidden" name="service_id" value="{{ $service->id }}">
                     <input type="hidden" name="scheduled_at" id="final_scheduled_at">
 
@@ -326,7 +325,7 @@
                     <div class="space-y-1.5">
                         <label class="block text-[10px] font-bold text-gray-600 uppercase tracking-wider">Special Instructions (Optional)</label>
                         <div class="relative">
-                            <textarea id="instructions" maxlength="200" rows="3" placeholder="Any specific instructions for the provider..." class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-[#3E8B3A] focus:border-[#3E8B3A] resize-none" oninput="updateCharCount(this)"></textarea>
+                            <textarea id="instructions" name="instructions" maxlength="200" rows="3" placeholder="Any specific instructions for the provider..." class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-xs text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-[#3E8B3A] focus:border-[#3E8B3A] resize-none" oninput="updateCharCount(this)"></textarea>
                             <span id="char_counter" class="absolute right-4 bottom-2.5 text-[9px] font-bold text-gray-400">0/200</span>
                         </div>
                     </div>
@@ -338,7 +337,7 @@
                     <div class="flex items-center justify-between select-none">
                         <div>
                             <p class="text-xs font-bold text-gray-900 leading-none">Total Amount</p>
-                            <p class="text-[9.5px] text-gray-400 font-semibold mt-1">You can cancel or reschedule before the service starts.</p>
+                            <p class="text-[9.5px] text-gray-400 font-semibold mt-1">You can cancel before the service starts.</p>
                         </div>
                         <p class="text-3xl font-extrabold text-[#3E8B3A] leading-none">
                             ₹{{ number_format($service->price, 0) }}

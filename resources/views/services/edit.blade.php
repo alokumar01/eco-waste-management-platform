@@ -189,9 +189,61 @@
                                         </div>
                                         <select name="city" class="w-full pl-10 pr-10 py-2.5 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-provider-green focus:border-provider-green transition-all bg-gray-50/20 appearance-none text-gray-700">
                                             <option value="" disabled>Select your service area</option>
+                                            <option value="Ahmedabad" {{ old('city', $service->city) == 'Ahmedabad' ? 'selected' : '' }}>Ahmedabad</option>
+                                            <option value="Amritsar" {{ old('city', $service->city) == 'Amritsar' ? 'selected' : '' }}>Amritsar</option>
+                                            <option value="Aurangabad" {{ old('city', $service->city) == 'Aurangabad' ? 'selected' : '' }}>Aurangabad</option>
                                             <option value="Bengaluru" {{ old('city', $service->city) == 'Bengaluru' || !old('city', $service->city) ? 'selected' : '' }}>Bengaluru</option>
+                                            <option value="Bhopal" {{ old('city', $service->city) == 'Bhopal' ? 'selected' : '' }}>Bhopal</option>
+                                            <option value="Bhubaneswar" {{ old('city', $service->city) == 'Bhubaneswar' ? 'selected' : '' }}>Bhubaneswar</option>
+                                            <option value="Chandigarh" {{ old('city', $service->city) == 'Chandigarh' ? 'selected' : '' }}>Chandigarh</option>
+                                            <option value="Chennai" {{ old('city', $service->city) == 'Chennai' ? 'selected' : '' }}>Chennai</option>
+                                            <option value="Coimbatore" {{ old('city', $service->city) == 'Coimbatore' ? 'selected' : '' }}>Coimbatore</option>
+                                            <option value="Dehradun" {{ old('city', $service->city) == 'Dehradun' ? 'selected' : '' }}>Dehradun</option>
+                                            <option value="Delhi NCR" {{ old('city', $service->city) == 'Delhi NCR' || old('city', $service->city) == 'Delhi' ? 'selected' : '' }}>Delhi NCR</option>
+                                            <option value="Dhanbad" {{ old('city', $service->city) == 'Dhanbad' ? 'selected' : '' }}>Dhanbad</option>
+                                            <option value="Faridabad" {{ old('city', $service->city) == 'Faridabad' ? 'selected' : '' }}>Faridabad</option>
+                                            <option value="Ghaziabad" {{ old('city', $service->city) == 'Ghaziabad' ? 'selected' : '' }}>Ghaziabad</option>
+                                            <option value="Gurugram" {{ old('city', $service->city) == 'Gurugram' ? 'selected' : '' }}>Gurugram (Gurgaon)</option>
+                                            <option value="Guwahati" {{ old('city', $service->city) == 'Guwahati' ? 'selected' : '' }}>Guwahati</option>
+                                            <option value="Gwalior" {{ old('city', $service->city) == 'Gwalior' ? 'selected' : '' }}>Gwalior</option>
+                                            <option value="Howrah" {{ old('city', $service->city) == 'Howrah' ? 'selected' : '' }}>Howrah</option>
+                                            <option value="Hyderabad" {{ old('city', $service->city) == 'Hyderabad' ? 'selected' : '' }}>Hyderabad</option>
+                                            <option value="Indore" {{ old('city', $service->city) == 'Indore' ? 'selected' : '' }}>Indore</option>
+                                            <option value="Jabalpur" {{ old('city', $service->city) == 'Jabalpur' ? 'selected' : '' }}>Jabalpur</option>
+                                            <option value="Jaipur" {{ old('city', $service->city) == 'Jaipur' ? 'selected' : '' }}>Jaipur</option>
+                                            <option value="Jamshedpur" {{ old('city', $service->city) == 'Jamshedpur' ? 'selected' : '' }}>Jamshedpur</option>
+                                            <option value="Jodhpur" {{ old('city', $service->city) == 'Jodhpur' ? 'selected' : '' }}>Jodhpur</option>
+                                            <option value="Kalyan-Dombivli" {{ old('city', $service->city) == 'Kalyan-Dombivli' ? 'selected' : '' }}>Kalyan-Dombivli</option>
+                                            <option value="Kanpur" {{ old('city', $service->city) == 'Kanpur' ? 'selected' : '' }}>Kanpur</option>
+                                            <option value="Kochi" {{ old('city', $service->city) == 'Kochi' ? 'selected' : '' }}>Kochi</option>
+                                            <option value="Kolkata" {{ old('city', $service->city) == 'Kolkata' ? 'selected' : '' }}>Kolkata</option>
+                                            <option value="Kota" {{ old('city', $service->city) == 'Kota' ? 'selected' : '' }}>Kota</option>
+                                            <option value="Lucknow" {{ old('city', $service->city) == 'Lucknow' ? 'selected' : '' }}>Lucknow</option>
+                                            <option value="Ludhiana" {{ old('city', $service->city) == 'Ludhiana' ? 'selected' : '' }}>Ludhiana</option>
+                                            <option value="Madurai" {{ old('city', $service->city) == 'Madurai' ? 'selected' : '' }}>Madurai</option>
+                                            <option value="Mangaluru" {{ old('city', $service->city) == 'Mangaluru' ? 'selected' : '' }}>Mangaluru (Mangalore)</option>
+                                            <option value="Meerut" {{ old('city', $service->city) == 'Meerut' ? 'selected' : '' }}>Meerut</option>
                                             <option value="Mumbai" {{ old('city', $service->city) == 'Mumbai' ? 'selected' : '' }}>Mumbai</option>
-                                            <option value="Delhi" {{ old('city', $service->city) == 'Delhi' ? 'selected' : '' }}>Delhi</option>
+                                            <option value="Mysore" {{ old('city', $service->city) == 'Mysore' ? 'selected' : '' }}>Mysore</option>
+                                            <option value="Nagpur" {{ old('city', $service->city) == 'Nagpur' ? 'selected' : '' }}>Nagpur</option>
+                                            <option value="Nashik" {{ old('city', $service->city) == 'Nashik' ? 'selected' : '' }}>Nashik</option>
+                                            <option value="Navi Mumbai" {{ old('city', $service->city) == 'Navi Mumbai' ? 'selected' : '' }}>Navi Mumbai</option>
+                                            <option value="Noida" {{ old('city', $service->city) == 'Noida' ? 'selected' : '' }}>Noida</option>
+                                            <option value="Patna" {{ old('city', $service->city) == 'Patna' ? 'selected' : '' }}>Patna</option>
+                                            <option value="Pimpri-Chinchwad" {{ old('city', $service->city) == 'Pimpri-Chinchwad' ? 'selected' : '' }}>Pimpri-Chinchwad</option>
+                                            <option value="Prayagraj" {{ old('city', $service->city) == 'Prayagraj' ? 'selected' : '' }}>Prayagraj (Allahabad)</option>
+                                            <option value="Pune" {{ old('city', $service->city) == 'Pune' ? 'selected' : '' }}>Pune</option>
+                                            <option value="Raipur" {{ old('city', $service->city) == 'Raipur' ? 'selected' : '' }}>Raipur</option>
+                                            <option value="Rajkot" {{ old('city', $service->city) == 'Rajkot' ? 'selected' : '' }}>Rajkot</option>
+                                            <option value="Ranchi" {{ old('city', $service->city) == 'Ranchi' ? 'selected' : '' }}>Ranchi</option>
+                                            <option value="Srinagar" {{ old('city', $service->city) == 'Srinagar' ? 'selected' : '' }}>Srinagar</option>
+                                            <option value="Surat" {{ old('city', $service->city) == 'Surat' ? 'selected' : '' }}>Surat</option>
+                                            <option value="Thane" {{ old('city', $service->city) == 'Thane' ? 'selected' : '' }}>Thane</option>
+                                            <option value="Thiruvananthapuram" {{ old('city', $service->city) == 'Thiruvananthapuram' ? 'selected' : '' }}>Thiruvananthapuram</option>
+                                            <option value="Vadodara" {{ old('city', $service->city) == 'Vadodara' ? 'selected' : '' }}>Vadodara</option>
+                                            <option value="Varanasi" {{ old('city', $service->city) == 'Varanasi' ? 'selected' : '' }}>Varanasi</option>
+                                            <option value="Vijayawada" {{ old('city', $service->city) == 'Vijayawada' ? 'selected' : '' }}>Vijayawada</option>
+                                            <option value="Visakhapatnam" {{ old('city', $service->city) == 'Visakhapatnam' ? 'selected' : '' }}>Visakhapatnam</option>
                                         </select>
                                         <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>

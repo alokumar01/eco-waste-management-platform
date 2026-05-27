@@ -68,6 +68,9 @@ class BlogPostController extends Controller
             'published_at' => $validated['status'] === 'published' ? now() : null,
         ]);
 
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.blog.all-articles')->with('success', 'Blog post created successfully.');
+        }
         return redirect()->route('blog.index')->with('success', 'Blog post created successfully.');
     }
 
@@ -86,8 +89,8 @@ class BlogPostController extends Controller
     {
         $post = BlogPost::findOrFail($id);
         
-        // Ensure user owns this post
-        if ($post->user_id !== Auth::id()) {
+        // Ensure user owns this post or is admin
+        if ($post->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -101,8 +104,8 @@ class BlogPostController extends Controller
     {
         $post = BlogPost::findOrFail($id);
         
-        // Ensure user owns this post
-        if ($post->user_id !== Auth::id()) {
+        // Ensure user owns this post or is admin
+        if ($post->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -146,6 +149,9 @@ class BlogPostController extends Controller
 
         $post->save();
 
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.blog.all-articles')->with('success', 'Blog post updated successfully.');
+        }
         return redirect()->route('blog.index')->with('success', 'Blog post updated successfully.');
     }
 
@@ -156,8 +162,8 @@ class BlogPostController extends Controller
     {
         $post = BlogPost::findOrFail($id);
         
-        // Ensure user owns this post
-        if ($post->user_id !== Auth::id()) {
+        // Ensure user owns this post or is admin
+        if ($post->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -167,6 +173,34 @@ class BlogPostController extends Controller
 
         $post->delete();
 
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.blog.all-articles')->with('success', 'Blog post deleted successfully.');
+        }
         return redirect()->route('blog.index')->with('success', 'Blog post deleted successfully.');
+    }
+
+    /**
+     * Preview the specified resource.
+     */
+    public function preview(string $id)
+    {
+        $post = BlogPost::findOrFail($id);
+        
+        // Ensure user owns this post or is admin
+        if ($post->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Get popular articles for the sidebar
+        $popularPosts = BlogPost::where('status', 'published')
+            ->where('visibility', 'public')
+            ->where('id', '!=', $post->id)
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+
+        $isPreview = true;
+
+        return view('blog.show', compact('post', 'popularPosts', 'isPreview'));
     }
 }

@@ -183,7 +183,7 @@
                 <!-- Value 2 -->
                 <div class="bg-white border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgb(62,139,58,0.06)] hover:border-green-100 rounded-[1.5rem] p-8 flex flex-col items-center transition-all">
                     <div class="w-14 h-14 rounded-full bg-[#F4FCF4] text-[#3E8B3A] flex items-center justify-center mb-6">
-                        <i class="fa-solid fa-shield-check text-xl"></i>
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
                     </div>
                     <h4 class="text-[13px] font-extrabold text-gray-900 mb-2">Trust & Transparency</h4>
                     <p class="text-[11px] text-gray-500 font-medium leading-relaxed">We verify our service providers and ensure complete transparency.</p>
@@ -265,7 +265,7 @@
 
                 <div class="flex flex-col items-center px-4">
                     <div class="w-12 h-12 rounded-full bg-[#3E8B3A] text-white flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-shield-check"></i>
+                        <i class="fa-solid fa-user-shield"></i>
                     </div>
                     <span class="text-2xl font-black text-white mb-1">150+</span>
                     <h4 class="text-white text-[12px] font-bold mb-1">Verified Providers</h4>

@@ -71,7 +71,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
+        return view('services.show', compact('service'));
     }
 
     /**
@@ -160,6 +160,22 @@ class ServiceController extends Controller
                 }
             }
         }
+
+        // Cancel and refund active bookings
+        foreach ($service->bookings as $booking) {
+            if ($booking->status !== 'cancelled' && $booking->status !== 'completed') {
+                $booking->status = 'cancelled';
+                if ($booking->payment_status === 'paid') {
+                    $booking->payment_status = 'refunded';
+                    if ($booking->transaction) {
+                        $booking->transaction->update(['status' => 'refunded']);
+                    }
+                    $booking->customer->notify(new \App\Notifications\BookingRefundedNotification($booking, $booking->price));
+                }
+                $booking->save();
+            }
+        }
+
         $service->delete();
         return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
     }

@@ -64,7 +64,7 @@
                     <span>Profile</span>
                 </a>
 
-                <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors text-gray-600 hover:bg-provider-green-light hover:text-provider-green">
+                <a href="{{ route('help.message-admin') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors text-gray-600 hover:bg-provider-green-light hover:text-provider-green">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4c0-1.165.46-2.223 1.228-3z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12c0 3.536-2.362 6.437-5.443 7.126C7.936 19.69 8.89 20 10 20c4.418 0 8-3.582 8-8s-3.582-8-8-8c-1.11 0-2.174.225-3.161.633"></path></svg>
                     <span>Help & Support</span>
                 </a>
