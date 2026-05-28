@@ -243,6 +243,8 @@
                                             <option value="Varanasi" {{ old('city') == 'Varanasi' ? 'selected' : '' }}>Varanasi</option>
                                             <option value="Vijayawada" {{ old('city') == 'Vijayawada' ? 'selected' : '' }}>Vijayawada</option>
                                             <option value="Visakhapatnam" {{ old('city') == 'Visakhapatnam' ? 'selected' : '' }}>Visakhapatnam</option>
+                                            <option value="Motihar" {{ old('city') == 'Motihari' ? 'selected' : '' }}>Motihari</option>
+
                                         </select>
                                         <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>

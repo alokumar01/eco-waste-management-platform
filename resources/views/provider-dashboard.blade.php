@@ -97,7 +97,7 @@
                 <div class="min-w-0">
                     <p class="text-[10.5px] text-gray-400 font-bold uppercase tracking-wider mb-1 truncate">Total Earnings</p>
                     <div class="flex items-baseline gap-2">
-                        <span class="text-[22px] font-bold text-gray-900 leading-none tracking-tight">₹{{ number_format($totalEarnings, 0) }}</span>
+                        <span style="font-family: Arial, sans-serif; font-size:22px; font-weight:bold;">₹ {{ number_format($totalEarnings, 0) }}</span>
                         <span class="text-[10px] font-bold text-provider-green bg-provider-green-light px-1.5 py-0.5 rounded truncate">↑ 18%</span>
                     </div>
                 </div>
