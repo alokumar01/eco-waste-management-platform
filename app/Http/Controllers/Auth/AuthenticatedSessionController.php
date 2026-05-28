@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,28 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = $request->user();
+        
+        // Clean up background AJAX/polling URLs from the intended redirect URL
+        $intended = session()->get('url.intended');
+        if ($intended && (
+            str_contains($intended, 'notifications/unread-count') || 
+            str_contains($intended, 'notifications/recent') ||
+            (str_contains($intended, 'messages') && str_contains($intended, 'fetch'))
+        )) {
+            session()->forget('url.intended');
+        }
+
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'provider') {
+            if (!$user->profile_completed) {
+                return redirect()->route('provider.profile.edit');
+            }
+            return redirect()->route('provider.dashboard');
+        }
+
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

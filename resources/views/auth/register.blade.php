@@ -1,150 +1,145 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}" class="w-full space-y-5"
-        x-data="{ showPassword: false, showConfirmPassword: false, submitting: false }" @submit="submitting = true">
+@extends('layouts.guest')
+
+@section('content')
+    <div class="mb-6 select-none text-center sm:text-left">
+        <h1 class="text-3xl font-heading font-extrabold text-gray-950 tracking-tight">Create account</h1>
+        <p class="mt-2 text-xs text-gray-400 font-semibold leading-relaxed">Join GreenLoop and start turning waste into value.</p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
-        <div class="w-full text-center mb-6">
-            <p class="text-4xl sm:text-5xl font-semibold tracking-tight">Create account</p>
-            <p class="mt-2 text-sm font-light text-muted-foreground">Join GreenLoop and start turning waste into value</p>
-        </div>
-
         <!-- Name -->
-        <div class="space-y-1.5">
-            <x-input-label for="name" :value="__('Name')" />
+        <div class="space-y-1">
+            <label for="name" class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">{{ __('Name') }}</label>
 
-            <div class="relative group mt-1">
-                <span
-                    class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted-foreground/80 transition-colors group-focus-within:text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.8" class="h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM5 20a7 7 0 0 1 14 0" />
+            <div class="relative group mt-1.5 guest-input-container">
+                <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-gray-500 group-focus-within:text-[#609953] transition-colors z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-4.5 w-4.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </span>
 
-                <x-text-input id="name" class="block w-full h-12 pl-11" type="text" name="name" :value="old('name')"
-                    required autofocus autocomplete="name" placeholder="Enter your full name" />
+                <input id="name" class="guest-input block w-full placeholder-gray-500/80 font-medium" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" placeholder="Enter your full name" />
             </div>
 
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            @error('name')
+                <p class="mt-1.5 text-[11px] font-bold text-red-600 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
 
         <!-- Email Address -->
-        <div class="space-y-1.5">
-            <x-input-label for="email" :value="__('Email')" />
+        <div class="space-y-1">
+            <label for="email" class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">{{ __('Email') }}</label>
 
-            <div class="relative group mt-1">
-                <span
-                    class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted-foreground/80 transition-colors group-focus-within:text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.8" class="h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 7l8.5 5.5a1 1 0 0 0 1 0L21 7m-17 11h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" />
+            <div class="relative group mt-1.5 guest-input-container">
+                <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-gray-500 group-focus-within:text-[#609953] transition-colors z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-4.5 w-4.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                 </span>
 
-                <x-text-input id="email" class="block w-full h-12 pl-11" type="email" name="email" :value="old('email')"
-                    required autocomplete="username" placeholder="Enter your email" />
+                <input id="email" class="guest-input block w-full placeholder-gray-500/80 font-medium" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="Enter your email" />
             </div>
 
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            @error('email')
+                <p class="mt-1.5 text-[11px] font-bold text-red-600 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
+        <!-- Role Select Menu -->
+        <div class="space-y-1">
+            <label for="role" class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">{{ __('Register As') }}</label>
+
+            <div class="relative group mt-1.5 guest-input-container">
+                <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-gray-500 group-focus-within:text-[#609953] transition-colors z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-4.5 w-4.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                </span>
+
+                <select id="role" name="role" autocomplete="off" class="guest-input block w-full placeholder-gray-500/80 font-bold appearance-none">
+                    <option value="user" {{ old('role') === 'user' ? 'selected' : '' }} class="font-semibold text-gray-700">Customer (Generate & Recycle Waste)</option>
+                    <option value="provider" {{ old('role') === 'provider' ? 'selected' : '' }} class="font-semibold text-gray-700">Service Provider (Collect & Process Waste)</option>
+                </select>
+
+                <!-- custom select pin -->
+                <div class="absolute right-3.5 inset-y-0 pointer-events-none flex items-center text-gray-400 z-20">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </div>
+
+            @error('role')
+                <p class="mt-1.5 text-[11px] font-bold text-red-600 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="space-y-1.5">
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="space-y-1">
+            <label for="password" class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">{{ __('Password') }}</label>
 
-            <div class="relative group mt-1">
-                <span
-                    class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted-foreground/80 transition-colors group-focus-within:text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.8" class="h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M16 11V8a4 4 0 1 0-8 0v3m-2 0h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1z" />
+            <div class="relative group mt-1.5 guest-input-container">
+                <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-gray-500 group-focus-within:text-[#609953] transition-colors z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-4.5 w-4.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                 </span>
 
-                <x-text-input id="password" class="block w-full h-12 pl-11 pr-11"
-                    x-bind:type="showPassword ? 'text' : 'password'" name="password" required
-                    autocomplete="new-password" placeholder="Create a password" />
-
-                <button type="button"
-                    class="absolute inset-y-0 right-3 inline-flex items-center text-muted-foreground/80 transition hover:text-foreground"
-                    @click="showPassword = !showPassword"
-                    :aria-label="showPassword ? 'Hide password' : 'Show password'">
-                    <svg x-show="!showPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.8" class="h-5 w-5" style="display: none;">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
-                        <circle cx="12" cy="12" r="3" />
-                    </svg>
-                    <svg x-show="showPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.8" class="h-5 w-5" style="display: none;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M10.7 6.2A10.5 10.5 0 0 1 12 6c6.5 0 10 6 10 6a15 15 0 0 1-3 3.8M6.1 6.1C3.6 7.8 2 12 2 12s3.5 7 10 7c1.7 0 3.2-.5 4.4-1.2" />
-                    </svg>
-                </button>
+                <input id="password" class="guest-input block w-full placeholder-gray-500/80 font-medium" type="password" name="password" required autocomplete="new-password" placeholder="Create a password" />
             </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            @error('password')
+                <p class="mt-1.5 text-[11px] font-bold text-red-600 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
 
         <!-- Confirm Password -->
-        <div class="space-y-1.5">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+        <div class="space-y-1">
+            <label for="password_confirmation" class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">{{ __('Confirm Password') }}</label>
 
-            <div class="relative group mt-1">
-                <span
-                    class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted-foreground/80 transition-colors group-focus-within:text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.8" class="h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M16 11V8a4 4 0 1 0-8 0v3m-2 0h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1z" />
+            <div class="relative group mt-1.5 guest-input-container">
+                <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-gray-500 group-focus-within:text-[#609953] transition-colors z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-4.5 w-4.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                 </span>
 
-                <x-text-input id="password_confirmation" class="block w-full h-12 pl-11 pr-11"
-                    x-bind:type="showConfirmPassword ? 'text' : 'password'" name="password_confirmation" required
-                    autocomplete="new-password" placeholder="Confirm your password" />
-
-                <button type="button"
-                    class="absolute inset-y-0 right-3 inline-flex items-center text-muted-foreground/80 transition hover:text-foreground"
-                    @click="showConfirmPassword = !showConfirmPassword"
-                    :aria-label="showConfirmPassword ? 'Hide password confirmation' : 'Show password confirmation'">
-                    <svg x-show="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5" style="display: none;">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
-                        <circle cx="12" cy="12" r="3" />
-                    </svg>
-                    <svg x-show="showConfirmPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5" style="display: none;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M10.7 6.2A10.5 10.5 0 0 1 12 6c6.5 0 10 6 10 6a15 15 0 0 1-3 3.8M6.1 6.1C3.6 7.8 2 12 2 12s3.5 7 10 7c1.7 0 3.2-.5 4.4-1.2" />
-                    </svg>
-                </button>
+                <input id="password_confirmation" class="guest-input block w-full placeholder-gray-500/80 font-medium" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm your password" />
             </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            @error('password_confirmation')
+                <p class="mt-1.5 text-[11px] font-bold text-red-600 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span>
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
 
-        <x-primary-button class="w-full h-12 text-center">
-            <span x-show="!submitting" style="display: inline;">{{ __('Create Account') }}</span>
-            <span x-show="submitting" class="inline-flex items-center gap-2" style="display: none;">
-                <svg class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"></path>
-                </svg>
-                <span>Creating account...</span>
-            </span>
-        </x-primary-button>
+        <!-- Sign Up Button -->
+        <button type="submit" class="w-full btn-primary-mockup text-center inline-flex items-center justify-center font-heading font-extrabold text-xs text-white tracking-wider uppercase select-none">
+            {{ __('Create Account') }}
+        </button>
 
-        <div class="text-center text-sm text-muted-foreground">
-            <a class="font-medium text-primary hover:text-primary/80 transition" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+        <!-- Divider Link -->
+        <div class="text-center pt-3 border-t border-gray-100 mt-6">
+            <p class="text-xs text-gray-400 font-semibold">
+                Already registered?
+                <a href="{{ route('login') }}" class="guest-link-green">
+                    Log in here
+                </a>
+            </p>
         </div>
     </form>
-</x-guest-layout>
+@endsection

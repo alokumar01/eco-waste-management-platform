@@ -18,15 +18,19 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <label for="name" class="block font-medium text-sm text-gray-700">{{ __('Name') }}</label>
+            <input id="name" name="name" type="text" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name" />
+            @error('name')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <label for="email" class="block font-medium text-sm text-gray-700">{{ __('Email') }}</label>
+            <input id="email" name="email" type="email" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" value="{{ old('email', $user->email) }}" required autocomplete="username" />
+            @error('email')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
@@ -48,17 +52,21 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">{{ __('Save') }}</button>
 
             @if (session('status') === 'profile-updated')
                 <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
+                    id="profile-updated-message"
                     class="text-sm text-gray-600 dark:text-gray-400"
                 >{{ __('Saved.') }}</p>
             @endif
         </div>
     </form>
+    @if (session('status') === 'profile-updated')
+    <script>
+        setTimeout(() => {
+            document.getElementById('profile-updated-message').style.display = 'none';
+        }, 2000);
+    </script>
+    @endif
 </section>
