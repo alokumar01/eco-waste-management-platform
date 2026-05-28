@@ -63,6 +63,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+        // DEFAULT: return redirect('/');
 
         return redirect('/');
     }

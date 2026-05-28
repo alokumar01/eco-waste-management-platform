@@ -226,7 +226,7 @@ Route::middleware(['auth', 'verified', 'role:provider,admin'])->group(function (
     Route::resource('provider/blog', \App\Http\Controllers\BlogPostController::class)->except(['show']);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get('/logout-now', function () {
     Auth::logout();
