@@ -83,3 +83,37 @@ test('correct password must be provided to delete account', function () {
 
     $this->assertNotNull($user->fresh());
 });
+
+test('provider can delete their account', function () {
+    $provider = User::factory()->create(['role' => 'provider', 'status' => 'active']);
+
+    $response = $this
+        ->actingAs($provider)
+        ->delete('/profile', [
+            'password' => 'password',
+        ]);
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect('/');
+
+    $this->assertGuest();
+    $this->assertNull($provider->fresh());
+});
+
+test('admin can delete their account', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+
+    $response = $this
+        ->actingAs($admin)
+        ->delete('/profile', [
+            'password' => 'password',
+        ]);
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect('/');
+
+    $this->assertGuest();
+    $this->assertNull($admin->fresh());
+});

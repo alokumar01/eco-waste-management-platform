@@ -18,6 +18,13 @@ return new class extends Migration {
             $table->string('password');
             $table->string('role')->default('user');
             $table->string('status')->default('active');
+            $table->string('business_name')->nullable();
+            $table->string('business_address')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('profile_picture')->nullable();
+            $table->text('bio')->nullable();
+            $table->boolean('is_verified')->default(false);
+            $table->boolean('profile_completed')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
