@@ -1,6 +1,6 @@
 # Eco Waste Management Platform
 
-[![Laravel Basic CI](https://github.com/alokumar01/eco-waste-management-platform/actions/workflows/laravel-ci.yml/badge.svg)](https://github.com/alokumar01/eco-waste-management-platform/actions/workflows/laravel-ci.yml)
+[![Laravel Basic CI](https://github.com/alokumar01/eco-waste-management-platform/actions/workflows/laravel-ci.yml/badge.svg?branch=main)](https://github.com/alokumar01/eco-waste-management-platform/actions/workflows/laravel-ci.yml)
 
 A role-based Laravel web application that helps users connect with eco-friendly waste management and composting service providers. The platform supports service discovery, bookings, provider verification, blog-based awareness, customer reviews, notifications, messaging, and admin monitoring.
 
